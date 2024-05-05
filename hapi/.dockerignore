@@ -1,0 +1,7 @@
+command
+query
+schemas
+.sqlfluff
+.editorconfig
+.gitignore
+*.vim
