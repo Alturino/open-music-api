@@ -4,6 +4,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    develop:
+      watch:
+        - action: rebuild
+          path: package.json
+        - action: rebuild
+          path: ./src
     depends_on:
       postgres:
         condition: service_healthy
