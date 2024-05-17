@@ -9,6 +9,7 @@ class PlaylistHandler {
     this.addSongToPlaylist = this.addSongToPlaylist.bind(this);
     this.getSongsInPlaylist = this.getSongsInPlaylist.bind(this);
     this.deleteSongInPlaylist = this.deleteSongInPlaylist.bind(this);
+    this.getActivities = this.getActivities.bind(this);
   }
 
   async addPlaylist(req, h) {
@@ -89,6 +90,19 @@ class PlaylistHandler {
         status: 'success',
         message: `Song di dalam playlist dengan id: ${playlistId} berhasil di hapus`,
         data: { playlistId, songId },
+      })
+      .code(200);
+  }
+
+  async getActivities(req, h) {
+    const { id: userId } = req.auth.credentials;
+    const { id: playlistId } = req.params;
+    const activities = await this._service.getActivities(playlistId, userId);
+    return h
+      .response({
+        status: 'success',
+        message: 'Activities di dalam playlist dengan id: ${playlistId} berhasil ditemukan',
+        data: { activities },
       })
       .code(200);
   }

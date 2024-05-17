@@ -36,7 +36,7 @@ class UserService {
       `UserService addUser executing query: ${insertUserQuery.text}, params: ${insertUserQuery.values}`,
     );
     const result = await this._pool.query(insertUserQuery);
-    if (result.rowCount === null || result.rowCount < 1) {
+    if (result.rowCount === null || result.rowCount === 0) {
       const e = new InvariantError('user gagal ditambahkan');
       console.error(`UserService addUser ${e}`);
       throw e;
@@ -53,7 +53,7 @@ class UserService {
       values: [id],
     };
     const result = await this._pool.query(query);
-    if (result.rowCount === null || result.rowCount < 1) {
+    if (result.rowCount === null || result.rowCount === 0) {
       const e = new InvariantError(`user dengan id: ${id} tidak ditemukan`, 404);
       console.error(`UserService getUserById ${e}`);
       throw e;
@@ -80,7 +80,7 @@ class UserService {
       values: [username],
     };
     const result = await this._pool.query(query);
-    if (result.rowCount === null || result.rowCount < 1) {
+    if (result.rowCount === null || result.rowCount === 0) {
       const e = new AuthenticationError(`user with username: ${username} is not found`);
       console.log(e);
       throw e;

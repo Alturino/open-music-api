@@ -17,7 +17,7 @@ class SongService {
       values: [id, title, year, genre, performer, duration, albumId],
     };
     const result = await this._pool.query(query);
-    if (result.rowCount === null || result.rowCount < 1) {
+    if (result.rowCount === null || result.rowCount === 0) {
       const e = new InvariantError('song gagal ditambahkan');
       console.error(`SongService addSong ${e}`);
       throw e;
@@ -34,7 +34,7 @@ class SongService {
       values: [id, title, year, genre, performer, duration, albumId],
     };
     const result = await this._pool.query(query);
-    if (result.rowCount === null || result.rowCount < 1) {
+    if (result.rowCount === null || result.rowCount === 0) {
       const e = new NotFoundError('song gagal diupdate', 404);
       console.error(`SongService updateSong ${e}`);
       throw e;
@@ -58,7 +58,7 @@ class SongService {
       values: [id],
     };
     const result = await this._pool.query(query);
-    if (result.rowCount === null || result.rowCount < 1) {
+    if (result.rowCount === null || result.rowCount === 0) {
       const e = new NotFoundError(`song dengan id: ${id} tidak ditemukan`);
       console.error(`SongService getSongById ${e}`);
       throw e;
@@ -86,7 +86,7 @@ class SongService {
     console.log(`SongService getSongs queryString: ${JSON.stringify(query)}`);
 
     const result = await this._pool.query(query);
-    if (result.rowCount === null || result.rowCount < 1) {
+    if (result.rowCount === null || result.rowCount === 0) {
       const e = new InvariantError(`Songs kosong`);
       console.error(`SongService getSongs ${e}`);
       throw e;
@@ -105,7 +105,7 @@ class SongService {
     };
     const result = await this._pool.query(query);
     console.log(`SongService deleteSong rows: ${JSON.stringify(result.rows)}`);
-    if (result.rowCount === null || result.rowCount < 1) {
+    if (result.rowCount === null || result.rowCount === 0) {
       const e = new NotFoundError('song gagal dihapus');
       console.error(`SongService deleteSong ${e}`);
       throw e;

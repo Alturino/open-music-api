@@ -15,7 +15,7 @@ class AlbumService {
       values: [id, name, year],
     };
     const result = await this._pool.query(query);
-    if (result.rowCount === null || result.rowCount < 1) {
+    if (result.rowCount === null || result.rowCount === 0) {
       const e = new InvariantError('album gagal ditambahkan');
       console.error(e);
       throw e;
@@ -31,7 +31,7 @@ class AlbumService {
       values: [id, name, year],
     };
     const result = await this._pool.query(query);
-    if (result.rowCount === null || result.rowCount < 1) {
+    if (result.rowCount === null || result.rowCount === 0) {
       const e = new NotFoundError(`Album dengan id: ${id} tidak ditemukan`);
       console.error(`AlbumService updateAlbum ${e}`);
       throw e;
@@ -109,7 +109,7 @@ class AlbumService {
       values: [id],
     };
     const result = await this._pool.query(query);
-    if (result.rowCount === null || result.rowCount < 1) {
+    if (result.rowCount === null || result.rowCount === 0) {
       const e = new NotFoundError(`album dengan id: ${id} gagal dihapus`);
       console.error(`AlbumService deleteAlbum ${e}`);
       throw e;

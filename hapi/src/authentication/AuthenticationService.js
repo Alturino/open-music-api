@@ -18,7 +18,7 @@ class AuthenticationService {
       `AuthenticationService addRefreshToken inserting query: ${query.text}, params: ${query.values}`,
     );
     const result = await this._pool.query(query);
-    if (result.rowCount === null || result.rowCount < 1) {
+    if (result.rowCount === null || result.rowCount === 0) {
       const e = new InvariantError('song gagal ditambahkan');
       console.error(`SongService addSong ${e}`);
       throw e;
@@ -41,7 +41,7 @@ class AuthenticationService {
       `AuthenticationService verifyRefreshToken executing query: ${query.text}, params: ${query.values}`,
     );
     const result = await this._pool.query(query);
-    if (result.rowCount === null || result.rowCount < 1) {
+    if (result.rowCount === null || result.rowCount === 0) {
       const e = new InvariantError(`Token dengan token: ${token} tidak ditemukan`);
       console.error(`AuthenticationService verifyRefreshToken ${e}`);
       throw e;
@@ -62,7 +62,7 @@ class AuthenticationService {
     console.log(
       `AuthenticationService deleteRefreshToken executing query: ${query.text}, params: ${query.values}`,
     );
-    if (result.rowCount === null || result.rowCount < 1) {
+    if (result.rowCount === null || result.rowCount === 0) {
       const e = new InvariantError(`Token dengan token: ${token} gagal dihapus`);
       console.error(`AuthenticationService deleteRefreshToken ${e}`);
       throw e;

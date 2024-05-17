@@ -1,7 +1,9 @@
 const AlbumService = require('./albums/AlbumService');
 const AlbumValidator = require('./albums/validator');
 const AuthentcationValidator = require('./authentication/validator');
+const CollaborationValidator = require('./collaborations/validator');
 const AuthenticationService = require('./authentication/AuthenticationService');
+const CollaborationsService = require('./collaborations/CollaborationsService');
 const ClientError = require('./core/exceptions/ClientError');
 const Hapi = require('@hapi/hapi');
 const Jwt = require('@hapi/jwt');
@@ -13,6 +15,7 @@ const TokenManager = require('./authentication/tokenize/TokenManager');
 const UserService = require('./users/UserService');
 const UserValidator = require('./users/validator');
 const albumsPlugin = require('./albums/api');
+const collaborationsPlugin = require('./collaborations/api');
 const authenticationPlugin = require('./authentication/api');
 const playlistPlugin = require('./playlists/api');
 const songsPlugin = require('./songs/api');
@@ -73,6 +76,7 @@ async function main() {
   const songService = new SongService(pgPool);
   const userService = new UserService(pgPool);
   const playlistService = new PlaylistService(pgPool);
+  const collaborationsService = new CollaborationsService(pgPool);
   const authenticationService = new AuthenticationService(pgPool);
   console.log('services created');
 
@@ -113,6 +117,13 @@ async function main() {
       options: {
         service: playlistService,
         validator: PlaylistValidator,
+      },
+    },
+    {
+      plugin: collaborationsPlugin,
+      options: {
+        service: collaborationsService,
+        validator: CollaborationValidator,
       },
     },
   ]);
