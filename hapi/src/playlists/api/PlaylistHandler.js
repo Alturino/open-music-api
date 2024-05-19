@@ -102,7 +102,7 @@ class PlaylistHandler {
       .response({
         status: 'success',
         message: 'Activities di dalam playlist dengan id: ${playlistId} berhasil ditemukan',
-        data: { activities },
+        data: { playlistId, activities },
       })
       .code(200);
   }

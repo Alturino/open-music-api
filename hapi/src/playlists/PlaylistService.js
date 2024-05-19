@@ -87,6 +87,7 @@ class PlaylistService {
       console.error(`PlaylistService addSongToPlaylist ${e}`);
       throw e;
     }
+    await this.addToActivity(playlistId, ownerId, 'add', songId);
   }
 
   async getSongsInPlaylist(playlistId, ownerId) {
@@ -167,6 +168,7 @@ class PlaylistService {
       console.error(`PlaylistService deleteSongInPlaylist ${e}`);
       throw e;
     }
+    await this.addToActivity(playlistId, ownerId, 'delete', songId);
     return result.rows.map((row) => {
       return {
         songId: row.song_id,
@@ -175,7 +177,43 @@ class PlaylistService {
     });
   }
 
-  async getActivities(playlistId, userId) {}
+  async getActivities(playlistId, userId) {
+    console.log(`PlaylistService getActivities playlistId: ${playlistId}, userId: ${userId}`);
+    await this.isPlaylistExist(playlistId);
+    await this.isPlaylistOwnerOrCollaborator(playlistId, userId);
+    const query = {
+      text: `
+        select
+            u.username,
+            s.title,
+            pa.action,
+            pa.time
+        from playlists as p
+        inner join playlist_activities as pa on p.id = pa.playlist_id
+        inner join songs as s on pa.song_id = s.id
+        inner join users as u on p.owner_id = u.id
+        left join collaborations as c on p.id = c.playlist_id
+        where
+            p.id = $1 and (c.user_id = $2 or p.owner_id = $2);`,
+      values: [playlistId, userId],
+    };
+    const result = await this._pool.query(query);
+    if (result.rowCount === null || result.rowCount === 0) {
+      const e = new AuthorizationError(
+        `User dengan id: ${userId} tidak berhak mengakses activities dari playlist dengan id: ${playlistId}`,
+      );
+      console.error(`PlaylistService getActivities ${e}`);
+      throw e;
+    }
+    return result.rows.map((row) => {
+      return {
+        username: row.username,
+        title: row.title,
+        action: row.action,
+        time: row.time,
+      };
+    });
+  }
 
   async isPlaylistExist(playlistId) {
     const query = {
@@ -205,7 +243,7 @@ class PlaylistService {
 
   async isPlaylistOwnerOrCollaborator(playlistId, userId) {
     console.log(
-      `PlaylistService isHavePlaylistReadAccess playlistId: ${playlistId}, userId: ${userId}`,
+      `PlaylistService isPlaylistOwnerOrCollaborator playlistId: ${playlistId}, userId: ${userId}`,
     );
     const query = {
       text: `
@@ -223,11 +261,11 @@ class PlaylistService {
       const e = new AuthorizationError(
         `User dengan id: ${userId} tidak berhak mengakses playlist dengan id: ${playlistId}`,
       );
-      console.error(`PlaylistService isHavePlaylistReadAccess ${e}`);
+      console.error(`PlaylistService isPlaylistOwnerOrCollaborator ${e}`);
       throw e;
     }
     console.log(
-      `PlaylistService isHavePlaylistReadAccess user dengan id: ${userId} berhak mengakses playlist dengan id: ${playlistId}`,
+      `PlaylistService isPlaylistOwnerOrCollaborator user dengan id: ${userId} berhak mengakses playlist dengan id: ${playlistId}`,
     );
   }
 
@@ -254,6 +292,22 @@ class PlaylistService {
     console.log(
       `PlaylistService isHavePlaylistWriteAccess user dengan id: ${userId} berhak mengakses playlist dengan id: ${playlistId}`,
     );
+  }
+
+  async addToActivity(playlistId, userId, action, songId) {
+    console.log(`PlaylistService addToActivity playlistId: ${playlistId}`);
+    await this.isPlaylistExist(playlistId);
+    await this.isSongExist(songId);
+    const id = nanoid(16);
+    const query = {
+      text: 'insert into playlist_activities(id, playlist_id, user_id, action, song_id) values ($1, $2, $3, $4, $5);',
+      values: [id, playlistId, userId, action, songId],
+    };
+    const result = await this._pool.query(query);
+    if (result.rowCount === null || result.rowCount === 0) {
+      const e = InvariantError('Activity gagal ditambahkan');
+      console.error(`PlaylistService addToActivity ${e}`);
+    }
   }
 }
 module.exports = PlaylistService;

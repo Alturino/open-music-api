@@ -16,10 +16,8 @@ postgres        | selecting default time zone ... UTC
 postgres        | creating configuration files ... ok
 postgres        | running bootstrap script ... ok
 postgres        | sh: locale: not found
-postgres        | 2024-05-19 08:01:13.538 UTC [30] WARNING:  no usable system locales were found
+postgres        | 2024-05-19 09:10:35.217 UTC [30] WARNING:  no usable system locales were found
 postgres        | performing post-bootstrap initialization ... ok
-postgres        | initdb: warning: enabling "trust" authentication for local connections
-postgres        | initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
 postgres        | syncing data to disk ... ok
 postgres        | 
 postgres        | 
@@ -27,33 +25,35 @@ postgres        | Success. You can now start the database server using:
 postgres        | 
 postgres        |     pg_ctl -D /var/lib/postgresql/data -l logfile start
 postgres        | 
-postgres        | waiting for server to start....2024-05-19 08:01:17.008 UTC [48] LOG:  starting PostgreSQL 16.1 on x86_64-pc-linux-musl, compiled by gcc (Alpine 13.2.1_git20231014) 13.2.1 20231014, 64-bit
-postgres        | 2024-05-19 08:01:17.011 UTC [48] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
-postgres        | 2024-05-19 08:01:17.019 UTC [51] LOG:  database system was shut down at 2024-05-19 08:01:14 UTC
-postgres        | 2024-05-19 08:01:17.027 UTC [48] LOG:  database system is ready to accept connections
+postgres        | initdb: warning: enabling "trust" authentication for local connections
+postgres        | initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+postgres        | waiting for server to start....2024-05-19 09:10:36.838 UTC [42] LOG:  starting PostgreSQL 16.1 on x86_64-pc-linux-musl, compiled by gcc (Alpine 13.2.1_git20231014) 13.2.1 20231014, 64-bit
+postgres        | 2024-05-19 09:10:36.840 UTC [42] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres        | 2024-05-19 09:10:36.844 UTC [45] LOG:  database system was shut down at 2024-05-19 09:10:35 UTC
+postgres        | 2024-05-19 09:10:36.851 UTC [42] LOG:  database system is ready to accept connections
 postgres        |  done
 postgres        | server started
 postgres        | 
 postgres        | /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
 postgres        | 
-postgres        | waiting for server to shut down...2024-05-19 08:01:17.103 UTC [48] LOG:  received fast shutdown request
-postgres        | .2024-05-19 08:01:17.104 UTC [48] LOG:  aborting any active transactions
-postgres        | 2024-05-19 08:01:17.109 UTC [48] LOG:  background worker "logical replication launcher" (PID 54) exited with exit code 1
-postgres        | 2024-05-19 08:01:17.109 UTC [49] LOG:  shutting down
-postgres        | 2024-05-19 08:01:17.111 UTC [49] LOG:  checkpoint starting: shutdown immediate
-postgres        | 2024-05-19 08:01:17.137 UTC [49] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.007 s, total=0.028 s; sync files=2, longest=0.006 s, average=0.004 s; distance=0 kB, estimate=0 kB; lsn=0/14F0498, redo lsn=0/14F0498
-postgres        | 2024-05-19 08:01:17.146 UTC [48] LOG:  database system is shut down
+postgres        | waiting for server to shut down....2024-05-19 09:10:36.936 UTC [42] LOG:  received fast shutdown request
+postgres        | 2024-05-19 09:10:36.937 UTC [42] LOG:  aborting any active transactions
+postgres        | 2024-05-19 09:10:36.940 UTC [42] LOG:  background worker "logical replication launcher" (PID 48) exited with exit code 1
+postgres        | 2024-05-19 09:10:36.942 UTC [43] LOG:  shutting down
+postgres        | 2024-05-19 09:10:36.943 UTC [43] LOG:  checkpoint starting: shutdown immediate
+postgres        | 2024-05-19 09:10:36.949 UTC [43] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.002 s, total=0.008 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/14F0498, redo lsn=0/14F0498
+postgres        | 2024-05-19 09:10:36.957 UTC [42] LOG:  database system is shut down
 postgres        |  done
 postgres        | server stopped
 postgres        | 
 postgres        | PostgreSQL init process complete; ready for start up.
 postgres        | 
-postgres        | 2024-05-19 08:01:17.242 UTC [1] LOG:  starting PostgreSQL 16.1 on x86_64-pc-linux-musl, compiled by gcc (Alpine 13.2.1_git20231014) 13.2.1 20231014, 64-bit
-postgres        | 2024-05-19 08:01:17.242 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
-postgres        | 2024-05-19 08:01:17.243 UTC [1] LOG:  listening on IPv6 address "::", port 5432
-postgres        | 2024-05-19 08:01:17.247 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
-postgres        | 2024-05-19 08:01:17.258 UTC [62] LOG:  database system was shut down at 2024-05-19 08:01:17 UTC
-postgres        | 2024-05-19 08:01:17.269 UTC [1] LOG:  database system is ready to accept connections
+postgres        | 2024-05-19 09:10:37.071 UTC [1] LOG:  starting PostgreSQL 16.1 on x86_64-pc-linux-musl, compiled by gcc (Alpine 13.2.1_git20231014) 13.2.1 20231014, 64-bit
+postgres        | 2024-05-19 09:10:37.072 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgres        | 2024-05-19 09:10:37.072 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgres        | 2024-05-19 09:10:37.073 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres        | 2024-05-19 09:10:37.077 UTC [56] LOG:  database system was shut down at 2024-05-19 09:10:36 UTC
+postgres        | 2024-05-19 09:10:37.084 UTC [1] LOG:  database system is ready to accept connections
 open-music-api  | 
 open-music-api  | > open-music-api-hapi-js@1.0.0 start
 open-music-api  | > node-pg-migrate up && node ./src/index.js
@@ -131,7 +131,7 @@ open-music-api  | INSERT INTO "public"."pgmigrations" (name, run_on) VALUES ('17
 open-music-api  | 
 open-music-api  | 
 open-music-api  | ### MIGRATION 1716006962226_create-table-playlist-activities (UP) ###
-open-music-api  | CREATE TYPE "action" AS ENUM ($pga$create$pga$, $pga$read$pga$, $pga$update$pga$, $pga$delete$pga$);
+open-music-api  | CREATE TYPE "action" AS ENUM ($pga$add$pga$, $pga$delete$pga$);
 open-music-api  | CREATE TABLE "playlist_activities" (
 open-music-api  |   "id" varchar(16) PRIMARY KEY NOT NULL,
 open-music-api  |   "playlist_id" varchar(16) NOT NULL REFERENCES "playlists" ON DELETE CASCADE,
@@ -155,20 +155,20 @@ open-music-api  | services created
 open-music-api  | registering plugins
 open-music-api  | plugins registered
 open-music-api  | Server berjalan pada http://0.0.0.0:5000
-open-music-api  | UserService addUser username: dicoding_1716105682, password: secret, fullname: Dicoding Indonesia
-open-music-api  | UserService addUser executing query: insert into users(id, username, password, fullname) values($1, $2, $3, $4) returning id;, params: QCcmS9tb2G-VPG3a,dicoding_1716105682,$2b$10$QKzem2515hqLhEkb/jSMUOAA8DZfwbLujeD8bupD3FcOYxuFd3n.O,Dicoding Indonesia
-open-music-api  | UserService addUser query: insert into users(id, username, password, fullname) values($1, $2, $3, $4) returning id;, params: QCcmS9tb2G-VPG3a,dicoding_1716105682,$2b$10$QKzem2515hqLhEkb/jSMUOAA8DZfwbLujeD8bupD3FcOYxuFd3n.O,Dicoding Indonesia executed
+open-music-api  | UserService addUser username: dicoding_1716109846, password: secret, fullname: Dicoding Indonesia
+open-music-api  | UserService addUser executing query: insert into users(id, username, password, fullname) values($1, $2, $3, $4) returning id;, params: 26owsPeV2qi_Jv2T,dicoding_1716109846,$2b$10$LPqeby4hw/0DDQ8xS8ztQ.ReYvSseQnoRgFjaksg3kvzqX9H.lon2,Dicoding Indonesia
+open-music-api  | UserService addUser query: insert into users(id, username, password, fullname) values($1, $2, $3, $4) returning id;, params: 26owsPeV2qi_Jv2T,dicoding_1716109846,$2b$10$LPqeby4hw/0DDQ8xS8ztQ.ReYvSseQnoRgFjaksg3kvzqX9H.lon2,Dicoding Indonesia executed
 open-music-api  | UserService addUser username: dicoding, password: secret, fullname: Dicoding Indonesia
-open-music-api  | UserService addUser executing query: insert into users(id, username, password, fullname) values($1, $2, $3, $4) returning id;, params: KZMkF4b_iuPLDFqh,dicoding,$2b$10$HeGK0VVWAeZfdy3/.dvL4.zxfG50JCpAtLtff3uwSDReD7bpL0pze,Dicoding Indonesia
-open-music-api  | UserService addUser query: insert into users(id, username, password, fullname) values($1, $2, $3, $4) returning id;, params: KZMkF4b_iuPLDFqh,dicoding,$2b$10$HeGK0VVWAeZfdy3/.dvL4.zxfG50JCpAtLtff3uwSDReD7bpL0pze,Dicoding Indonesia executed
+open-music-api  | UserService addUser executing query: insert into users(id, username, password, fullname) values($1, $2, $3, $4) returning id;, params: WBuluCr36hgxwSTA,dicoding,$2b$10$l.iTbKgpvf2NIeFZmUleR.TELUS2ulugyL5Syrh6LuUG35M2l6.dq,Dicoding Indonesia
+open-music-api  | UserService addUser query: insert into users(id, username, password, fullname) values($1, $2, $3, $4) returning id;, params: WBuluCr36hgxwSTA,dicoding,$2b$10$l.iTbKgpvf2NIeFZmUleR.TELUS2ulugyL5Syrh6LuUG35M2l6.dq,Dicoding Indonesia executed
 open-music-api  | UserService addUser username: dicoding, password: secret, fullname: Dicoding Indonesia
 open-music-api  | UserService addUser InvariantError: user dengan username: dicoding sudah terdaftar
 open-music-api  | UserService addUser username: john, password: secret, fullname: John Doe
-open-music-api  | UserService addUser executing query: insert into users(id, username, password, fullname) values($1, $2, $3, $4) returning id;, params: gPbUNR28ge_HyYti,john,$2b$10$prf/ZaxrqVZbr3ZJGxpye.o3SwYbQBbtllP5Phn8QZU2XMRrqo0w.,John Doe
-open-music-api  | UserService addUser query: insert into users(id, username, password, fullname) values($1, $2, $3, $4) returning id;, params: gPbUNR28ge_HyYti,john,$2b$10$prf/ZaxrqVZbr3ZJGxpye.o3SwYbQBbtllP5Phn8QZU2XMRrqo0w.,John Doe executed
+open-music-api  | UserService addUser executing query: insert into users(id, username, password, fullname) values($1, $2, $3, $4) returning id;, params: NZ1cye-IH1ElPuzt,john,$2b$10$p886K6Cm1EmJWm7HyEPxEOVuVbaB0JdCQ.vuMNLA1bYkf87iWtc2O,John Doe
+open-music-api  | UserService addUser query: insert into users(id, username, password, fullname) values($1, $2, $3, $4) returning id;, params: NZ1cye-IH1ElPuzt,john,$2b$10$p886K6Cm1EmJWm7HyEPxEOVuVbaB0JdCQ.vuMNLA1bYkf87iWtc2O,John Doe executed
 open-music-api  | UserService addUser username: jane, password: secret, fullname: John Doe
-open-music-api  | UserService addUser executing query: insert into users(id, username, password, fullname) values($1, $2, $3, $4) returning id;, params: gF9MdeznJKNBkesU,jane,$2b$10$HwMqoYa9UnFm9M2cdJXG0.zRZ9cy12XtGsbp4ZqyI/Ea1PxJhF02W,John Doe
-open-music-api  | UserService addUser query: insert into users(id, username, password, fullname) values($1, $2, $3, $4) returning id;, params: gF9MdeznJKNBkesU,jane,$2b$10$HwMqoYa9UnFm9M2cdJXG0.zRZ9cy12XtGsbp4ZqyI/Ea1PxJhF02W,John Doe executed
+open-music-api  | UserService addUser executing query: insert into users(id, username, password, fullname) values($1, $2, $3, $4) returning id;, params: 7RbMj1FEScqS9alH,jane,$2b$10$IFpNYNbnbd0qu4vvlPo8bOPzzXyb7EvLkFv85VRSQv5ephUd.xJ7C,John Doe
+open-music-api  | UserService addUser query: insert into users(id, username, password, fullname) values($1, $2, $3, $4) returning id;, params: 7RbMj1FEScqS9alH,jane,$2b$10$IFpNYNbnbd0qu4vvlPo8bOPzzXyb7EvLkFv85VRSQv5ephUd.xJ7C,John Doe executed
 open-music-api  | UserService verifyUserCredential username: xxx, password: xxx
 open-music-api  | AuthenticationError: user with username: xxx is not found
 open-music-api  |     at UserService.verifyUserCredential (/usr/src/app/src/users/UserService.js:84:17)
@@ -193,42 +193,42 @@ open-music-api  |     at async Request._execute (/usr/src/app/node_modules/@hapi
 open-music-api  |   statusCode: 401
 open-music-api  | }
 open-music-api  | UserService verifyUserCredential username: john, password: secret
-open-music-api  | AuthenticationService addRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODN9.T_RAnIKB6GGnSpInbYkl_dYPQBEx6OXRac2fgvYosBc
-open-music-api  | AuthenticationService addRefreshToken inserting query: insert into authentications(id, token) values($1, $2) returning id;, params: 6MtJzlBcWog76fi-,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODN9.T_RAnIKB6GGnSpInbYkl_dYPQBEx6OXRac2fgvYosBc
-open-music-api  | AuthenticationService addRefreshToken query: insert into authentications(id, token) values($1, $2) returning id;, params: 6MtJzlBcWog76fi-,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODN9.T_RAnIKB6GGnSpInbYkl_dYPQBEx6OXRac2fgvYosBc, [{"id":"6MtJzlBcWog76fi-"}] inserted
+open-music-api  | AuthenticationService addRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NDd9.o326oMd3jmKl_sPxxf3lwWbA82x1ce_V1y_gMmnuZ0M
+open-music-api  | AuthenticationService addRefreshToken inserting query: insert into authentications(id, token) values($1, $2) returning id;, params: hp4JZABNxlOIDODE,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NDd9.o326oMd3jmKl_sPxxf3lwWbA82x1ce_V1y_gMmnuZ0M
+open-music-api  | AuthenticationService addRefreshToken query: insert into authentications(id, token) values($1, $2) returning id;, params: hp4JZABNxlOIDODE,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NDd9.o326oMd3jmKl_sPxxf3lwWbA82x1ce_V1y_gMmnuZ0M, [{"id":"hp4JZABNxlOIDODE"}] inserted
 open-music-api  | UserService verifyUserCredential username: jane, password: secret
-open-music-api  | AuthenticationService addRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdGOU1kZXpuSktOQmtlc1UiLCJpYXQiOjE3MTYxMDU2ODN9.WxNTAWifM4HnY_HLmVhEGBS9Q1xcNTWA9P5agsg22zk
-open-music-api  | AuthenticationService addRefreshToken inserting query: insert into authentications(id, token) values($1, $2) returning id;, params: IpOA7PiZyWtQg_2Z,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdGOU1kZXpuSktOQmtlc1UiLCJpYXQiOjE3MTYxMDU2ODN9.WxNTAWifM4HnY_HLmVhEGBS9Q1xcNTWA9P5agsg22zk
-open-music-api  | AuthenticationService addRefreshToken query: insert into authentications(id, token) values($1, $2) returning id;, params: IpOA7PiZyWtQg_2Z,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdGOU1kZXpuSktOQmtlc1UiLCJpYXQiOjE3MTYxMDU2ODN9.WxNTAWifM4HnY_HLmVhEGBS9Q1xcNTWA9P5agsg22zk, [{"id":"IpOA7PiZyWtQg_2Z"}] inserted
+open-music-api  | AuthenticationService addRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdSYk1qMUZFU2NxUzlhbEgiLCJpYXQiOjE3MTYxMDk4NDd9.F5HIHQyyawGIWXZhSccOtCl2H4sbSrdW8JtlFylH-mE
+open-music-api  | AuthenticationService addRefreshToken inserting query: insert into authentications(id, token) values($1, $2) returning id;, params: O1wjxejMvg6XcH76,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdSYk1qMUZFU2NxUzlhbEgiLCJpYXQiOjE3MTYxMDk4NDd9.F5HIHQyyawGIWXZhSccOtCl2H4sbSrdW8JtlFylH-mE
+open-music-api  | AuthenticationService addRefreshToken query: insert into authentications(id, token) values($1, $2) returning id;, params: O1wjxejMvg6XcH76,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdSYk1qMUZFU2NxUzlhbEgiLCJpYXQiOjE3MTYxMDk4NDd9.F5HIHQyyawGIWXZhSccOtCl2H4sbSrdW8JtlFylH-mE, [{"id":"O1wjxejMvg6XcH76"}] inserted
 open-music-api  | AuthenticationService verifyRefreshToken token: xxxx 
 open-music-api  | AuthenticationService verifyRefreshToken executing query: select token from authentications where token = $1, params: xxxx
 open-music-api  | AuthenticationService verifyRefreshToken InvariantError: Token dengan token: xxxx tidak ditemukan
-open-music-api  | AuthenticationService verifyRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODN9.0oWzOoGcqjbOf19bK8GpSx_9kV4HLajKvAYX1wl0U5U 
-open-music-api  | AuthenticationService verifyRefreshToken executing query: select token from authentications where token = $1, params: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODN9.0oWzOoGcqjbOf19bK8GpSx_9kV4HLajKvAYX1wl0U5U
-open-music-api  | AuthenticationService verifyRefreshToken InvariantError: Token dengan token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODN9.0oWzOoGcqjbOf19bK8GpSx_9kV4HLajKvAYX1wl0U5U tidak ditemukan
-open-music-api  | AuthenticationService verifyRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODN9.T_RAnIKB6GGnSpInbYkl_dYPQBEx6OXRac2fgvYosBc 
-open-music-api  | AuthenticationService verifyRefreshToken executing query: select token from authentications where token = $1, params: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODN9.T_RAnIKB6GGnSpInbYkl_dYPQBEx6OXRac2fgvYosBc
-open-music-api  | AuthenticationService verifyRefreshToken query: select token from authentications where token = $1, params: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODN9.T_RAnIKB6GGnSpInbYkl_dYPQBEx6OXRac2fgvYosBc executed
+open-music-api  | AuthenticationService verifyRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NDd9.3ETd66TnGEhDL4fk-Bb2nQLYSe5JrGc-Si7fZAy-N4Q 
+open-music-api  | AuthenticationService verifyRefreshToken executing query: select token from authentications where token = $1, params: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NDd9.3ETd66TnGEhDL4fk-Bb2nQLYSe5JrGc-Si7fZAy-N4Q
+open-music-api  | AuthenticationService verifyRefreshToken InvariantError: Token dengan token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NDd9.3ETd66TnGEhDL4fk-Bb2nQLYSe5JrGc-Si7fZAy-N4Q tidak ditemukan
+open-music-api  | AuthenticationService verifyRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NDd9.o326oMd3jmKl_sPxxf3lwWbA82x1ce_V1y_gMmnuZ0M 
+open-music-api  | AuthenticationService verifyRefreshToken executing query: select token from authentications where token = $1, params: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NDd9.o326oMd3jmKl_sPxxf3lwWbA82x1ce_V1y_gMmnuZ0M
+open-music-api  | AuthenticationService verifyRefreshToken query: select token from authentications where token = $1, params: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NDd9.o326oMd3jmKl_sPxxf3lwWbA82x1ce_V1y_gMmnuZ0M executed
 open-music-api  | AuthenticationService verifyRefreshToken token: xxx 
 open-music-api  | AuthenticationService verifyRefreshToken executing query: select token from authentications where token = $1, params: xxx
 open-music-api  | AuthenticationService verifyRefreshToken InvariantError: Token dengan token: xxx tidak ditemukan
-open-music-api  | AuthenticationService verifyRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODN9.T_RAnIKB6GGnSpInbYkl_dYPQBEx6OXRac2fgvYosBc 
-open-music-api  | AuthenticationService verifyRefreshToken executing query: select token from authentications where token = $1, params: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODN9.T_RAnIKB6GGnSpInbYkl_dYPQBEx6OXRac2fgvYosBc
-open-music-api  | AuthenticationService verifyRefreshToken query: select token from authentications where token = $1, params: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODN9.T_RAnIKB6GGnSpInbYkl_dYPQBEx6OXRac2fgvYosBc executed
-open-music-api  | AuthenticationService deleteRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODN9.T_RAnIKB6GGnSpInbYkl_dYPQBEx6OXRac2fgvYosBc
-open-music-api  | AuthenticationService deleteRefreshToken executing query: delete from authentications where token = $1 returning id;, params: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODN9.T_RAnIKB6GGnSpInbYkl_dYPQBEx6OXRac2fgvYosBc
-open-music-api  | {"command":"DELETE","rowCount":1,"oid":null,"rows":[{"id":"6MtJzlBcWog76fi-"}],"fields":[{"name":"id","tableID":16419,"columnID":1,"dataTypeID":1043,"dataTypeSize":-1,"dataTypeModifier":20,"format":"text"}],"_parsers":[null],"_types":{"_types":{"arrayParser":{},"builtins":{"BOOL":16,"BYTEA":17,"CHAR":18,"INT8":20,"INT2":21,"INT4":23,"REGPROC":24,"TEXT":25,"OID":26,"TID":27,"XID":28,"CID":29,"JSON":114,"XML":142,"PG_NODE_TREE":194,"SMGR":210,"PATH":602,"POLYGON":604,"CIDR":650,"FLOAT4":700,"FLOAT8":701,"ABSTIME":702,"RELTIME":703,"TINTERVAL":704,"CIRCLE":718,"MACADDR8":774,"MONEY":790,"MACADDR":829,"INET":869,"ACLITEM":1033,"BPCHAR":1042,"VARCHAR":1043,"DATE":1082,"TIME":1083,"TIMESTAMP":1114,"TIMESTAMPTZ":1184,"INTERVAL":1186,"TIMETZ":1266,"BIT":1560,"VARBIT":1562,"NUMERIC":1700,"REFCURSOR":1790,"REGPROCEDURE":2202,"REGOPER":2203,"REGOPERATOR":2204,"REGCLASS":2205,"REGTYPE":2206,"UUID":2950,"TXID_SNAPSHOT":2970,"PG_LSN":3220,"PG_NDISTINCT":3361,"PG_DEPENDENCIES":3402,"TSVECTOR":3614,"TSQUERY":3615,"GTSVECTOR":3642,"REGCONFIG":3734,"REGDICTIONARY":3769,"JSONB":3802,"REGNAMESPACE":4089,"REGROLE":4096}},"text":{},"binary":{}},"RowCtor":null,"rowAsArray":false,"_prebuiltEmptyResultObject":{"id":null}}
-open-music-api  | AuthenticationService deleteRefreshToken query: delete from authentications where token = $1 returning id;, params: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODN9.T_RAnIKB6GGnSpInbYkl_dYPQBEx6OXRac2fgvYosBc executed
-open-music-api  | AuthenticationService verifyRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdGOU1kZXpuSktOQmtlc1UiLCJpYXQiOjE3MTYxMDU2ODN9.WxNTAWifM4HnY_HLmVhEGBS9Q1xcNTWA9P5agsg22zk 
-open-music-api  | AuthenticationService verifyRefreshToken executing query: select token from authentications where token = $1, params: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdGOU1kZXpuSktOQmtlc1UiLCJpYXQiOjE3MTYxMDU2ODN9.WxNTAWifM4HnY_HLmVhEGBS9Q1xcNTWA9P5agsg22zk
-open-music-api  | AuthenticationService verifyRefreshToken query: select token from authentications where token = $1, params: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdGOU1kZXpuSktOQmtlc1UiLCJpYXQiOjE3MTYxMDU2ODN9.WxNTAWifM4HnY_HLmVhEGBS9Q1xcNTWA9P5agsg22zk executed
-open-music-api  | AuthenticationService deleteRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdGOU1kZXpuSktOQmtlc1UiLCJpYXQiOjE3MTYxMDU2ODN9.WxNTAWifM4HnY_HLmVhEGBS9Q1xcNTWA9P5agsg22zk
-open-music-api  | AuthenticationService deleteRefreshToken executing query: delete from authentications where token = $1 returning id;, params: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdGOU1kZXpuSktOQmtlc1UiLCJpYXQiOjE3MTYxMDU2ODN9.WxNTAWifM4HnY_HLmVhEGBS9Q1xcNTWA9P5agsg22zk
-open-music-api  | {"command":"DELETE","rowCount":1,"oid":null,"rows":[{"id":"IpOA7PiZyWtQg_2Z"}],"fields":[{"name":"id","tableID":16419,"columnID":1,"dataTypeID":1043,"dataTypeSize":-1,"dataTypeModifier":20,"format":"text"}],"_parsers":[null],"_types":{"_types":{"arrayParser":{},"builtins":{"BOOL":16,"BYTEA":17,"CHAR":18,"INT8":20,"INT2":21,"INT4":23,"REGPROC":24,"TEXT":25,"OID":26,"TID":27,"XID":28,"CID":29,"JSON":114,"XML":142,"PG_NODE_TREE":194,"SMGR":210,"PATH":602,"POLYGON":604,"CIDR":650,"FLOAT4":700,"FLOAT8":701,"ABSTIME":702,"RELTIME":703,"TINTERVAL":704,"CIRCLE":718,"MACADDR8":774,"MONEY":790,"MACADDR":829,"INET":869,"ACLITEM":1033,"BPCHAR":1042,"VARCHAR":1043,"DATE":1082,"TIME":1083,"TIMESTAMP":1114,"TIMESTAMPTZ":1184,"INTERVAL":1186,"TIMETZ":1266,"BIT":1560,"VARBIT":1562,"NUMERIC":1700,"REFCURSOR":1790,"REGPROCEDURE":2202,"REGOPER":2203,"REGOPERATOR":2204,"REGCLASS":2205,"REGTYPE":2206,"UUID":2950,"TXID_SNAPSHOT":2970,"PG_LSN":3220,"PG_NDISTINCT":3361,"PG_DEPENDENCIES":3402,"TSVECTOR":3614,"TSQUERY":3615,"GTSVECTOR":3642,"REGCONFIG":3734,"REGDICTIONARY":3769,"JSONB":3802,"REGNAMESPACE":4089,"REGROLE":4096}},"text":{},"binary":{}},"RowCtor":null,"rowAsArray":false,"_prebuiltEmptyResultObject":{"id":null}}
-open-music-api  | AuthenticationService deleteRefreshToken query: delete from authentications where token = $1 returning id;, params: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdGOU1kZXpuSktOQmtlc1UiLCJpYXQiOjE3MTYxMDU2ODN9.WxNTAWifM4HnY_HLmVhEGBS9Q1xcNTWA9P5agsg22zk executed
-open-music-api  | AuthenticationService verifyRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODN9.T_RAnIKB6GGnSpInbYkl_dYPQBEx6OXRac2fgvYosBc 
-open-music-api  | AuthenticationService verifyRefreshToken executing query: select token from authentications where token = $1, params: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODN9.T_RAnIKB6GGnSpInbYkl_dYPQBEx6OXRac2fgvYosBc
-open-music-api  | AuthenticationService verifyRefreshToken InvariantError: Token dengan token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODN9.T_RAnIKB6GGnSpInbYkl_dYPQBEx6OXRac2fgvYosBc tidak ditemukan
+open-music-api  | AuthenticationService verifyRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NDd9.o326oMd3jmKl_sPxxf3lwWbA82x1ce_V1y_gMmnuZ0M 
+open-music-api  | AuthenticationService verifyRefreshToken executing query: select token from authentications where token = $1, params: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NDd9.o326oMd3jmKl_sPxxf3lwWbA82x1ce_V1y_gMmnuZ0M
+open-music-api  | AuthenticationService verifyRefreshToken query: select token from authentications where token = $1, params: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NDd9.o326oMd3jmKl_sPxxf3lwWbA82x1ce_V1y_gMmnuZ0M executed
+open-music-api  | AuthenticationService deleteRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NDd9.o326oMd3jmKl_sPxxf3lwWbA82x1ce_V1y_gMmnuZ0M
+open-music-api  | AuthenticationService deleteRefreshToken executing query: delete from authentications where token = $1 returning id;, params: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NDd9.o326oMd3jmKl_sPxxf3lwWbA82x1ce_V1y_gMmnuZ0M
+open-music-api  | {"command":"DELETE","rowCount":1,"oid":null,"rows":[{"id":"hp4JZABNxlOIDODE"}],"fields":[{"name":"id","tableID":16419,"columnID":1,"dataTypeID":1043,"dataTypeSize":-1,"dataTypeModifier":20,"format":"text"}],"_parsers":[null],"_types":{"_types":{"arrayParser":{},"builtins":{"BOOL":16,"BYTEA":17,"CHAR":18,"INT8":20,"INT2":21,"INT4":23,"REGPROC":24,"TEXT":25,"OID":26,"TID":27,"XID":28,"CID":29,"JSON":114,"XML":142,"PG_NODE_TREE":194,"SMGR":210,"PATH":602,"POLYGON":604,"CIDR":650,"FLOAT4":700,"FLOAT8":701,"ABSTIME":702,"RELTIME":703,"TINTERVAL":704,"CIRCLE":718,"MACADDR8":774,"MONEY":790,"MACADDR":829,"INET":869,"ACLITEM":1033,"BPCHAR":1042,"VARCHAR":1043,"DATE":1082,"TIME":1083,"TIMESTAMP":1114,"TIMESTAMPTZ":1184,"INTERVAL":1186,"TIMETZ":1266,"BIT":1560,"VARBIT":1562,"NUMERIC":1700,"REFCURSOR":1790,"REGPROCEDURE":2202,"REGOPER":2203,"REGOPERATOR":2204,"REGCLASS":2205,"REGTYPE":2206,"UUID":2950,"TXID_SNAPSHOT":2970,"PG_LSN":3220,"PG_NDISTINCT":3361,"PG_DEPENDENCIES":3402,"TSVECTOR":3614,"TSQUERY":3615,"GTSVECTOR":3642,"REGCONFIG":3734,"REGDICTIONARY":3769,"JSONB":3802,"REGNAMESPACE":4089,"REGROLE":4096}},"text":{},"binary":{}},"RowCtor":null,"rowAsArray":false,"_prebuiltEmptyResultObject":{"id":null}}
+open-music-api  | AuthenticationService deleteRefreshToken query: delete from authentications where token = $1 returning id;, params: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NDd9.o326oMd3jmKl_sPxxf3lwWbA82x1ce_V1y_gMmnuZ0M executed
+open-music-api  | AuthenticationService verifyRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdSYk1qMUZFU2NxUzlhbEgiLCJpYXQiOjE3MTYxMDk4NDd9.F5HIHQyyawGIWXZhSccOtCl2H4sbSrdW8JtlFylH-mE 
+open-music-api  | AuthenticationService verifyRefreshToken executing query: select token from authentications where token = $1, params: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdSYk1qMUZFU2NxUzlhbEgiLCJpYXQiOjE3MTYxMDk4NDd9.F5HIHQyyawGIWXZhSccOtCl2H4sbSrdW8JtlFylH-mE
+open-music-api  | AuthenticationService verifyRefreshToken query: select token from authentications where token = $1, params: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdSYk1qMUZFU2NxUzlhbEgiLCJpYXQiOjE3MTYxMDk4NDd9.F5HIHQyyawGIWXZhSccOtCl2H4sbSrdW8JtlFylH-mE executed
+open-music-api  | AuthenticationService deleteRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdSYk1qMUZFU2NxUzlhbEgiLCJpYXQiOjE3MTYxMDk4NDd9.F5HIHQyyawGIWXZhSccOtCl2H4sbSrdW8JtlFylH-mE
+open-music-api  | AuthenticationService deleteRefreshToken executing query: delete from authentications where token = $1 returning id;, params: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdSYk1qMUZFU2NxUzlhbEgiLCJpYXQiOjE3MTYxMDk4NDd9.F5HIHQyyawGIWXZhSccOtCl2H4sbSrdW8JtlFylH-mE
+open-music-api  | {"command":"DELETE","rowCount":1,"oid":null,"rows":[{"id":"O1wjxejMvg6XcH76"}],"fields":[{"name":"id","tableID":16419,"columnID":1,"dataTypeID":1043,"dataTypeSize":-1,"dataTypeModifier":20,"format":"text"}],"_parsers":[null],"_types":{"_types":{"arrayParser":{},"builtins":{"BOOL":16,"BYTEA":17,"CHAR":18,"INT8":20,"INT2":21,"INT4":23,"REGPROC":24,"TEXT":25,"OID":26,"TID":27,"XID":28,"CID":29,"JSON":114,"XML":142,"PG_NODE_TREE":194,"SMGR":210,"PATH":602,"POLYGON":604,"CIDR":650,"FLOAT4":700,"FLOAT8":701,"ABSTIME":702,"RELTIME":703,"TINTERVAL":704,"CIRCLE":718,"MACADDR8":774,"MONEY":790,"MACADDR":829,"INET":869,"ACLITEM":1033,"BPCHAR":1042,"VARCHAR":1043,"DATE":1082,"TIME":1083,"TIMESTAMP":1114,"TIMESTAMPTZ":1184,"INTERVAL":1186,"TIMETZ":1266,"BIT":1560,"VARBIT":1562,"NUMERIC":1700,"REFCURSOR":1790,"REGPROCEDURE":2202,"REGOPER":2203,"REGOPERATOR":2204,"REGCLASS":2205,"REGTYPE":2206,"UUID":2950,"TXID_SNAPSHOT":2970,"PG_LSN":3220,"PG_NDISTINCT":3361,"PG_DEPENDENCIES":3402,"TSVECTOR":3614,"TSQUERY":3615,"GTSVECTOR":3642,"REGCONFIG":3734,"REGDICTIONARY":3769,"JSONB":3802,"REGNAMESPACE":4089,"REGROLE":4096}},"text":{},"binary":{}},"RowCtor":null,"rowAsArray":false,"_prebuiltEmptyResultObject":{"id":null}}
+open-music-api  | AuthenticationService deleteRefreshToken query: delete from authentications where token = $1 returning id;, params: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdSYk1qMUZFU2NxUzlhbEgiLCJpYXQiOjE3MTYxMDk4NDd9.F5HIHQyyawGIWXZhSccOtCl2H4sbSrdW8JtlFylH-mE executed
+open-music-api  | AuthenticationService verifyRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NDd9.o326oMd3jmKl_sPxxf3lwWbA82x1ce_V1y_gMmnuZ0M 
+open-music-api  | AuthenticationService verifyRefreshToken executing query: select token from authentications where token = $1, params: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NDd9.o326oMd3jmKl_sPxxf3lwWbA82x1ce_V1y_gMmnuZ0M
+open-music-api  | AuthenticationService verifyRefreshToken InvariantError: Token dengan token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NDd9.o326oMd3jmKl_sPxxf3lwWbA82x1ce_V1y_gMmnuZ0M tidak ditemukan
 open-music-api  | AlbumService addAlbum name: Viva la vida, year: 2008
 open-music-api  | AlbumService addAlbum rows: []
 open-music-api  | AlbumService getAlbumById id: xxx
@@ -244,22 +244,22 @@ open-music-api  |     at async Request._lifecycle (/usr/src/app/node_modules/@ha
 open-music-api  |     at async Request._execute (/usr/src/app/node_modules/@hapi/hapi/lib/request.js:280:9) {
 open-music-api  |   statusCode: 404
 open-music-api  | }
-open-music-api  | AlbumService getAlbumById id: ubqhH-M5cURHwVXw
-open-music-api  | AlbumService getAlbumById rowCount: [{"id":"ubqhH-M5cURHwVXw","name":"Viva la vida","year":2008}]
-open-music-api  | AlbumService getAlbumById albums: [{"id":"ubqhH-M5cURHwVXw","name":"Viva la vida","year":2008,"songs":[]}], songs: []
+open-music-api  | AlbumService getAlbumById id: 6PI21rG1VeeJ7yKy
+open-music-api  | AlbumService getAlbumById rowCount: [{"id":"6PI21rG1VeeJ7yKy","name":"Viva la vida","year":2008}]
+open-music-api  | AlbumService getAlbumById albums: [{"id":"6PI21rG1VeeJ7yKy","name":"Viva la vida","year":2008,"songs":[]}], songs: []
 open-music-api  | AlbumService updateAlbum id: xxx, name: Viva la vida Revision, year: 2010
 open-music-api  | AlbumService updateAlbum NotFoundError: Album dengan id: xxx tidak ditemukan
-open-music-api  | AlbumService updateAlbum id: ubqhH-M5cURHwVXw, name: Viva la vida Revision, year: 2010
-open-music-api  | AlbumService updateAlbum albums: [{"id":"ubqhH-M5cURHwVXw","name":"Viva la vida Revision","year":2010}]
-open-music-api  | AlbumService getAlbumById id: ubqhH-M5cURHwVXw
-open-music-api  | AlbumService getAlbumById rowCount: [{"id":"ubqhH-M5cURHwVXw","name":"Viva la vida Revision","year":2010}]
-open-music-api  | AlbumService getAlbumById albums: [{"id":"ubqhH-M5cURHwVXw","name":"Viva la vida Revision","year":2010,"songs":[]}], songs: []
+open-music-api  | AlbumService updateAlbum id: 6PI21rG1VeeJ7yKy, name: Viva la vida Revision, year: 2010
+open-music-api  | AlbumService updateAlbum albums: [{"id":"6PI21rG1VeeJ7yKy","name":"Viva la vida Revision","year":2010}]
+open-music-api  | AlbumService getAlbumById id: 6PI21rG1VeeJ7yKy
+open-music-api  | AlbumService getAlbumById rowCount: [{"id":"6PI21rG1VeeJ7yKy","name":"Viva la vida Revision","year":2010}]
+open-music-api  | AlbumService getAlbumById albums: [{"id":"6PI21rG1VeeJ7yKy","name":"Viva la vida Revision","year":2010,"songs":[]}], songs: []
 open-music-api  | AlbumService deleteAlbum id: xxx
 open-music-api  | AlbumService deleteAlbum NotFoundError: album dengan id: xxx gagal dihapus
-open-music-api  | AlbumService deleteAlbum id: ubqhH-M5cURHwVXw
-open-music-api  | AlbumService getAlbumById id: ubqhH-M5cURHwVXw
+open-music-api  | AlbumService deleteAlbum id: 6PI21rG1VeeJ7yKy
+open-music-api  | AlbumService getAlbumById id: 6PI21rG1VeeJ7yKy
 open-music-api  | AlbumService getAlbumById rowCount: []
-open-music-api  | NotFoundError: AlbumService getAlbumById album dengan id: ubqhH-M5cURHwVXw tidak ditemukan
+open-music-api  | NotFoundError: AlbumService getAlbumById album dengan id: 6PI21rG1VeeJ7yKy tidak ditemukan
 open-music-api  |     at AlbumService.getAlbumById (/usr/src/app/src/albums/AlbumService.js:59:17)
 open-music-api  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
 open-music-api  |     at async AlbumHandler.getAlbumById (/usr/src/app/src/albums/api/AlbumHandler.js:42:19)
@@ -274,32 +274,32 @@ open-music-api  | SongService addSong title: Life in Technicolor, year: 2008, ge
 open-music-api  | SongService addSong title: Fix You, year: 2008, genre: Pop, performer: Coldplay, duration: 120, albumId: undefined
 open-music-api  | SongService getSongs title: , performer: 
 open-music-api  | SongService getSongs queryString: {"text":"select id, title, performer from songs where title ilike $1 and performer ilike $2;","values":["%%","%%"]}
-open-music-api  | SongService getSongs row: {"id":"rmEguF-2VYwdS8E1","title":"Life in Technicolor","performer":"Coldplay"}
-open-music-api  | SongService getSongs row: {"id":"le5WyqgjhQtT3Bnf","title":"Fix You","performer":"Coldplay"}
+open-music-api  | SongService getSongs row: {"id":"r2M-bQLb7Js9WemK","title":"Life in Technicolor","performer":"Coldplay"}
+open-music-api  | SongService getSongs row: {"id":"P1pUOns2qfFFJ4rM","title":"Fix You","performer":"Coldplay"}
 open-music-api  | SongService getSongById NotFoundError: song dengan id: xxx tidak ditemukan
-open-music-api  | SongService getSongById {"id":"rmEguF-2VYwdS8E1","title":"Life in Technicolor","year":2008,"genre":"Pop","performer":"Coldplay","duration":120}
+open-music-api  | SongService getSongById {"id":"r2M-bQLb7Js9WemK","title":"Life in Technicolor","year":2008,"genre":"Pop","performer":"Coldplay","duration":120}
 open-music-api  | SongService updateSong title: Life in Technicolor revision, year: 2010, genre: Hip Hop, performer: Coldplay 2, duration: 125, albumId: undefined
 open-music-api  | SongService updateSong NotFoundError: song gagal diupdate
 open-music-api  | SongService updateSong title: Life in Technicolor revision, year: 2010, genre: Hip Hop, performer: Coldplay 2, duration: 125, albumId: undefined
-open-music-api  | SongService getSongById {"id":"rmEguF-2VYwdS8E1","title":"Life in Technicolor revision","year":2010,"genre":"Hip Hop","performer":"Coldplay 2","duration":125}
+open-music-api  | SongService getSongById {"id":"r2M-bQLb7Js9WemK","title":"Life in Technicolor revision","year":2010,"genre":"Hip Hop","performer":"Coldplay 2","duration":125}
 open-music-api  | SongService deleteSong id: xxx
 open-music-api  | SongService deleteSong rows: []
 open-music-api  | SongService deleteSong NotFoundError: song gagal dihapus
-open-music-api  | SongService deleteSong id: rmEguF-2VYwdS8E1
-open-music-api  | SongService deleteSong rows: [{"id":"rmEguF-2VYwdS8E1"}]
-open-music-api  | SongService getSongById NotFoundError: song dengan id: rmEguF-2VYwdS8E1 tidak ditemukan
+open-music-api  | SongService deleteSong id: r2M-bQLb7Js9WemK
+open-music-api  | SongService deleteSong rows: [{"id":"r2M-bQLb7Js9WemK"}]
+open-music-api  | SongService getSongById NotFoundError: song dengan id: r2M-bQLb7Js9WemK tidak ditemukan
 open-music-api  | UserService addUser username: john, password: secret, fullname: John Doe
 open-music-api  | UserService addUser InvariantError: user dengan username: john sudah terdaftar
 open-music-api  | UserService verifyUserCredential username: john, password: secret
-open-music-api  | AuthenticationService addRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODZ9.IcAKR7pFXlEj-xbQREvXhGIBQ24x6iPHfMIUZqECw18
-open-music-api  | AuthenticationService addRefreshToken inserting query: insert into authentications(id, token) values($1, $2) returning id;, params: JcQ1AuOZFkPDhC4z,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODZ9.IcAKR7pFXlEj-xbQREvXhGIBQ24x6iPHfMIUZqECw18
-open-music-api  | AuthenticationService addRefreshToken query: insert into authentications(id, token) values($1, $2) returning id;, params: JcQ1AuOZFkPDhC4z,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODZ9.IcAKR7pFXlEj-xbQREvXhGIBQ24x6iPHfMIUZqECw18, [{"id":"JcQ1AuOZFkPDhC4z"}] inserted
+open-music-api  | AuthenticationService addRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NDl9.8HAkSCGX4P4JY7RrzoMcmMR6tN6Hj2oTU6e3IpxPnc8
+open-music-api  | AuthenticationService addRefreshToken inserting query: insert into authentications(id, token) values($1, $2) returning id;, params: YUxWjwFuWPxdKNCo,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NDl9.8HAkSCGX4P4JY7RrzoMcmMR6tN6Hj2oTU6e3IpxPnc8
+open-music-api  | AuthenticationService addRefreshToken query: insert into authentications(id, token) values($1, $2) returning id;, params: YUxWjwFuWPxdKNCo,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NDl9.8HAkSCGX4P4JY7RrzoMcmMR6tN6Hj2oTU6e3IpxPnc8, [{"id":"YUxWjwFuWPxdKNCo"}] inserted
 open-music-api  | UserService addUser username: jane, password: secret, fullname: John Doe
 open-music-api  | UserService addUser InvariantError: user dengan username: jane sudah terdaftar
 open-music-api  | UserService verifyUserCredential username: jane, password: secret
-open-music-api  | AuthenticationService addRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdGOU1kZXpuSktOQmtlc1UiLCJpYXQiOjE3MTYxMDU2ODZ9.I6LmFvUgqO3JQfAhlaP9Tx2RszmmawiOTdH6bbtC3Cc
-open-music-api  | AuthenticationService addRefreshToken inserting query: insert into authentications(id, token) values($1, $2) returning id;, params: XDavCFWE6K7lGMko,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdGOU1kZXpuSktOQmtlc1UiLCJpYXQiOjE3MTYxMDU2ODZ9.I6LmFvUgqO3JQfAhlaP9Tx2RszmmawiOTdH6bbtC3Cc
-open-music-api  | AuthenticationService addRefreshToken query: insert into authentications(id, token) values($1, $2) returning id;, params: XDavCFWE6K7lGMko,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdGOU1kZXpuSktOQmtlc1UiLCJpYXQiOjE3MTYxMDU2ODZ9.I6LmFvUgqO3JQfAhlaP9Tx2RszmmawiOTdH6bbtC3Cc, [{"id":"XDavCFWE6K7lGMko"}] inserted
+open-music-api  | AuthenticationService addRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdSYk1qMUZFU2NxUzlhbEgiLCJpYXQiOjE3MTYxMDk4NDl9.uzPBjwHTtDiiNkV7tJwpbNV0g3kEUEXTmbSXHEb3_oo
+open-music-api  | AuthenticationService addRefreshToken inserting query: insert into authentications(id, token) values($1, $2) returning id;, params: y1dlibGgx5x91Fa-,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdSYk1qMUZFU2NxUzlhbEgiLCJpYXQiOjE3MTYxMDk4NDl9.uzPBjwHTtDiiNkV7tJwpbNV0g3kEUEXTmbSXHEb3_oo
+open-music-api  | AuthenticationService addRefreshToken query: insert into authentications(id, token) values($1, $2) returning id;, params: y1dlibGgx5x91Fa-,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdSYk1qMUZFU2NxUzlhbEgiLCJpYXQiOjE3MTYxMDk4NDl9.uzPBjwHTtDiiNkV7tJwpbNV0g3kEUEXTmbSXHEb3_oo, [{"id":"y1dlibGgx5x91Fa-"}] inserted
 open-music-api  | SongService addSong title: Life in Technicolor, year: 2008, genre: Pop, performer: Coldplay, duration: 120, albumId: undefined
 open-music-api  | SongService addSong title: Fix You, year: 2008, genre: Pop, performer: Coldplay, duration: 120, albumId: undefined
 open-music-api  | Error: Missing authentication
@@ -319,97 +319,100 @@ open-music-api  |     },
 open-music-api  |     headers: { 'WWW-Authenticate': 'Bearer' }
 open-music-api  |   }
 open-music-api  | }
-open-music-api  | PlaylistService addPlaylist name: Lagu Indie Hits Indonesia, ownerId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService addPlaylist name: Lagu Indie Hits Indonesia, ownerId: gPbUNR28ge_HyYti result: [{"id":"ASniEfCMVWLkRETh"}]
-open-music-api  | PlaylistService addPlaylist name: Lagu Untuk Membaca, ownerId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService addPlaylist name: Lagu Untuk Membaca, ownerId: gPbUNR28ge_HyYti result: [{"id":"_x6lrsM6SS3rpglT"}]
-open-music-api  | PlaylistService getPlaylists ownerId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService getPlaylists ownerId: gPbUNR28ge_HyYti, result: [{"id":"ASniEfCMVWLkRETh","name":"Lagu Indie Hits Indonesia","username":"john"},{"id":"_x6lrsM6SS3rpglT","name":"Lagu Untuk Membaca","username":"john"}]
+open-music-api  | PlaylistService addPlaylist name: Lagu Indie Hits Indonesia, ownerId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService addPlaylist name: Lagu Indie Hits Indonesia, ownerId: NZ1cye-IH1ElPuzt result: [{"id":"LMGTQcChOiALKeRv"}]
+open-music-api  | PlaylistService addPlaylist name: Lagu Untuk Membaca, ownerId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService addPlaylist name: Lagu Untuk Membaca, ownerId: NZ1cye-IH1ElPuzt result: [{"id":"wgprW06gLmX8QG_m"}]
+open-music-api  | PlaylistService getPlaylists ownerId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService getPlaylists ownerId: NZ1cye-IH1ElPuzt, result: [{"id":"LMGTQcChOiALKeRv","name":"Lagu Indie Hits Indonesia","username":"john"},{"id":"wgprW06gLmX8QG_m","name":"Lagu Untuk Membaca","username":"john"}]
 open-music-api  | PlaylistService isSongExist NotFoundError: Song dengan id: xxx tidak ditemukan
-open-music-api  | PlaylistService isHavePlaylistReadAccess playlistId: _x6lrsM6SS3rpglT, userId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService isHavePlaylistReadAccess user dengan id: gPbUNR28ge_HyYti berhak mengakses playlist dengan id: _x6lrsM6SS3rpglT
-open-music-api  | PlaylistService addSongToPlaylist playlistId: _x6lrsM6SS3rpglT, songId: Bbm-8vULS0q2UbIj, ownerId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService isHavePlaylistReadAccess playlistId: _x6lrsM6SS3rpglT, userId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService isHavePlaylistReadAccess user dengan id: gPbUNR28ge_HyYti berhak mengakses playlist dengan id: _x6lrsM6SS3rpglT
-open-music-api  | PlaylistService addSongToPlaylist playlistId: _x6lrsM6SS3rpglT, songId: Fp89q-r2yK1QWpFJ, ownerId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService isHavePlaylistReadAccess playlistId: _x6lrsM6SS3rpglT, userId: gF9MdeznJKNBkesU
-open-music-api  | PlaylistService isHavePlaylistReadAccess AuthorizationError: User dengan id: gF9MdeznJKNBkesU tidak berhak mengakses playlist dengan id: _x6lrsM6SS3rpglT
-open-music-api  | PlaylistService getSongsInPlaylist playlistId: _x6lrsM6SS3rpglT, ownerId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService isHavePlaylistReadAccess playlistId: _x6lrsM6SS3rpglT, userId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService isHavePlaylistReadAccess user dengan id: gPbUNR28ge_HyYti berhak mengakses playlist dengan id: _x6lrsM6SS3rpglT
-open-music-api  | PlaylistService getSongsInPlaylist playlistId: _x6lrsM6SS3rpglT, ownerId: gF9MdeznJKNBkesU
-open-music-api  | PlaylistService isHavePlaylistReadAccess playlistId: _x6lrsM6SS3rpglT, userId: gF9MdeznJKNBkesU
-open-music-api  | PlaylistService isHavePlaylistReadAccess AuthorizationError: User dengan id: gF9MdeznJKNBkesU tidak berhak mengakses playlist dengan id: _x6lrsM6SS3rpglT
-open-music-api  | PlaylistService isHavePlaylistReadAccess playlistId: _x6lrsM6SS3rpglT, userId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService isHavePlaylistReadAccess user dengan id: gPbUNR28ge_HyYti berhak mengakses playlist dengan id: _x6lrsM6SS3rpglT
-open-music-api  | PlaylistService deleteSongInPlaylist id: _x6lrsM6SS3rpglT, ownerId: gPbUNR28ge_HyYti, songId: Bbm-8vULS0q2UbIj
-open-music-api  | PlaylistService isHavePlaylistReadAccess playlistId: _x6lrsM6SS3rpglT, userId: gF9MdeznJKNBkesU
-open-music-api  | PlaylistService isHavePlaylistReadAccess AuthorizationError: User dengan id: gF9MdeznJKNBkesU tidak berhak mengakses playlist dengan id: _x6lrsM6SS3rpglT
-open-music-api  | PlaylistService getSongsInPlaylist playlistId: _x6lrsM6SS3rpglT, ownerId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService isHavePlaylistReadAccess playlistId: _x6lrsM6SS3rpglT, userId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService isHavePlaylistReadAccess user dengan id: gPbUNR28ge_HyYti berhak mengakses playlist dengan id: _x6lrsM6SS3rpglT
-open-music-api  | PlaylistService isHavePlaylistWriteAccess playlistId: _x6lrsM6SS3rpglT, userId: gF9MdeznJKNBkesU
-open-music-api  | PlaylistService isHavePlaylistWriteAccess AuthorizationError: User dengan id: gF9MdeznJKNBkesU tidak berhak mengakses playlist dengan id: _x6lrsM6SS3rpglT
-open-music-api  | PlaylistService isHavePlaylistWriteAccess playlistId: ASniEfCMVWLkRETh, userId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService isHavePlaylistWriteAccess user dengan id: gPbUNR28ge_HyYti berhak mengakses playlist dengan id: ASniEfCMVWLkRETh
-open-music-api  | PlaylistService deletePlaylist id: ASniEfCMVWLkRETh, ownerId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService isHavePlaylistWriteAccess playlistId: _x6lrsM6SS3rpglT, userId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService isHavePlaylistWriteAccess user dengan id: gPbUNR28ge_HyYti berhak mengakses playlist dengan id: _x6lrsM6SS3rpglT
-open-music-api  | PlaylistService deletePlaylist id: _x6lrsM6SS3rpglT, ownerId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService getSongsInPlaylist playlistId: _x6lrsM6SS3rpglT, ownerId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService isPlaylistExist NotFoundError: Playlist dengan id: _x6lrsM6SS3rpglT tidak ditemukan
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator playlistId: wgprW06gLmX8QG_m, userId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator user dengan id: NZ1cye-IH1ElPuzt berhak mengakses playlist dengan id: wgprW06gLmX8QG_m
+open-music-api  | PlaylistService addSongToPlaylist playlistId: wgprW06gLmX8QG_m, songId: i-TmytJ9ZCT0iDMA, ownerId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService addToActivity playlistId: wgprW06gLmX8QG_m
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator playlistId: wgprW06gLmX8QG_m, userId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator user dengan id: NZ1cye-IH1ElPuzt berhak mengakses playlist dengan id: wgprW06gLmX8QG_m
+open-music-api  | PlaylistService addSongToPlaylist playlistId: wgprW06gLmX8QG_m, songId: 6XXB43DUgnHyLQ5l, ownerId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService addToActivity playlistId: wgprW06gLmX8QG_m
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator playlistId: wgprW06gLmX8QG_m, userId: 7RbMj1FEScqS9alH
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator AuthorizationError: User dengan id: 7RbMj1FEScqS9alH tidak berhak mengakses playlist dengan id: wgprW06gLmX8QG_m
+open-music-api  | PlaylistService getSongsInPlaylist playlistId: wgprW06gLmX8QG_m, ownerId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator playlistId: wgprW06gLmX8QG_m, userId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator user dengan id: NZ1cye-IH1ElPuzt berhak mengakses playlist dengan id: wgprW06gLmX8QG_m
+open-music-api  | PlaylistService getSongsInPlaylist playlistId: wgprW06gLmX8QG_m, ownerId: 7RbMj1FEScqS9alH
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator playlistId: wgprW06gLmX8QG_m, userId: 7RbMj1FEScqS9alH
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator AuthorizationError: User dengan id: 7RbMj1FEScqS9alH tidak berhak mengakses playlist dengan id: wgprW06gLmX8QG_m
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator playlistId: wgprW06gLmX8QG_m, userId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator user dengan id: NZ1cye-IH1ElPuzt berhak mengakses playlist dengan id: wgprW06gLmX8QG_m
+open-music-api  | PlaylistService deleteSongInPlaylist id: wgprW06gLmX8QG_m, ownerId: NZ1cye-IH1ElPuzt, songId: i-TmytJ9ZCT0iDMA
+open-music-api  | PlaylistService addToActivity playlistId: wgprW06gLmX8QG_m
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator playlistId: wgprW06gLmX8QG_m, userId: 7RbMj1FEScqS9alH
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator AuthorizationError: User dengan id: 7RbMj1FEScqS9alH tidak berhak mengakses playlist dengan id: wgprW06gLmX8QG_m
+open-music-api  | PlaylistService getSongsInPlaylist playlistId: wgprW06gLmX8QG_m, ownerId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator playlistId: wgprW06gLmX8QG_m, userId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator user dengan id: NZ1cye-IH1ElPuzt berhak mengakses playlist dengan id: wgprW06gLmX8QG_m
+open-music-api  | PlaylistService isHavePlaylistWriteAccess playlistId: wgprW06gLmX8QG_m, userId: 7RbMj1FEScqS9alH
+open-music-api  | PlaylistService isHavePlaylistWriteAccess AuthorizationError: User dengan id: 7RbMj1FEScqS9alH tidak berhak mengakses playlist dengan id: wgprW06gLmX8QG_m
+open-music-api  | PlaylistService isHavePlaylistWriteAccess playlistId: LMGTQcChOiALKeRv, userId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService isHavePlaylistWriteAccess user dengan id: NZ1cye-IH1ElPuzt berhak mengakses playlist dengan id: LMGTQcChOiALKeRv
+open-music-api  | PlaylistService deletePlaylist id: LMGTQcChOiALKeRv, ownerId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService isHavePlaylistWriteAccess playlistId: wgprW06gLmX8QG_m, userId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService isHavePlaylistWriteAccess user dengan id: NZ1cye-IH1ElPuzt berhak mengakses playlist dengan id: wgprW06gLmX8QG_m
+open-music-api  | PlaylistService deletePlaylist id: wgprW06gLmX8QG_m, ownerId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService getSongsInPlaylist playlistId: wgprW06gLmX8QG_m, ownerId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService isPlaylistExist NotFoundError: Playlist dengan id: wgprW06gLmX8QG_m tidak ditemukan
 open-music-api  | AlbumService addAlbum name: Viva la vida, year: 2008
 open-music-api  | AlbumService addAlbum rows: []
 open-music-api  | AlbumService addAlbum name: Viva la vida, year: 2008
 open-music-api  | AlbumService addAlbum rows: []
-open-music-api  | SongService addSong title: Life in Technicolor, year: 2008, genre: Pop, performer: Coldplay, duration: 120, albumId: 07ZaxRHn7JfNrCOC
-open-music-api  | SongService addSong title: Fix you, year: 2008, genre: Pop, performer: Coldplay, duration: 120, albumId: 07ZaxRHn7JfNrCOC
-open-music-api  | AlbumService getAlbumById id: 07ZaxRHn7JfNrCOC
-open-music-api  | AlbumService getAlbumById rowCount: [{"id":"07ZaxRHn7JfNrCOC","name":"Viva la vida","year":2008}]
-open-music-api  | AlbumService getAlbumById albums: [{"id":"07ZaxRHn7JfNrCOC","name":"Viva la vida","year":2008,"songs":[{"id":"Po5v9BByhWRLu_KH","title":"Life in Technicolor","year":2008,"genre":"Pop","performer":"Coldplay","duration":120,"album_id":"07ZaxRHn7JfNrCOC"},{"id":"MvWKrnNx_Bqrz4nE","title":"Fix you","year":2008,"genre":"Pop","performer":"Coldplay","duration":120,"album_id":"07ZaxRHn7JfNrCOC"}]}], songs: [{"id":"Po5v9BByhWRLu_KH","title":"Life in Technicolor","year":2008,"genre":"Pop","performer":"Coldplay","duration":120,"album_id":"07ZaxRHn7JfNrCOC"},{"id":"MvWKrnNx_Bqrz4nE","title":"Fix you","year":2008,"genre":"Pop","performer":"Coldplay","duration":120,"album_id":"07ZaxRHn7JfNrCOC"}]
-open-music-api  | AlbumService getAlbumById id: ietc-xxbXJfvJPiF
-open-music-api  | AlbumService getAlbumById rowCount: [{"id":"ietc-xxbXJfvJPiF","name":"Viva la vida","year":2008}]
-open-music-api  | AlbumService getAlbumById albums: [{"id":"ietc-xxbXJfvJPiF","name":"Viva la vida","year":2008,"songs":[]}], songs: []
+open-music-api  | SongService addSong title: Life in Technicolor, year: 2008, genre: Pop, performer: Coldplay, duration: 120, albumId: daX5vOGDrwDLxylZ
+open-music-api  | SongService addSong title: Fix you, year: 2008, genre: Pop, performer: Coldplay, duration: 120, albumId: daX5vOGDrwDLxylZ
+open-music-api  | AlbumService getAlbumById id: daX5vOGDrwDLxylZ
+open-music-api  | AlbumService getAlbumById rowCount: [{"id":"daX5vOGDrwDLxylZ","name":"Viva la vida","year":2008}]
+open-music-api  | AlbumService getAlbumById albums: [{"id":"daX5vOGDrwDLxylZ","name":"Viva la vida","year":2008,"songs":[{"id":"9yb5T74kK6r-9wc9","title":"Life in Technicolor","year":2008,"genre":"Pop","performer":"Coldplay","duration":120,"album_id":"daX5vOGDrwDLxylZ"},{"id":"K5tdzmDdCikXF_4T","title":"Fix you","year":2008,"genre":"Pop","performer":"Coldplay","duration":120,"album_id":"daX5vOGDrwDLxylZ"}]}], songs: [{"id":"9yb5T74kK6r-9wc9","title":"Life in Technicolor","year":2008,"genre":"Pop","performer":"Coldplay","duration":120,"album_id":"daX5vOGDrwDLxylZ"},{"id":"K5tdzmDdCikXF_4T","title":"Fix you","year":2008,"genre":"Pop","performer":"Coldplay","duration":120,"album_id":"daX5vOGDrwDLxylZ"}]
+open-music-api  | AlbumService getAlbumById id: _wejETna7rgo1YYP
+open-music-api  | AlbumService getAlbumById rowCount: [{"id":"_wejETna7rgo1YYP","name":"Viva la vida","year":2008}]
+open-music-api  | AlbumService getAlbumById albums: [{"id":"_wejETna7rgo1YYP","name":"Viva la vida","year":2008,"songs":[]}], songs: []
 open-music-api  | SongService addSong title: Kupu-kupu Malam, year: 2008, genre: Pop, performer: Chrisye, duration: 120, albumId: undefined
 open-music-api  | SongService addSong title: Cinta, year: 2008, genre: Pop, performer: Chrisye, duration: 120, albumId: undefined
 open-music-api  | SongService addSong title: Cinta Mati, year: 2008, genre: Pop, performer: Dewa 98, duration: 120, albumId: undefined
 open-music-api  | SongService addSong title: Kupu-kupu Malam, year: 2008, genre: Rock, performer: Peterpan, duration: 120, albumId: undefined
 open-music-api  | SongService getSongs title: cint, performer: 
 open-music-api  | SongService getSongs queryString: {"text":"select id, title, performer from songs where title ilike $1 and performer ilike $2;","values":["%cint%","%%"]}
-open-music-api  | SongService getSongs row: {"id":"U0y6jXuQdVGhRHYr","title":"Cinta","performer":"Chrisye"}
-open-music-api  | SongService getSongs row: {"id":"tczVX3cBro0NVj6G","title":"Cinta Mati","performer":"Dewa 98"}
+open-music-api  | SongService getSongs row: {"id":"pnr5HhHJoYzF_HHp","title":"Cinta","performer":"Chrisye"}
+open-music-api  | SongService getSongs row: {"id":"w51puZe8Ilq_mrRI","title":"Cinta Mati","performer":"Dewa 98"}
 open-music-api  | SongService getSongs title: , performer: chris
 open-music-api  | SongService getSongs queryString: {"text":"select id, title, performer from songs where title ilike $1 and performer ilike $2;","values":["%%","%chris%"]}
-open-music-api  | SongService getSongs row: {"id":"-rlcYsAM5SU8eY7G","title":"Kupu-kupu Malam","performer":"Chrisye"}
-open-music-api  | SongService getSongs row: {"id":"U0y6jXuQdVGhRHYr","title":"Cinta","performer":"Chrisye"}
+open-music-api  | SongService getSongs row: {"id":"xj-90ZxbmEoAvSJm","title":"Kupu-kupu Malam","performer":"Chrisye"}
+open-music-api  | SongService getSongs row: {"id":"pnr5HhHJoYzF_HHp","title":"Cinta","performer":"Chrisye"}
 open-music-api  | SongService getSongs title: kupu, performer: peter
 open-music-api  | SongService getSongs queryString: {"text":"select id, title, performer from songs where title ilike $1 and performer ilike $2;","values":["%kupu%","%peter%"]}
-open-music-api  | SongService getSongs row: {"id":"B9zTzLP_99AOZequ","title":"Kupu-kupu Malam","performer":"Peterpan"}
-open-music-api  | SongService deleteSong id: -rlcYsAM5SU8eY7G
-open-music-api  | SongService deleteSong rows: [{"id":"-rlcYsAM5SU8eY7G"}]
-open-music-api  | SongService deleteSong id: U0y6jXuQdVGhRHYr
-open-music-api  | SongService deleteSong rows: [{"id":"U0y6jXuQdVGhRHYr"}]
-open-music-api  | SongService deleteSong id: tczVX3cBro0NVj6G
-open-music-api  | SongService deleteSong rows: [{"id":"tczVX3cBro0NVj6G"}]
-open-music-api  | SongService deleteSong id: B9zTzLP_99AOZequ
-open-music-api  | SongService deleteSong rows: [{"id":"B9zTzLP_99AOZequ"}]
+open-music-api  | SongService getSongs row: {"id":"p4bMy6hrSN68MzNy","title":"Kupu-kupu Malam","performer":"Peterpan"}
+open-music-api  | SongService deleteSong id: xj-90ZxbmEoAvSJm
+open-music-api  | SongService deleteSong rows: [{"id":"xj-90ZxbmEoAvSJm"}]
+open-music-api  | SongService deleteSong id: pnr5HhHJoYzF_HHp
+open-music-api  | SongService deleteSong rows: [{"id":"pnr5HhHJoYzF_HHp"}]
+open-music-api  | SongService deleteSong id: w51puZe8Ilq_mrRI
+open-music-api  | SongService deleteSong rows: [{"id":"w51puZe8Ilq_mrRI"}]
+open-music-api  | SongService deleteSong id: p4bMy6hrSN68MzNy
+open-music-api  | SongService deleteSong rows: [{"id":"p4bMy6hrSN68MzNy"}]
 open-music-api  | SongService addSong title: Life in Technicolor, year: 2008, genre: Pop, performer: Coldplay, duration: 120, albumId: undefined
 open-music-api  | SongService addSong title: Fix You, year: 2008, genre: Pop, performer: Coldplay, duration: 120, albumId: undefined
 open-music-api  | UserService addUser username: john, password: secret, fullname: John Doe
 open-music-api  | UserService addUser InvariantError: user dengan username: john sudah terdaftar
-open-music-api  | UserService addUser username: tom1716105688083, password: secret, fullname: Tom Riddle
-open-music-api  | UserService addUser executing query: insert into users(id, username, password, fullname) values($1, $2, $3, $4) returning id;, params: a8J04MNHeLrG4tIj,tom1716105688083,$2b$10$oGyU2tzBRHKtusp.uCys.urppvuaP4r51D4oPA7qrAA2NgqqPobKy,Tom Riddle
-open-music-api  | UserService addUser query: insert into users(id, username, password, fullname) values($1, $2, $3, $4) returning id;, params: a8J04MNHeLrG4tIj,tom1716105688083,$2b$10$oGyU2tzBRHKtusp.uCys.urppvuaP4r51D4oPA7qrAA2NgqqPobKy,Tom Riddle executed
+open-music-api  | UserService addUser username: tom1716109851499, password: secret, fullname: Tom Riddle
+open-music-api  | UserService addUser executing query: insert into users(id, username, password, fullname) values($1, $2, $3, $4) returning id;, params: dfBxrnV3G30SY7KR,tom1716109851499,$2b$10$uezLMP5s1MhhqCEQVvDxPOtTHV3jHZLi.ZHuhHICI.VQ.kTe20uDq,Tom Riddle
+open-music-api  | UserService addUser query: insert into users(id, username, password, fullname) values($1, $2, $3, $4) returning id;, params: dfBxrnV3G30SY7KR,tom1716109851499,$2b$10$uezLMP5s1MhhqCEQVvDxPOtTHV3jHZLi.ZHuhHICI.VQ.kTe20uDq,Tom Riddle executed
 open-music-api  | UserService verifyUserCredential username: john, password: secret
-open-music-api  | AuthenticationService addRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODh9.onGXkz6sNWWbXXhmcM2udMzQbP1XPyjUBJttoqkORkU
-open-music-api  | AuthenticationService addRefreshToken inserting query: insert into authentications(id, token) values($1, $2) returning id;, params: s-xun4vbk2wAcOel,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODh9.onGXkz6sNWWbXXhmcM2udMzQbP1XPyjUBJttoqkORkU
-open-music-api  | AuthenticationService addRefreshToken query: insert into authentications(id, token) values($1, $2) returning id;, params: s-xun4vbk2wAcOel,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODh9.onGXkz6sNWWbXXhmcM2udMzQbP1XPyjUBJttoqkORkU, [{"id":"s-xun4vbk2wAcOel"}] inserted
-open-music-api  | UserService verifyUserCredential username: tom1716105688083, password: secret
-open-music-api  | AuthenticationService addRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE4SjA0TU5IZUxyRzR0SWoiLCJpYXQiOjE3MTYxMDU2ODh9.QjEiwuJoKlyeFiy9kMm329LkXqGgC4ksMKn4qYn0CJk
-open-music-api  | AuthenticationService addRefreshToken inserting query: insert into authentications(id, token) values($1, $2) returning id;, params: Cq3B_kcB5zpnsTjR,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE4SjA0TU5IZUxyRzR0SWoiLCJpYXQiOjE3MTYxMDU2ODh9.QjEiwuJoKlyeFiy9kMm329LkXqGgC4ksMKn4qYn0CJk
-open-music-api  | AuthenticationService addRefreshToken query: insert into authentications(id, token) values($1, $2) returning id;, params: Cq3B_kcB5zpnsTjR,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE4SjA0TU5IZUxyRzR0SWoiLCJpYXQiOjE3MTYxMDU2ODh9.QjEiwuJoKlyeFiy9kMm329LkXqGgC4ksMKn4qYn0CJk, [{"id":"Cq3B_kcB5zpnsTjR"}] inserted
-open-music-api  | PlaylistService addPlaylist name: Lagu Indie Hits Indonesia, ownerId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService addPlaylist name: Lagu Indie Hits Indonesia, ownerId: gPbUNR28ge_HyYti result: [{"id":"kaaPoPaheV7GXQaO"}]
+open-music-api  | AuthenticationService addRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NTF9.Dq0Gfzo53T-GiariWm-jy8OEKIJXz9bGNZnHSc-1K2k
+open-music-api  | AuthenticationService addRefreshToken inserting query: insert into authentications(id, token) values($1, $2) returning id;, params: rQoTLdEA8-Qi5umJ,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NTF9.Dq0Gfzo53T-GiariWm-jy8OEKIJXz9bGNZnHSc-1K2k
+open-music-api  | AuthenticationService addRefreshToken query: insert into authentications(id, token) values($1, $2) returning id;, params: rQoTLdEA8-Qi5umJ,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NTF9.Dq0Gfzo53T-GiariWm-jy8OEKIJXz9bGNZnHSc-1K2k, [{"id":"rQoTLdEA8-Qi5umJ"}] inserted
+open-music-api  | UserService verifyUserCredential username: tom1716109851499, password: secret
+open-music-api  | AuthenticationService addRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRmQnhyblYzRzMwU1k3S1IiLCJpYXQiOjE3MTYxMDk4NTF9.-U0MmGQsD0dIZkpcArIZ_8AfKCgn40Q3_kCavHwKlk8
+open-music-api  | AuthenticationService addRefreshToken inserting query: insert into authentications(id, token) values($1, $2) returning id;, params: Q9-axLvKFkdYtTSd,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRmQnhyblYzRzMwU1k3S1IiLCJpYXQiOjE3MTYxMDk4NTF9.-U0MmGQsD0dIZkpcArIZ_8AfKCgn40Q3_kCavHwKlk8
+open-music-api  | AuthenticationService addRefreshToken query: insert into authentications(id, token) values($1, $2) returning id;, params: Q9-axLvKFkdYtTSd,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRmQnhyblYzRzMwU1k3S1IiLCJpYXQiOjE3MTYxMDk4NTF9.-U0MmGQsD0dIZkpcArIZ_8AfKCgn40Q3_kCavHwKlk8, [{"id":"Q9-axLvKFkdYtTSd"}] inserted
+open-music-api  | PlaylistService addPlaylist name: Lagu Indie Hits Indonesia, ownerId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService addPlaylist name: Lagu Indie Hits Indonesia, ownerId: NZ1cye-IH1ElPuzt result: [{"id":"mIT274rY5wYhTgcO"}]
 open-music-api  | Error: Missing authentication
 open-music-api  |     at module.exports.internals.Auth._authenticate (/usr/src/app/node_modules/@hapi/hapi/lib/auth.js:287:26)
 open-music-api  |     at async Request._lifecycle (/usr/src/app/node_modules/@hapi/hapi/lib/request.js:370:32)
@@ -431,53 +434,56 @@ open-music-api  | CollaborationHandler addCollaboration
 open-music-api  | CollaborationService verifyUserExist userId: xxx
 open-music-api  | CollaborationService verifyUserExist NotFoundError: User dengan userId: xxx tidak ditemukan
 open-music-api  | CollaborationHandler addCollaboration
-open-music-api  | CollaborationService verifyUserExist userId: a8J04MNHeLrG4tIj
+open-music-api  | CollaborationService verifyUserExist userId: dfBxrnV3G30SY7KR
 open-music-api  | CollaborationService isPlaylistExist playlistId: xxx
 open-music-api  | CollaborationService isPlaylistExist NotFoundError: Playlist dengan playlistId: xxx tidak ditemukan
 open-music-api  | CollaborationHandler addCollaboration
-open-music-api  | CollaborationService verifyUserExist userId: a8J04MNHeLrG4tIj
-open-music-api  | CollaborationService isPlaylistExist playlistId: kaaPoPaheV7GXQaO
-open-music-api  | CollaborationService verifyCollaborationsOwner ownerId: gPbUNR28ge_HyYti
-open-music-api  | CollaborationService addCollaboration playlistId: kaaPoPaheV7GXQaO userId: a8J04MNHeLrG4tIj
+open-music-api  | CollaborationService verifyUserExist userId: dfBxrnV3G30SY7KR
+open-music-api  | CollaborationService isPlaylistExist playlistId: mIT274rY5wYhTgcO
+open-music-api  | CollaborationService verifyCollaborationsOwner ownerId: NZ1cye-IH1ElPuzt
+open-music-api  | CollaborationService addCollaboration playlistId: mIT274rY5wYhTgcO userId: dfBxrnV3G30SY7KR
 open-music-api  | CollaborationHandler addCollaboration
-open-music-api  | CollaborationService verifyUserExist userId: a8J04MNHeLrG4tIj
-open-music-api  | CollaborationService isPlaylistExist playlistId: kaaPoPaheV7GXQaO
-open-music-api  | CollaborationService verifyCollaborationsOwner ownerId: a8J04MNHeLrG4tIj
-open-music-api  | CollaborationService verifyCollaborationsOwner AuthorizationError: User dengan ownerId: a8J04MNHeLrG4tIj tidak berhak mengakses playlist dengan playlistId: kaaPoPaheV7GXQaO
-open-music-api  | PlaylistService getPlaylists ownerId: a8J04MNHeLrG4tIj
-open-music-api  | PlaylistService getPlaylists ownerId: a8J04MNHeLrG4tIj, result: [{"id":"kaaPoPaheV7GXQaO","name":"Lagu Indie Hits Indonesia","username":"john"}]
-open-music-api  | PlaylistService isHavePlaylistReadAccess playlistId: kaaPoPaheV7GXQaO, userId: a8J04MNHeLrG4tIj
-open-music-api  | PlaylistService isHavePlaylistReadAccess user dengan id: a8J04MNHeLrG4tIj berhak mengakses playlist dengan id: kaaPoPaheV7GXQaO
-open-music-api  | PlaylistService addSongToPlaylist playlistId: kaaPoPaheV7GXQaO, songId: 70B-tZ1v-qM8v84y, ownerId: a8J04MNHeLrG4tIj
-open-music-api  | PlaylistService isHavePlaylistReadAccess playlistId: kaaPoPaheV7GXQaO, userId: a8J04MNHeLrG4tIj
-open-music-api  | PlaylistService isHavePlaylistReadAccess user dengan id: a8J04MNHeLrG4tIj berhak mengakses playlist dengan id: kaaPoPaheV7GXQaO
-open-music-api  | PlaylistService addSongToPlaylist playlistId: kaaPoPaheV7GXQaO, songId: X8a9nWbolkq8sFUF, ownerId: a8J04MNHeLrG4tIj
-open-music-api  | PlaylistService getSongsInPlaylist playlistId: kaaPoPaheV7GXQaO, ownerId: a8J04MNHeLrG4tIj
-open-music-api  | PlaylistService isHavePlaylistReadAccess playlistId: kaaPoPaheV7GXQaO, userId: a8J04MNHeLrG4tIj
-open-music-api  | PlaylistService isHavePlaylistReadAccess user dengan id: a8J04MNHeLrG4tIj berhak mengakses playlist dengan id: kaaPoPaheV7GXQaO
-open-music-api  | PlaylistService isHavePlaylistReadAccess playlistId: kaaPoPaheV7GXQaO, userId: a8J04MNHeLrG4tIj
-open-music-api  | PlaylistService isHavePlaylistReadAccess user dengan id: a8J04MNHeLrG4tIj berhak mengakses playlist dengan id: kaaPoPaheV7GXQaO
-open-music-api  | PlaylistService deleteSongInPlaylist id: kaaPoPaheV7GXQaO, ownerId: a8J04MNHeLrG4tIj, songId: 70B-tZ1v-qM8v84y
-open-music-api  | PlaylistService isHavePlaylistWriteAccess playlistId: kaaPoPaheV7GXQaO, userId: a8J04MNHeLrG4tIj
-open-music-api  | PlaylistService isHavePlaylistWriteAccess AuthorizationError: User dengan id: a8J04MNHeLrG4tIj tidak berhak mengakses playlist dengan id: kaaPoPaheV7GXQaO
+open-music-api  | CollaborationService verifyUserExist userId: dfBxrnV3G30SY7KR
+open-music-api  | CollaborationService isPlaylistExist playlistId: mIT274rY5wYhTgcO
+open-music-api  | CollaborationService verifyCollaborationsOwner ownerId: dfBxrnV3G30SY7KR
+open-music-api  | CollaborationService verifyCollaborationsOwner AuthorizationError: User dengan ownerId: dfBxrnV3G30SY7KR tidak berhak mengakses playlist dengan playlistId: mIT274rY5wYhTgcO
+open-music-api  | PlaylistService getPlaylists ownerId: dfBxrnV3G30SY7KR
+open-music-api  | PlaylistService getPlaylists ownerId: dfBxrnV3G30SY7KR, result: [{"id":"mIT274rY5wYhTgcO","name":"Lagu Indie Hits Indonesia","username":"john"}]
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator playlistId: mIT274rY5wYhTgcO, userId: dfBxrnV3G30SY7KR
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator user dengan id: dfBxrnV3G30SY7KR berhak mengakses playlist dengan id: mIT274rY5wYhTgcO
+open-music-api  | PlaylistService addSongToPlaylist playlistId: mIT274rY5wYhTgcO, songId: T3tpFDAO9pXz6b7S, ownerId: dfBxrnV3G30SY7KR
+open-music-api  | PlaylistService addToActivity playlistId: mIT274rY5wYhTgcO
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator playlistId: mIT274rY5wYhTgcO, userId: dfBxrnV3G30SY7KR
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator user dengan id: dfBxrnV3G30SY7KR berhak mengakses playlist dengan id: mIT274rY5wYhTgcO
+open-music-api  | PlaylistService addSongToPlaylist playlistId: mIT274rY5wYhTgcO, songId: K-cwHORW6pvMsATv, ownerId: dfBxrnV3G30SY7KR
+open-music-api  | PlaylistService addToActivity playlistId: mIT274rY5wYhTgcO
+open-music-api  | PlaylistService getSongsInPlaylist playlistId: mIT274rY5wYhTgcO, ownerId: dfBxrnV3G30SY7KR
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator playlistId: mIT274rY5wYhTgcO, userId: dfBxrnV3G30SY7KR
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator user dengan id: dfBxrnV3G30SY7KR berhak mengakses playlist dengan id: mIT274rY5wYhTgcO
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator playlistId: mIT274rY5wYhTgcO, userId: dfBxrnV3G30SY7KR
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator user dengan id: dfBxrnV3G30SY7KR berhak mengakses playlist dengan id: mIT274rY5wYhTgcO
+open-music-api  | PlaylistService deleteSongInPlaylist id: mIT274rY5wYhTgcO, ownerId: dfBxrnV3G30SY7KR, songId: T3tpFDAO9pXz6b7S
+open-music-api  | PlaylistService addToActivity playlistId: mIT274rY5wYhTgcO
+open-music-api  | PlaylistService isHavePlaylistWriteAccess playlistId: mIT274rY5wYhTgcO, userId: dfBxrnV3G30SY7KR
+open-music-api  | PlaylistService isHavePlaylistWriteAccess AuthorizationError: User dengan id: dfBxrnV3G30SY7KR tidak berhak mengakses playlist dengan id: mIT274rY5wYhTgcO
 open-music-api  | CollaborationHandler deleteCollaboration
-open-music-api  | CollaborationService verifyUserExist userId: a8J04MNHeLrG4tIj
-open-music-api  | CollaborationService isPlaylistExist playlistId: kaaPoPaheV7GXQaO
-open-music-api  | CollaborationService verifyCollaborationsOwner ownerId: a8J04MNHeLrG4tIj
-open-music-api  | CollaborationService verifyCollaborationsOwner AuthorizationError: User dengan ownerId: a8J04MNHeLrG4tIj tidak berhak mengakses playlist dengan playlistId: kaaPoPaheV7GXQaO
+open-music-api  | CollaborationService verifyUserExist userId: dfBxrnV3G30SY7KR
+open-music-api  | CollaborationService isPlaylistExist playlistId: mIT274rY5wYhTgcO
+open-music-api  | CollaborationService verifyCollaborationsOwner ownerId: dfBxrnV3G30SY7KR
+open-music-api  | CollaborationService verifyCollaborationsOwner AuthorizationError: User dengan ownerId: dfBxrnV3G30SY7KR tidak berhak mengakses playlist dengan playlistId: mIT274rY5wYhTgcO
 open-music-api  | CollaborationHandler deleteCollaboration
-open-music-api  | CollaborationService verifyUserExist userId: a8J04MNHeLrG4tIj
-open-music-api  | CollaborationService isPlaylistExist playlistId: kaaPoPaheV7GXQaO
-open-music-api  | CollaborationService verifyCollaborationsOwner ownerId: gPbUNR28ge_HyYti
-open-music-api  | CollaborationService isCollaborationOwner playlistId: kaaPoPaheV7GXQaO
-open-music-api  | CollaborationService deleteCollaboration playlistId: kaaPoPaheV7GXQaO userId: a8J04MNHeLrG4tIj
-open-music-api  | PlaylistService getPlaylists ownerId: a8J04MNHeLrG4tIj
-open-music-api  | PlaylistService getPlaylists ownerId: a8J04MNHeLrG4tIj, result: []
-open-music-api  | PlaylistService isHavePlaylistReadAccess playlistId: kaaPoPaheV7GXQaO, userId: a8J04MNHeLrG4tIj
-open-music-api  | PlaylistService isHavePlaylistReadAccess AuthorizationError: User dengan id: a8J04MNHeLrG4tIj tidak berhak mengakses playlist dengan id: kaaPoPaheV7GXQaO
-open-music-api  | PlaylistService isHavePlaylistWriteAccess playlistId: kaaPoPaheV7GXQaO, userId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService isHavePlaylistWriteAccess user dengan id: gPbUNR28ge_HyYti berhak mengakses playlist dengan id: kaaPoPaheV7GXQaO
-open-music-api  | PlaylistService deletePlaylist id: kaaPoPaheV7GXQaO, ownerId: gPbUNR28ge_HyYti
+open-music-api  | CollaborationService verifyUserExist userId: dfBxrnV3G30SY7KR
+open-music-api  | CollaborationService isPlaylistExist playlistId: mIT274rY5wYhTgcO
+open-music-api  | CollaborationService verifyCollaborationsOwner ownerId: NZ1cye-IH1ElPuzt
+open-music-api  | CollaborationService isCollaborationOwner playlistId: mIT274rY5wYhTgcO
+open-music-api  | CollaborationService deleteCollaboration playlistId: mIT274rY5wYhTgcO userId: dfBxrnV3G30SY7KR
+open-music-api  | PlaylistService getPlaylists ownerId: dfBxrnV3G30SY7KR
+open-music-api  | PlaylistService getPlaylists ownerId: dfBxrnV3G30SY7KR, result: []
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator playlistId: mIT274rY5wYhTgcO, userId: dfBxrnV3G30SY7KR
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator AuthorizationError: User dengan id: dfBxrnV3G30SY7KR tidak berhak mengakses playlist dengan id: mIT274rY5wYhTgcO
+open-music-api  | PlaylistService isHavePlaylistWriteAccess playlistId: mIT274rY5wYhTgcO, userId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService isHavePlaylistWriteAccess user dengan id: NZ1cye-IH1ElPuzt berhak mengakses playlist dengan id: mIT274rY5wYhTgcO
+open-music-api  | PlaylistService deletePlaylist id: mIT274rY5wYhTgcO, ownerId: NZ1cye-IH1ElPuzt
 open-music-api  | SongService addSong title: Life in Technicolor, year: 2008, genre: Pop, performer: Coldplay, duration: 120, albumId: undefined
 open-music-api  | SongService addSong title: Fix You, year: 2008, genre: Pop, performer: Coldplay, duration: 120, albumId: undefined
 open-music-api  | UserService addUser username: john, password: secret, fullname: John Doe
@@ -485,24 +491,27 @@ open-music-api  | UserService addUser InvariantError: user dengan username: john
 open-music-api  | UserService addUser username: jane, password: secret, fullname: John Doe
 open-music-api  | UserService addUser InvariantError: user dengan username: jane sudah terdaftar
 open-music-api  | UserService verifyUserCredential username: john, password: secret
-open-music-api  | AuthenticationService addRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODl9.HWFFudiUrx88Z0xA11iNdtKYqZeppVz1a1vk08n0gFQ
-open-music-api  | AuthenticationService addRefreshToken inserting query: insert into authentications(id, token) values($1, $2) returning id;, params: QcfM_0srfEI5PfzA,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODl9.HWFFudiUrx88Z0xA11iNdtKYqZeppVz1a1vk08n0gFQ
-open-music-api  | AuthenticationService addRefreshToken query: insert into authentications(id, token) values($1, $2) returning id;, params: QcfM_0srfEI5PfzA,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdQYlVOUjI4Z2VfSHlZdGkiLCJpYXQiOjE3MTYxMDU2ODl9.HWFFudiUrx88Z0xA11iNdtKYqZeppVz1a1vk08n0gFQ, [{"id":"QcfM_0srfEI5PfzA"}] inserted
+open-music-api  | AuthenticationService addRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NTJ9.Uun9R5FaFjCtJguqJWQV26n735NtIHiY0rnuru58YEI
+open-music-api  | AuthenticationService addRefreshToken inserting query: insert into authentications(id, token) values($1, $2) returning id;, params: lMf33UaQ7khR_oKO,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NTJ9.Uun9R5FaFjCtJguqJWQV26n735NtIHiY0rnuru58YEI
+open-music-api  | AuthenticationService addRefreshToken query: insert into authentications(id, token) values($1, $2) returning id;, params: lMf33UaQ7khR_oKO,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik5aMWN5ZS1JSDFFbFB1enQiLCJpYXQiOjE3MTYxMDk4NTJ9.Uun9R5FaFjCtJguqJWQV26n735NtIHiY0rnuru58YEI, [{"id":"lMf33UaQ7khR_oKO"}] inserted
 open-music-api  | UserService verifyUserCredential username: jane, password: secret
-open-music-api  | AuthenticationService addRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdGOU1kZXpuSktOQmtlc1UiLCJpYXQiOjE3MTYxMDU2ODl9.H3OWGJjPsdp-qzq8XuW4rHO2xhonhvxzX8uw5GUPct0
-open-music-api  | AuthenticationService addRefreshToken inserting query: insert into authentications(id, token) values($1, $2) returning id;, params: wzuXFmKiThdjgndw,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdGOU1kZXpuSktOQmtlc1UiLCJpYXQiOjE3MTYxMDU2ODl9.H3OWGJjPsdp-qzq8XuW4rHO2xhonhvxzX8uw5GUPct0
-open-music-api  | AuthenticationService addRefreshToken query: insert into authentications(id, token) values($1, $2) returning id;, params: wzuXFmKiThdjgndw,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImdGOU1kZXpuSktOQmtlc1UiLCJpYXQiOjE3MTYxMDU2ODl9.H3OWGJjPsdp-qzq8XuW4rHO2xhonhvxzX8uw5GUPct0, [{"id":"wzuXFmKiThdjgndw"}] inserted
-open-music-api  | PlaylistService addPlaylist name: Lagu Indie Hits Indonesia, ownerId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService addPlaylist name: Lagu Indie Hits Indonesia, ownerId: gPbUNR28ge_HyYti result: [{"id":"H5SjYD8N_mlSFcPV"}]
-open-music-api  | PlaylistService isHavePlaylistReadAccess playlistId: H5SjYD8N_mlSFcPV, userId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService isHavePlaylistReadAccess user dengan id: gPbUNR28ge_HyYti berhak mengakses playlist dengan id: H5SjYD8N_mlSFcPV
-open-music-api  | PlaylistService addSongToPlaylist playlistId: H5SjYD8N_mlSFcPV, songId: 4DKJblQa-sx_VeHe, ownerId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService isHavePlaylistReadAccess playlistId: H5SjYD8N_mlSFcPV, userId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService isHavePlaylistReadAccess user dengan id: gPbUNR28ge_HyYti berhak mengakses playlist dengan id: H5SjYD8N_mlSFcPV
-open-music-api  | PlaylistService addSongToPlaylist playlistId: H5SjYD8N_mlSFcPV, songId: XLC3RADZzOL2dLoF, ownerId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService isHavePlaylistReadAccess playlistId: H5SjYD8N_mlSFcPV, userId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService isHavePlaylistReadAccess user dengan id: gPbUNR28ge_HyYti berhak mengakses playlist dengan id: H5SjYD8N_mlSFcPV
-open-music-api  | PlaylistService deleteSongInPlaylist id: H5SjYD8N_mlSFcPV, ownerId: gPbUNR28ge_HyYti, songId: 4DKJblQa-sx_VeHe
+open-music-api  | AuthenticationService addRefreshToken token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdSYk1qMUZFU2NxUzlhbEgiLCJpYXQiOjE3MTYxMDk4NTJ9.BJ_nKkFJ7VKhk1elIDcscxSAolPcsjd38R7NA3kAQrg
+open-music-api  | AuthenticationService addRefreshToken inserting query: insert into authentications(id, token) values($1, $2) returning id;, params: MQ8MyxCauOzPvwDf,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdSYk1qMUZFU2NxUzlhbEgiLCJpYXQiOjE3MTYxMDk4NTJ9.BJ_nKkFJ7VKhk1elIDcscxSAolPcsjd38R7NA3kAQrg
+open-music-api  | AuthenticationService addRefreshToken query: insert into authentications(id, token) values($1, $2) returning id;, params: MQ8MyxCauOzPvwDf,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdSYk1qMUZFU2NxUzlhbEgiLCJpYXQiOjE3MTYxMDk4NTJ9.BJ_nKkFJ7VKhk1elIDcscxSAolPcsjd38R7NA3kAQrg, [{"id":"MQ8MyxCauOzPvwDf"}] inserted
+open-music-api  | PlaylistService addPlaylist name: Lagu Indie Hits Indonesia, ownerId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService addPlaylist name: Lagu Indie Hits Indonesia, ownerId: NZ1cye-IH1ElPuzt result: [{"id":"1PL_2UAEdjmktefj"}]
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator playlistId: 1PL_2UAEdjmktefj, userId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator user dengan id: NZ1cye-IH1ElPuzt berhak mengakses playlist dengan id: 1PL_2UAEdjmktefj
+open-music-api  | PlaylistService addSongToPlaylist playlistId: 1PL_2UAEdjmktefj, songId: PhSSleBw6gp8M1rv, ownerId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService addToActivity playlistId: 1PL_2UAEdjmktefj
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator playlistId: 1PL_2UAEdjmktefj, userId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator user dengan id: NZ1cye-IH1ElPuzt berhak mengakses playlist dengan id: 1PL_2UAEdjmktefj
+open-music-api  | PlaylistService addSongToPlaylist playlistId: 1PL_2UAEdjmktefj, songId: AHYPIouRsWP6NwBl, ownerId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService addToActivity playlistId: 1PL_2UAEdjmktefj
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator playlistId: 1PL_2UAEdjmktefj, userId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator user dengan id: NZ1cye-IH1ElPuzt berhak mengakses playlist dengan id: 1PL_2UAEdjmktefj
+open-music-api  | PlaylistService deleteSongInPlaylist id: 1PL_2UAEdjmktefj, ownerId: NZ1cye-IH1ElPuzt, songId: PhSSleBw6gp8M1rv
+open-music-api  | PlaylistService addToActivity playlistId: 1PL_2UAEdjmktefj
 open-music-api  | Error: Missing authentication
 open-music-api  |     at module.exports.internals.Auth._authenticate (/usr/src/app/node_modules/@hapi/hapi/lib/auth.js:287:26)
 open-music-api  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
@@ -521,6 +530,16 @@ open-music-api  |     },
 open-music-api  |     headers: { 'WWW-Authenticate': 'Bearer' }
 open-music-api  |   }
 open-music-api  | }
-open-music-api  | PlaylistService isHavePlaylistWriteAccess playlistId: H5SjYD8N_mlSFcPV, userId: gPbUNR28ge_HyYti
-open-music-api  | PlaylistService isHavePlaylistWriteAccess user dengan id: gPbUNR28ge_HyYti berhak mengakses playlist dengan id: H5SjYD8N_mlSFcPV
-open-music-api  | PlaylistService deletePlaylist id: H5SjYD8N_mlSFcPV, ownerId: gPbUNR28ge_HyYti
+open-music-api  | PlaylistService getActivities playlistId: xxx, userId: 7RbMj1FEScqS9alH
+open-music-api  | PlaylistService isPlaylistExist NotFoundError: Playlist dengan id: xxx tidak ditemukan
+open-music-api  | PlaylistService getActivities playlistId: 1PL_2UAEdjmktefj, userId: 7RbMj1FEScqS9alH
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator playlistId: 1PL_2UAEdjmktefj, userId: 7RbMj1FEScqS9alH
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator AuthorizationError: User dengan id: 7RbMj1FEScqS9alH tidak berhak mengakses playlist dengan id: 1PL_2UAEdjmktefj
+open-music-api  | PlaylistService getActivities playlistId: 1PL_2UAEdjmktefj, userId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator playlistId: 1PL_2UAEdjmktefj, userId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService isPlaylistOwnerOrCollaborator user dengan id: NZ1cye-IH1ElPuzt berhak mengakses playlist dengan id: 1PL_2UAEdjmktefj
+open-music-api  | PlaylistService isHavePlaylistWriteAccess playlistId: 1PL_2UAEdjmktefj, userId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService isHavePlaylistWriteAccess user dengan id: NZ1cye-IH1ElPuzt berhak mengakses playlist dengan id: 1PL_2UAEdjmktefj
+open-music-api  | PlaylistService deletePlaylist id: 1PL_2UAEdjmktefj, ownerId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService getActivities playlistId: 1PL_2UAEdjmktefj, userId: NZ1cye-IH1ElPuzt
+open-music-api  | PlaylistService isPlaylistExist NotFoundError: Playlist dengan id: 1PL_2UAEdjmktefj tidak ditemukan

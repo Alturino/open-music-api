@@ -4,7 +4,7 @@
  * @returns {Promise<void> | void}
  */
 exports.up = (pgm) => {
-  pgm.createType('action', ['create', 'read', 'update', 'delete']);
+  pgm.createType('action', ['add', 'delete']);
   pgm.createTable('playlist_activities', {
     id: {
       type: 'varchar(16)',
