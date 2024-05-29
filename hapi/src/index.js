@@ -22,17 +22,20 @@ const playlistPlugin = require('./playlists/api');
 const songsPlugin = require('./songs/api');
 const usersPlugin = require('./users/api');
 
-const Jwt = require('@hapi/jwt');
 const ClientError = require('./core/exceptions/ClientError');
 const Hapi = require('@hapi/hapi');
+const Jwt = require('@hapi/jwt');
+const amqp = require('amqplib');
 const TokenManager = require('./authentication/tokenize/TokenManager');
+const config = require('./core/config');
 const { Pool } = require('pg');
+
 require('dotenv').config();
 
 async function main() {
   const server = Hapi.server({
-    host: process.env.HOST,
-    port: process.env.PORT,
+    host: config.app.host,
+    port: config.app.port,
     routes: {
       cors: {
         origin: ['*'],
@@ -46,12 +49,12 @@ async function main() {
 
   console.log('applying auth strategy jwt');
   server.auth.strategy('open_music_api_jwt', 'jwt', {
-    keys: process.env.ACCESS_TOKEN_KEY,
+    keys: config.app.accessTokenKey,
     verify: {
       aud: false,
       iss: false,
       sub: false,
-      maxAgeSec: process.env.ACCESS_TOKEN_AGE,
+      maxAgeSec: config.app.accessTokenAge,
     },
     validate: (artifacts) => ({
       isValid: true,
@@ -61,14 +64,13 @@ async function main() {
     }),
   });
   console.log('auth strategy jwt applied');
-
   console.log('creating connection pool to postgres');
   const pgPool = new Pool({
-    user: process.env.POSTGRES_USER,
-    password: process.env.POSTGRES_PASSWORD,
-    host: process.env.POSTGRES_HOST,
-    database: process.env.POSTGRES_DB,
-    port: process.env.POSTGRES_PORT,
+    user: config.postgres.user,
+    password: config.postgres.password,
+    host: config.postgres.host,
+    database: config.postgres.db,
+    port: config.postgres.port,
   });
   pgPool.connect((err) => {
     if (err instanceof Error) {
@@ -82,8 +84,8 @@ async function main() {
   const songService = new SongService(pgPool);
   const userService = new UserService(pgPool);
   const playlistService = new PlaylistService(pgPool);
-  const mqConnection = await amqp.connect(config.rabbitMq.server);
-  const exportService = new ExportService(mqConnection);
+  const rabbitmqConnection = await amqp.connect(config.rabbitmq.uri);
+  const exportService = new ExportService(rabbitmqConnection);
   const collaborationsService = new CollaborationsService(pgPool);
   const authenticationService = new AuthenticationService(pgPool);
   console.log('services created');
