@@ -1,25 +1,31 @@
 const AlbumService = require('./albums/AlbumService');
+const PlaylistService = require('./playlists/PlaylistService');
+const AuthenticationService = require('./authentication/AuthenticationService');
+const CollaborationsService = require('./collaborations/CollaborationsService');
+const ExportService = require('./exports/ExportService');
+const SongService = require('./songs/SongService');
+const UserService = require('./users/UserService');
+
 const AlbumValidator = require('./albums/validator');
 const AuthentcationValidator = require('./authentication/validator');
 const CollaborationValidator = require('./collaborations/validator');
-const AuthenticationService = require('./authentication/AuthenticationService');
-const CollaborationsService = require('./collaborations/CollaborationsService');
-const ClientError = require('./core/exceptions/ClientError');
-const Hapi = require('@hapi/hapi');
-const Jwt = require('@hapi/jwt');
-const PlaylistService = require('./playlists/PlaylistService');
+const ExportValidator = require('./exports/validator');
 const PlaylistValidator = require('./playlists/validator');
-const SongService = require('./songs/SongService');
 const SongValidator = require('./songs/validator');
-const TokenManager = require('./authentication/tokenize/TokenManager');
-const UserService = require('./users/UserService');
 const UserValidator = require('./users/validator');
+
 const albumsPlugin = require('./albums/api');
-const collaborationsPlugin = require('./collaborations/api');
 const authenticationPlugin = require('./authentication/api');
+const collaborationsPlugin = require('./collaborations/api');
+const exportsPlugin = require('./exports/api');
 const playlistPlugin = require('./playlists/api');
 const songsPlugin = require('./songs/api');
 const usersPlugin = require('./users/api');
+
+const Jwt = require('@hapi/jwt');
+const ClientError = require('./core/exceptions/ClientError');
+const Hapi = require('@hapi/hapi');
+const TokenManager = require('./authentication/tokenize/TokenManager');
 const { Pool } = require('pg');
 require('dotenv').config();
 
@@ -76,6 +82,8 @@ async function main() {
   const songService = new SongService(pgPool);
   const userService = new UserService(pgPool);
   const playlistService = new PlaylistService(pgPool);
+  const mqConnection = await amqp.connect(config.rabbitMq.server);
+  const exportService = new ExportService(mqConnection);
   const collaborationsService = new CollaborationsService(pgPool);
   const authenticationService = new AuthenticationService(pgPool);
   console.log('services created');
@@ -124,6 +132,13 @@ async function main() {
       options: {
         service: collaborationsService,
         validator: CollaborationValidator,
+      },
+    },
+    {
+      plugin: exportsPlugin,
+      options: {
+        service: exportService,
+        validator: ExportValidator,
       },
     },
   ]);

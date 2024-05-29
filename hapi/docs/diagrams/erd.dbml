@@ -1,0 +1,66 @@
+Table users {
+    id varchar(16)
+    username text
+    password text
+    fullname text
+}
+
+Table songs {
+    id int [primary key]
+    album_id int
+    title text
+    year int
+    performer text
+    genre text
+    duration text
+}
+
+Table albums {
+    id int [primary key]
+    name text
+    year int
+    cover text
+}
+
+Table playlists {
+  id int [primary key]
+  owner_id int
+  name text
+}
+
+Table playlist_and_song {
+  id int [primary key]
+  playlist_id int
+  song_id int
+}
+
+Table user_album_likes {
+  id int [primary key]
+  user_id int
+  album_id int
+}
+
+Table collaborations {
+  id int [primary key]
+  playlist_id int
+  user_id int
+}
+
+Table playlist_song_activities {
+  id int [primary key]
+  playlist_id int
+  song_id int
+  user_id int
+  action text
+  time timestamp
+}
+
+ref: albums.id < songs.album_id
+ref: albums.id < user_album_likes.album_id
+ref: playlists.id < collaborations.playlist_id
+ref: playlists.id < playlist_and_song.playlist_id
+ref: playlists.id < playlist_song_activities.playlist_id
+ref: songs.id < playlist_and_song.song_id
+ref: users.id < collaborations.user_id
+ref: users.id < playlists.owner_id
+ref: users.id < user_album_likes.user_id

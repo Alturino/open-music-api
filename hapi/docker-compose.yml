@@ -2,7 +2,7 @@ services:
   open-music-api:
     container_name: open-music-api
     build:
-      context: .
+      context: ./api/
       dockerfile: Dockerfile
     develop:
       watch:
@@ -27,7 +27,8 @@ services:
     image: postgres:16.1-alpine3.19
     restart: always
     healthcheck:
-      test: ['CMD', 'pg_isready', '-d', '${POSTGRES_DB}', '-U', '${POSTGRES_USER}']
+      test:
+        ["CMD", "pg_isready", "-d", "${POSTGRES_DB}", "-U", "${POSTGRES_USER}"]
       interval: 2s
       timeout: 10s
       retries: 3
@@ -40,6 +41,15 @@ services:
     #   - postgres:/var/lib/postgresql/data
     networks:
       - postgres
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.13.2-management-alpine
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - ${RABBITMQ_PORT}:${RABBITMQ_PORT}
+      - ${RABBITMQ_MANAGEMENT_PORT}:${RABBITMQ_MANAGEMENT_PORT}
 # volumes:
 #   postgres:
 #     name: postgres
