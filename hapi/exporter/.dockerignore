@@ -1,0 +1,6 @@
+*.vim
+.editorconfig
+.env.example
+.gitignore
+.prettierc
+.sqlfluff

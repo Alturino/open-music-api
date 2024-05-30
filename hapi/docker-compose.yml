@@ -2,26 +2,47 @@ services:
   open-music-api:
     container_name: open-music-api
     build:
-      context: ./api/
-      dockerfile: Dockerfile
-    develop:
-      watch:
-        - action: rebuild
-          path: package.json
-        - action: rebuild
-          path: ./src
+      context: ./api
+      dockerfile: ./Dockerfile
     depends_on:
       postgres:
+        condition: service_healthy
+      rabbitmq:
         condition: service_healthy
     restart: always
     networks:
       - postgres
+      - rabbitmq
     env_file:
-      - .env
+      - ./api/.env
     links:
       - postgres
+      - rabbitmq
     ports:
       - ${PORT}:${PORT}
+    volumes:
+      - ./api/src/albums/covers/:/usr/src/app/src/albums/covers
+  exporter:
+    container_name: exporter
+    build:
+      context: ./exporter
+      dockerfile: ./Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    restart: always
+    networks:
+      - postgres
+      - rabbitmq
+    env_file:
+      - ./exporter/.env
+    links:
+      - postgres
+      - rabbitmq
+    ports:
+      - 5001:${PORT}
   postgres:
     container_name: postgres
     image: postgres:16.1-alpine3.19
@@ -29,12 +50,12 @@ services:
     healthcheck:
       test:
         ["CMD", "pg_isready", "-d", "${POSTGRES_DB}", "-U", "${POSTGRES_USER}"]
-      interval: 2s
-      timeout: 10s
+      interval: 5s
+      timeout: 30s
       retries: 3
-      start_period: 5s
+      start_period: 10s
     env_file:
-      - .env
+      - ./.env
     ports:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
     # volumes:
@@ -45,8 +66,16 @@ services:
     container_name: rabbitmq
     image: rabbitmq:3.13.2-management-alpine
     restart: always
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 30s
+      timeout: 5m
+      retries: 5
+      start_period: 45s
     env_file:
-      - .env
+      - ./.env
+    networks:
+      - rabbitmq
     ports:
       - ${RABBITMQ_PORT}:${RABBITMQ_PORT}
       - ${RABBITMQ_MANAGEMENT_PORT}:${RABBITMQ_MANAGEMENT_PORT}
@@ -56,3 +85,5 @@ services:
 networks:
   postgres:
     name: postgres
+  rabbitmq:
+    name: rabbitmq
