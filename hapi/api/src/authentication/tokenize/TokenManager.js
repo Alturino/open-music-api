@@ -7,7 +7,7 @@ const TokenManager = {
   verifyRefreshToken: (refreshToken) => {
     try {
       const artifact = Jwt.token.decode(refreshToken);
-      Jwt.token.verifySignature(artifact, process.env.REFRESH_TOKEN_KEY);
+      Jwt.token.verifySignature(artifact, config.app.refreshTokenKey);
       const { payload } = artifact.decoded;
       return payload;
     } catch (e) {

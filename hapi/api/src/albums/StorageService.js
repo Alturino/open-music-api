@@ -9,8 +9,9 @@ class StorageService {
   }
 
   writeFile(file, metadata) {
-    const filename = `${new Date()}-${metadata.filename}`;
+    const filename = +new Date() + metadata.filename;
     const path = `${this._folder}/${filename}`;
+
     const filestream = this._fs.createWriteStream(path);
 
     return new Promise((resolve, reject) => {

@@ -100,10 +100,12 @@ async function main() {
     }
   });
 
+  const staticFileFolder = path.resolve(__dirname, './public/assets');
+
   const albumService = new AlbumService(pgPool);
   const songService = new SongService(pgPool);
   const userService = new UserService(pgPool);
-  const storageService = new StorageService(fs, path.resolve(__dirname, './albums/covers'));
+  const storageService = new StorageService(fs, staticFileFolder);
   const playlistService = new PlaylistService(pgPool);
   const rabbitmqConnection = await amqp.connect(config.rabbitmq.uri);
   const exportService = new ExportService(rabbitmqConnection);
@@ -117,6 +119,7 @@ async function main() {
         albumService: albumService,
         storageService: storageService,
         albumValidator: AlbumValidator,
+        folder: staticFileFolder,
       },
     },
     {

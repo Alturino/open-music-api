@@ -20,6 +20,7 @@ Table albums {
     name text
     year int
     cover text
+    like_count int
 }
 
 Table playlists {

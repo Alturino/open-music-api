@@ -13,15 +13,14 @@ services:
     networks:
       - postgres
       - rabbitmq
-    env_file:
-      - ./api/.env
+    env_file: ./api/.env
     links:
       - postgres
       - rabbitmq
     ports:
       - ${PORT}:${PORT}
     volumes:
-      - ./api/src/albums/covers/:/usr/src/app/src/albums/covers
+      - assets:/usr/src/open-music-api/public/assets/
   exporter:
     container_name: exporter
     build:
@@ -36,8 +35,7 @@ services:
     networks:
       - postgres
       - rabbitmq
-    env_file:
-      - ./exporter/.env
+    env_file: ./exporter/.env
     links:
       - postgres
       - rabbitmq
@@ -58,8 +56,6 @@ services:
       - ./.env
     ports:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
-    # volumes:
-    #   - postgres:/var/lib/postgresql/data
     networks:
       - postgres
   rabbitmq:
@@ -72,16 +68,15 @@ services:
       timeout: 5m
       retries: 5
       start_period: 45s
-    env_file:
-      - ./.env
+    env_file: .env
     networks:
       - rabbitmq
     ports:
       - ${RABBITMQ_PORT}:${RABBITMQ_PORT}
       - ${RABBITMQ_MANAGEMENT_PORT}:${RABBITMQ_MANAGEMENT_PORT}
-# volumes:
-#   postgres:
-#     name: postgres
+volumes:
+  assets:
+    name: assets
 networks:
   postgres:
     name: postgres
