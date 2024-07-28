@@ -15,6 +15,7 @@ class AlbumHandler {
     this.addCoverToAlbum = this.addCoverToAlbum.bind(this);
     this.addAlbumLike = this.addAlbumLike.bind(this);
     this.unlikeAlbum = this.unlikeAlbum.bind(this);
+    this.getAlbumLike = this.getAlbumLike.bind(this);
   }
 
   async addAlbum(req, h) {
@@ -135,8 +136,9 @@ class AlbumHandler {
 
   async unlikeAlbum(req, h) {
     const { id: albumId } = req.params;
+    const { id: userId } = req.auth.credentials;
     req.log(['INF', 'AlbumHandler', 'getAlbumLike'], `albumId=${albumId} msg=get album like_count`);
-    await this._albumService.deleteAlbumLike(req, albumId);
+    await this._albumService.unlikeAlbum(req, userId, albumId);
     req.log(
       ['INF', 'AlbumHandler', 'addAlbumLike'],
       `albumId=${albumId} msg=deleted album with albumId=${albumId}`,

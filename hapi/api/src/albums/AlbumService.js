@@ -10,10 +10,10 @@ class AlbumService {
     this.updateAlbum = this.updateAlbum.bind(this);
     this.getAlbumById = this.getAlbumById.bind(this);
     this.getAlbums = this.getAlbums.bind(this);
-    this.getAlbumById = this.getAlbumById.bind(this);
     this.addCoverToAlbum = this.addCoverToAlbum.bind(this);
     this.addAlbumLike = this.addAlbumLike.bind(this);
     this.unlikeAlbum = this.unlikeAlbum.bind(this);
+    this.getAlbumLike = this.getAlbumLike.bind(this);
   }
 
   async addAlbum(name, year) {
@@ -229,7 +229,9 @@ class AlbumService {
         deleteUserAlbumLikesQueryResult.rowCount === null ||
         deleteUserAlbumLikesQueryResult.rowCount === 0
       ) {
-        throw new NotFoundError(`album dengan id=${albumId} tidak ditemukan`);
+        throw new NotFoundError(
+          `user_album_likes dengan user_id=${userId} dan album_id=${albumId} tidak ditemukan`,
+        );
       }
 
       const getLikeCountQuery = {
@@ -238,10 +240,21 @@ class AlbumService {
       };
       const getLikeCountQueryResult = await client.query(getLikeCountQuery);
       if (getLikeCountQueryResult.rowCount === null || getLikeCountQueryResult.rowCount === 0) {
+        throw new NotFoundError(`album dengan id=${albumId} tidak ditemukan`);
       }
+
+      const albumLikeCount = getLikeCountQueryResult.rows[0].like_count;
       const updateAlbumLikeCountQuery = {
-        text: 'update albums set like_count ',
+        text: 'update albums set like_count = $1 - 1 where id = $2',
+        values: [albumLikeCount, albumId],
       };
+      const updateAlbumLikeCountQueryResult = await client.query(updateAlbumLikeCountQuery);
+      if (
+        updateAlbumLikeCountQueryResult.rowCount === null ||
+        updateAlbumLikeCountQueryResult.rowCount === 0
+      ) {
+        throw new NotFoundError(`Gagal mengupdate album like_count`);
+      }
 
       await client.query('COMMIT');
     } catch (e) {
