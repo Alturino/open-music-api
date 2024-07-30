@@ -23,6 +23,13 @@ const config = {
     management_port: process.env.RABBITMQ_MANAGEMENT_PORT,
     uri: process.env.RABBITMQ_URI,
   },
+  redis: {
+    host: process.env.REDIS_HOST,
+    user: process.env.REDIS_USER,
+    password: process.env.REDIS_PASSWORD,
+    port: process.env.REDIS_PORT,
+    url: process.env.REDIS_SERVER,
+  },
 };
 
 module.exports = config;

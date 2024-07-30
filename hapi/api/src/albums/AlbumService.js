@@ -3,8 +3,9 @@ const InvariantError = require('../core/exceptions/InvariantError');
 const NotFoundError = require('../core/exceptions/NotFoundError');
 
 class AlbumService {
-  constructor(pgPool) {
+  constructor(pgPool, cacheService) {
     this._pool = pgPool;
+    this._cacheService = cacheService;
 
     this.addAlbum = this.addAlbum.bind(this);
     this.updateAlbum = this.updateAlbum.bind(this);
@@ -183,6 +184,9 @@ class AlbumService {
         ) {
           throw new InvariantError('Failed to update album like_count');
         }
+
+        await this._cacheService.delete(`albums-like:${albumId}`);
+
         await client.query('COMMIT');
         return;
       }
@@ -198,21 +202,27 @@ class AlbumService {
   }
 
   async getAlbumLike(req, albumId) {
-    const query = {
-      text: 'select like_count from albums where id = $1',
-      values: [albumId],
-    };
-    req.log(
-      ['INF', 'AlbumService', 'getAlbumLike'],
-      `Starting the query to fetch like_count from album_id=${albumId}`,
-    );
-    const queryResult = await this._pool.query(query);
-    const likeCount = queryResult.rows[0].like_count;
-    req.log(
-      ['INF', 'AlbumService', 'getAlbumLike'],
-      `Finished the query to fetch like_count from album_id=${albumId} with like_count=${likeCount}`,
-    );
-    return likeCount;
+    try {
+      const likeCount = await this._cacheService.get(`albums-like:${albumId}`);
+      return { likeCount, isCache: true };
+    } catch (e) {
+      const query = {
+        text: 'select like_count from albums where id = $1',
+        values: [albumId],
+      };
+      req.log(
+        ['INF', 'AlbumService', 'getAlbumLike'],
+        `Starting the query to fetch like_count from album_id=${albumId}`,
+      );
+      const queryResult = await this._pool.query(query);
+      const likeCount = queryResult.rows[0].like_count;
+      await this._cacheService.set(`albums-like:${albumId}`, likeCount);
+      req.log(
+        ['INF', 'AlbumService', 'getAlbumLike'],
+        `Finished the query to fetch like_count from album_id=${albumId} with like_count=${likeCount}`,
+      );
+      return { likeCount, isCache: false };
+    }
   }
 
   async unlikeAlbum(req, userId, albumId) {
@@ -255,6 +265,8 @@ class AlbumService {
       ) {
         throw new NotFoundError(`Gagal mengupdate album like_count`);
       }
+
+      await this._cacheService.delete(`albums-like:${albumId}`);
 
       await client.query('COMMIT');
     } catch (e) {

@@ -2,6 +2,7 @@ const AlbumService = require('./albums/AlbumService');
 const AlbumValidator = require('./albums/validator');
 const albumPlugin = require('./albums/api');
 const StorageService = require('./albums/StorageService');
+const CacheService = require('./albums/CacheService');
 const fs = require('fs');
 
 const CollaborationsService = require('./collaborations/CollaborationsService');
@@ -37,6 +38,7 @@ const Jwt = require('@hapi/jwt');
 const amqp = require('amqplib');
 const config = require('./core/config');
 const { Pool } = require('pg');
+const redis = require('redis');
 const path = require('path');
 const dotenvExpand = require('dotenv-expand');
 
@@ -100,9 +102,16 @@ async function main() {
     }
   });
 
+  const redisClient = redis.createClient({ url: config.redis.url });
+  redisClient.on('error', (error) => {
+    server.logger.error(`main redisClient ${error}`);
+  });
+  await redisClient.connect();
+
   const staticFileFolder = path.resolve(__dirname, './public/assets');
 
-  const albumService = new AlbumService(pgPool);
+  const cacheService = new CacheService(redisClient);
+  const albumService = new AlbumService(pgPool, cacheService);
   const songService = new SongService(pgPool);
   const userService = new UserService(pgPool);
   const storageService = new StorageService(fs, staticFileFolder);

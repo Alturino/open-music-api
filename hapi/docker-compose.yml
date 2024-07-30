@@ -9,18 +9,22 @@ services:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
+      redis:
+        condition: service_healthy
     restart: always
     networks:
       - postgres
       - rabbitmq
+      - redis
     env_file: ./api/.env
     links:
       - postgres
       - rabbitmq
+      - redis
     ports:
       - ${PORT}:${PORT}
     volumes:
-      - assets:/usr/src/open-music-api/public/assets/
+      - assets:/usr/src/open_music_api/public/assets/
   exporter:
     container_name: exporter
     build:
@@ -74,6 +78,21 @@ services:
     ports:
       - ${RABBITMQ_PORT}:${RABBITMQ_PORT}
       - ${RABBITMQ_MANAGEMENT_PORT}:${RABBITMQ_MANAGEMENT_PORT}
+  redis:
+    container_name: redis
+    image: redis:7.2.4-alpine3.19
+    restart: always
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 5m
+      retries: 5
+      start_period: 45s
+    env_file: .env
+    networks:
+      - redis
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
 volumes:
   assets:
     name: assets
@@ -82,3 +101,5 @@ networks:
     name: postgres
   rabbitmq:
     name: rabbitmq
+  redis:
+    name: redis

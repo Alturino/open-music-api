@@ -122,16 +122,20 @@ class AlbumHandler {
   async getAlbumLike(req, h) {
     const { id: albumId } = req.params;
     req.log(['INF', 'AlbumHandler', 'getAlbumLike'], `albumId=${albumId} msg=get album like_count`);
-    const likeCount = await this._albumService.getAlbumLike(req, albumId);
+    const { likeCount, isCache } = await this._albumService.getAlbumLike(req, albumId);
     req.log(
       ['INF', 'AlbumHandler', 'addAlbumLike'],
       `albumId=${albumId} like_count=${likeCount} msg=success get album like_count`,
     );
-    return h.response({
+    const response = h.response({
       status: 'success',
       message: `Album like_count = ${likeCount}`,
-      data: { likes: likeCount },
+      data: { likes: Number(likeCount) },
     });
+    if (isCache) {
+      response.header('X-Data-Source', 'cache');
+    }
+    return response;
   }
 
   async unlikeAlbum(req, h) {
