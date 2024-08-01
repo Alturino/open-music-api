@@ -1,7 +1,6 @@
 package com.onirutla.open_music_api.album;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,19 +14,19 @@ import org.springframework.data.annotation.LastModifiedDate;
 @Entity
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class AlbumEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private String id;
 
-    @Column(nullable = false)
-    private String name;
+  @Column(nullable = false)
+  private String name;
 
-    @Column(nullable = false)
-    private int year;
+  @Column(nullable = false)
+  private int year;
 
-    @CreatedDate
-    private Timestamp createdAt;
+  @CreatedDate
+  private Timestamp createdAt;
 
-    @LastModifiedDate
-    private Timestamp updatedAt;
+  @LastModifiedDate
+  private Timestamp updatedAt;
 }
