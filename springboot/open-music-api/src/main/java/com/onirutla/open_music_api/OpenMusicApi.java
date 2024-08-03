@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class OpenMusicApi {
 
-    public static void main(String[] args) {
-        SpringApplication.run(OpenMusicApi.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(OpenMusicApi.class, args);
+  }
 
 }

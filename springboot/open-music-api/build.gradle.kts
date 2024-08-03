@@ -17,6 +17,9 @@ configurations {
     compileOnly {
         extendsFrom(configurations.annotationProcessor.get())
     }
+	all {
+		exclude(group = "org.springframework.boot", module = "spring-boot-starter-logging")
+	}
 }
 
 repositories {
@@ -24,14 +27,18 @@ repositories {
 }
 
 dependencies {
+
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-amqp")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	implementation("org.springframework.boot:spring-boot-starter-security")
+//	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-integration")
-	implementation("io.micrometer:micrometer-tracing-bridge-brave")
+	implementation("org.springframework.boot:spring-boot-starter-log4j2")
+
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.projectlombok:lombok")
+
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	developmentOnly("org.springframework.boot:spring-boot-docker-compose")
 	runtimeOnly("io.micrometer:micrometer-registry-prometheus")
@@ -39,7 +46,7 @@ dependencies {
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.amqp:spring-rabbit-test")
-	testImplementation("org.springframework.security:spring-security-test")
+//	testImplementation("org.springframework.security:spring-security-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 

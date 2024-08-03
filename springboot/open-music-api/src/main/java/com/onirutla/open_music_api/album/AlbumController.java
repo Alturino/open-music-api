@@ -1,8 +1,7 @@
 package com.onirutla.open_music_api.album;
 
-import lombok.extern.log4j.Log4j;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.integration.support.MapBuilder;
@@ -12,13 +11,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Map;
 
-@RestController("/albums")
-@Log4j
+@Slf4j
+@RestController
+@RequestMapping(value = "albums", produces = {MediaType.APPLICATION_JSON_VALUE})
 public class AlbumController {
 
     private final AlbumRepository repository;
@@ -27,9 +29,12 @@ public class AlbumController {
         this.repository = repository;
     }
 
-    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping
     public ResponseEntity<Map<Object, Object>> getAlbums() {
         List<AlbumEntity> albums = repository.findAll();
+        if (albums.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No albums found");
+        }
         Map<Object, Object> response = new MapBuilder<>()
                 .put("status", "success")
                 .put("message", "Album not empty")
@@ -49,18 +54,20 @@ public class AlbumController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping(value = "/")
-    public ResponseEntity<Map<Object, Object>> insertAlbum(@Validated @RequestBody AlbumEntity album) {
-        repository.save(album);
+    @PostMapping
+    public ResponseEntity<Map<Object, Object>> insertAlbum(@Validated @RequestBody AlbumDto album) {
+        AlbumEntity newAlbum = repository.save(new AlbumEntity(album.name(), album.year()));
         Map<Object, Object> response = new MapBuilder<>()
                 .put("status", "success")
-                .put("message", String.format("Album with id=%s is inserted", album.getId()))
+                .put("message", String.format("Album with id=%s is inserted", newAlbum.getId()))
+                .put("data", newAlbum)
                 .get();
         return ResponseEntity.ok(response);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Map<Object, Object>> updateAlbum(@PathVariable(value = "id") String albumId, @Validated @RequestBody AlbumEntity album) {
+    public ResponseEntity<Map<Object, Object>> updateAlbum(@PathVariable(value = "id") String albumId,
+                                                           @Validated @RequestBody AlbumEntity album) {
         repository.findById(albumId).orElseThrow();
         repository.save(album);
         Map<Object, Object> response = new MapBuilder<>()

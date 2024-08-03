@@ -1,4 +1,7 @@
 package com.onirutla.open_music_api.album;
 
-record AlbumDto(String name, int year) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+public record AlbumDto(@NotBlank String name, @Size(max = 4) int year) {
 }

@@ -35,12 +35,9 @@ public class AlbumEntity {
 
     }
 
-    public AlbumEntity(String id, String name, int year, Timestamp createdAt, Timestamp updatedAt) {
-        this.id = id;
+    public AlbumEntity(String name, int year) {
         this.name = name;
         this.year = year;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
     public String getId() {
