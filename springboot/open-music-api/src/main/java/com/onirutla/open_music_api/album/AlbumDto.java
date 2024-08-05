@@ -1,7 +1,9 @@
 package com.onirutla.open_music_api.album;
 
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
-public record AlbumDto(@NotBlank String name, @Size(max = 4) int year) {
+public record AlbumDto(@NotBlank String name,
+                       @Digits(integer = 4, fraction = 0) @Min(1) int year) {
 }
