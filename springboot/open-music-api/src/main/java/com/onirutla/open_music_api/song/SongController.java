@@ -30,11 +30,14 @@ public class SongController {
 
     @GetMapping
     public ResponseEntity<Map<Object, Object>> getSongs() {
-        List<SongEntity> songs = repository.findAll();
+        List<SongResponse> songs = repository.findAll()
+                .stream()
+                .map(song -> new SongResponse(song.getId(), song.getTitle(), song.getPerformer()))
+                .toList();
         Map<Object, Object> body = new MapBuilder<>()
                 .put("status", "success")
                 .put("message", "Song not empty")
-                .put("Songs", songs)
+                .put("data", Map.ofEntries(Map.entry("songs", songs)))
                 .get();
         return ResponseEntity.ok(body);
     }
@@ -45,44 +48,48 @@ public class SongController {
         Map<Object, Object> body = new MapBuilder<>()
                 .put("status", "success")
                 .put("message", String.format("Song with id=%s is found", songId))
-                .put("data", Map.ofEntries(Map.entry("Song", song)))
+                .put("data", Map.ofEntries(Map.entry("song", song)))
                 .get();
         return ResponseEntity.ok(body);
     }
 
     @PostMapping
-    public ResponseEntity<Map<Object, Object>> insertSong(@Valid @RequestBody SongDto song) {
-        SongEntity newSong = SongEntity.builder()
-                .title(song.title())
-                .genre(song.genre())
-                .year(song.year())
-                .duration(song.duration())
+    public ResponseEntity<Map<Object, Object>> insertSong(@Valid @RequestBody SongRequest songRequest) {
+        SongEntity song = SongEntity.builder()
+                .title(songRequest.title())
+                .year(songRequest.year())
+                .performer(songRequest.performer())
+                .genre(songRequest.genre())
+                .duration(songRequest.duration())
                 .build();
+        SongEntity newSong = repository.save(song);
         Map<Object, Object> body = new MapBuilder<>()
                 .put("status", "success")
                 .put("message", String.format("Song with id=%s is inserted", newSong.getId()))
-                .put("data", Map.ofEntries(Map.entry("SongId", newSong.getId())))
+                .put("data", Map.ofEntries(Map.entry("songId", newSong.getId())))
                 .get();
         return ResponseEntity.status(201).body(body);
     }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<Map<Object, Object>> updateSong(@PathVariable(value = "id") String songId,
-                                                          @Valid @RequestBody SongDto song) {
+                                                          @Valid @RequestBody SongRequest songRequest) {
 
         SongEntity oldSong = repository.findById(songId).orElseThrow();
         SongEntity newSong = SongEntity.builder()
-                .title(song.title())
-                .genre(song.genre())
-                .duration(song.duration())
-                .year(song.year())
+                .id(oldSong.getId())
+                .title(songRequest.title())
+                .year(songRequest.year())
+                .performer(songRequest.performer())
+                .genre(songRequest.genre())
+                .duration(songRequest.duration())
                 .createdAt(oldSong.getCreatedAt())
                 .build();
-        repository.saveAndFlush(newSong);
+        SongEntity updatedSong = repository.saveAndFlush(newSong);
         Map<Object, Object> response = new MapBuilder<>()
                 .put("status", "success")
                 .put("message", String.format("Song with id=%s is updated", songId))
-                .put("data", newSong)
+                .put("data", Map.ofEntries(Map.entry("song", updatedSong)))
                 .get();
         return ResponseEntity.ok(response);
     }

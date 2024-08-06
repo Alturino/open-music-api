@@ -24,13 +24,13 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
 
-@Getter
-@Setter
-@Entity
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity(name = "songs")
+@Getter
 @JsonNaming(PropertyNamingStrategies.LowerCamelCaseStrategy.class)
+@NoArgsConstructor
+@Setter
 public class SongEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -61,7 +61,7 @@ public class SongEntity {
     @JsonIgnore
     private Timestamp updatedAt;
 
-    @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private AlbumEntity album;
 

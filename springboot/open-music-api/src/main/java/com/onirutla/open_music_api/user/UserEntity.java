@@ -1,17 +1,13 @@
-package com.onirutla.open_music_api.album;
+package com.onirutla.open_music_api.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.onirutla.open_music_api.song.SongEntity;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,37 +16,36 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.sql.Timestamp;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Builder
-@Entity(name = "albums")
+@Entity(name = "users")
 @Getter
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonNaming(PropertyNamingStrategies.LowerCamelCaseStrategy.class)
 @NoArgsConstructor
 @Setter
-public class AlbumEntity {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(nullable = false)
-    private String name;
+    @Column(unique = true)
+    private String username;
 
-    @Column(nullable = false)
-    private int year;
+    @Column
+    private String password;
+
+    @Column
+    private String fullname;
+
+    @Column(unique = true)
+    private String refreshToken;
 
     @CreationTimestamp
-    @JsonIgnore
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    @JsonIgnore
-    private Timestamp updatedAt;
-
-    @OneToMany(mappedBy = "album", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<SongEntity> songs;
-
+    private LocalDateTime updatedAt;
 }
