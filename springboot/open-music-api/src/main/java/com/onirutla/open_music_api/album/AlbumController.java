@@ -2,6 +2,8 @@ package com.onirutla.open_music_api.album;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,7 @@ import java.util.Map;
 public class AlbumController {
 
     private final AlbumRepository repository;
+    private final Logger logger = LoggerFactory.getLogger(AlbumController.class);
 
     AlbumController(AlbumRepository repository) {
         this.repository = repository;
@@ -45,8 +48,9 @@ public class AlbumController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Map<Object, Object>> getAlbumDetails(@PathVariable(value = "id") String albumId) {
+    public ResponseEntity<Map<Object, Object>> getAlbumById(@PathVariable(value = "id") String albumId) {
         AlbumEntity album = repository.findById(albumId).orElseThrow();
+        logger.atInfo().log("album={}", album.toString());
         Map<Object, Object> body = new MapBuilder<>()
                 .put("status", "success")
                 .put("message", String.format("Album with id=%s is found", albumId))
@@ -80,7 +84,7 @@ public class AlbumController {
                 .name(album.name())
                 .createdAt(oldAlbum.getCreatedAt())
                 .build();
-        repository.saveAndFlush(newAlbum);
+        repository.save(newAlbum);
         Map<Object, Object> response = new MapBuilder<>()
                 .put("status", "success")
                 .put("message", String.format("Album with id=%s is updated", albumId))

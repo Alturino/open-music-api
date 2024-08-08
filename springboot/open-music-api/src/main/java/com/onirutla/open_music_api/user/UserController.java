@@ -30,7 +30,7 @@ public class UserController {
                 .password(hashedPassword)
                 .fullname(request.fullname())
                 .build();
-        repository.saveAndFlush(user);
+        repository.save(user);
         return ResponseEntity.ok(Map.of());
     }
 }

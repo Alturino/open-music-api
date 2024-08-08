@@ -25,9 +25,8 @@ import java.util.List;
 
 @AllArgsConstructor
 @Builder
-@Entity(name = "albums")
+@Entity
 @Getter
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonNaming(PropertyNamingStrategies.LowerCamelCaseStrategy.class)
 @NoArgsConstructor
 @Setter
@@ -44,13 +43,20 @@ public class AlbumEntity {
 
     @CreationTimestamp
     @JsonIgnore
+    @Column(updatable = false)
     private Timestamp createdAt;
 
     @UpdateTimestamp
     @JsonIgnore
+    @Column(updatable = false)
     private Timestamp updatedAt;
 
-    @OneToMany(mappedBy = "album", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.REMOVE)
     private List<SongEntity> songs;
 
+    @Override
+    public String toString() {
+        return "%s(id = %s, name = %s, year = %d, createdAt = %s, updatedAt = %s)"
+                .formatted(getClass().getSimpleName(), id, name, year, createdAt, updatedAt);
+    }
 }

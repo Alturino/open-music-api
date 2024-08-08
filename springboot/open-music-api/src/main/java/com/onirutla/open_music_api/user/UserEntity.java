@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Builder
-@Entity(name = "users")
+@Entity
 @Getter
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonNaming(PropertyNamingStrategies.LowerCamelCaseStrategy.class)
@@ -44,8 +44,10 @@ public class UserEntity {
     private String refreshToken;
 
     @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
+    @Column(updatable = false)
     private LocalDateTime updatedAt;
 }

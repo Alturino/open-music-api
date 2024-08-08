@@ -11,6 +11,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +27,7 @@ import java.sql.Timestamp;
 
 @AllArgsConstructor
 @Builder
-@Entity(name = "songs")
+@Entity
 @Getter
 @JsonNaming(PropertyNamingStrategies.LowerCamelCaseStrategy.class)
 @NoArgsConstructor
@@ -52,17 +53,23 @@ public class SongEntity {
     private int duration;
 
     @CreationTimestamp
-    @Column(name = "created_at", nullable = false)
+    @Column(nullable = false, updatable = false)
     @JsonIgnore
     private Timestamp createdAt;
 
     @UpdateTimestamp
-    @Column(name = "updated_at", nullable = false)
+    @Column(nullable = false)
     @JsonIgnore
     private Timestamp updatedAt;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "album_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private AlbumEntity album;
 
+    @Override
+    public String toString() {
+        return "%s(id = %s, title = %s, year = %d, performer = %s, genre = %s, duration = %d, createdAt = %s, updatedAt = %s)"
+                .formatted(getClass().getSimpleName(), id, title, year, performer, genre, duration, createdAt, updatedAt);
+    }
 }
