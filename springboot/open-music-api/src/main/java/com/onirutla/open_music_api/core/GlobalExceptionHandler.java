@@ -1,5 +1,6 @@
 package com.onirutla.open_music_api.core;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.integration.support.MapBuilder;
@@ -45,4 +46,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(404).body(errorBody);
     }
 
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Map<Object, Object>> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+        Map<Object, Object> errorBody = new MapBuilder<>()
+                .put("status", "fail")
+                .put("message", ex.getLocalizedMessage())
+                .get();
+        return ResponseEntity.status(400).body(errorBody);
+    }
 }

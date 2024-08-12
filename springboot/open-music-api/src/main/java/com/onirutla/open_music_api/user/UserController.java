@@ -3,6 +3,7 @@ package com.onirutla.open_music_api.user;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.integration.support.MapBuilder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,6 +34,11 @@ public class UserController {
                 .fullname(request.fullname())
                 .build();
         repository.save(user);
-        return ResponseEntity.ok(Map.of());
+        Map<Object, Object> body = new MapBuilder<>()
+                .put("status", "success")
+                .put("message", "User created")
+                .put("data", Map.ofEntries(Map.entry("userId", user.getId())))
+                .get();
+        return ResponseEntity.status(201).body(body);
     }
 }

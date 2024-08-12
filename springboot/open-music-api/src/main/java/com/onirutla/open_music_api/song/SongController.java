@@ -1,6 +1,5 @@
 package com.onirutla.open_music_api.song;
 
-import com.onirutla.open_music_api.album.AlbumEntity;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -13,10 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -30,8 +31,9 @@ public class SongController {
     }
 
     @GetMapping
-    public ResponseEntity<Map<Object, Object>> getSongs() {
-        List<SongResponse> songs = repository.findAll()
+    public ResponseEntity<Map<Object, Object>> findAllSongs(@RequestParam(value = "title", required = false) Optional<String> title,
+                                                            @RequestParam(value = "performer", required = false) Optional<String> performer) {
+        List<SongResponse> songs = repository.findSongByTitleOrPerformer(title.orElse(""), performer.orElse(""))
                 .stream()
                 .map(song -> new SongResponse(song.getId(), song.getTitle(), song.getPerformer()))
                 .toList();

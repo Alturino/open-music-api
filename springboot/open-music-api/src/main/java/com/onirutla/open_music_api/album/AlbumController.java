@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -37,7 +38,7 @@ public class AlbumController {
     }
 
     @GetMapping
-    public ResponseEntity<Map<Object, Object>> getAlbums() {
+    public ResponseEntity<Map<Object, Object>> findAllAlbums() {
         List<AlbumEntity> albums = repository.findAll();
         if (albums.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No albums found");
@@ -51,7 +52,7 @@ public class AlbumController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Map<Object, Object>> getAlbumById(@PathVariable(value = "id") String albumId) {
+    public ResponseEntity<Map<Object, Object>> findAlbumById(@PathVariable(value = "id") String albumId) {
         AlbumEntity album = repository.findById(albumId).orElseThrow();
         logger.atInfo().log("album={}", album.toString());
         Map<Object, Object> body = new MapBuilder<>()
@@ -87,6 +88,11 @@ public class AlbumController {
                 .name(album.name())
                 .createdAt(oldAlbum.getCreatedAt())
                 .build();
+        logger.atDebug()
+                .addKeyValue("albumId", albumId)
+                .addKeyValue("oldAlbum", oldAlbum.toString())
+                .addKeyValue("newAlbum", newAlbum.toString())
+                .log("updateAlbum");
         repository.save(newAlbum);
         Map<Object, Object> response = new MapBuilder<>()
                 .put("status", "success")

@@ -54,7 +54,7 @@ public class AlbumEntity {
     @Column(updatable = false)
     private Timestamp updatedAt;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "album_id")
     private List<SongEntity> songs;
 
