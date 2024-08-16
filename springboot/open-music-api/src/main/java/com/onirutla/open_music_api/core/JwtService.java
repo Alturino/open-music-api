@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -15,9 +16,11 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class JwtService {
@@ -42,7 +45,7 @@ public class JwtService {
         return (username != null && username.equals(userDetails.getUsername())) && !isExpired(token);
     }
 
-    private Claims extractAllClaimsFromToken(String token) {
+    public Claims extractAllClaimsFromToken(String token) {
         byte[] keyBytes = Decoders.BASE64.decode(env.getProperty("environment.secret_key"));
         Key signingKey = Keys.hmacShaKeyFor(keyBytes);
 
@@ -51,6 +54,11 @@ public class JwtService {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    public List<String> extractRolesFromToken(String token) {
+        final Claims claims = extractAllClaimsFromToken(token);
+        return claims.get("roles", List.class);
     }
 
     private boolean isExpired(String token) {
@@ -62,12 +70,21 @@ public class JwtService {
     }
 
     public String generateToken(Map<String, Object> claims, UserDetails userDetails) {
+        return generateToken(Jwts.claims(claims), userDetails);
+    }
+
+    public String generateToken(Claims claims, UserDetails userDetails) {
         Instant instantIssued = Instant.now(Clock.systemUTC());
         Date dateIssued = Date.from(instantIssued);
 
         Instant instantExpiration = instantIssued.plus(12, ChronoUnit.HOURS);
         Date dateExpiration = Date.from(instantExpiration);
 
+        log.atDebug()
+                .addKeyValue("instant_issued", instantIssued)
+                .addKeyValue("instant_expiration", instantExpiration)
+                .addKeyValue("process", "generateToken")
+                .log();
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
@@ -75,5 +92,4 @@ public class JwtService {
                 .setExpiration(dateExpiration)
                 .compact();
     }
-
 }

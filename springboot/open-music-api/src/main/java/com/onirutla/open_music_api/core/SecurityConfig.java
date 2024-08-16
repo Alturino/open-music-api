@@ -30,6 +30,7 @@ public class SecurityConfig {
                     authorize.requestMatchers("/albums/**").permitAll()
                             .requestMatchers("/songs/**").permitAll()
                             .requestMatchers("/users/**").permitAll()
+                            .requestMatchers("/authentications/**").permitAll()
                             .anyRequest().authenticated();
                 })
                 .csrf(AbstractHttpConfigurer::disable)
@@ -37,6 +38,7 @@ public class SecurityConfig {
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> {
                     httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 })
+                .addFilter()
                 .build();
     }
 
