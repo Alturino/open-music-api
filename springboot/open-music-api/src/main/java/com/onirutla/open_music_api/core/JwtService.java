@@ -40,7 +40,7 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public boolean isTokenValid(String token, UserDetails userDetails) {
+    public boolean isJwtValid(String token, UserDetails userDetails) {
         String username = extractUsername(token);
         return (username != null && username.equals(userDetails.getUsername())) && !isExpired(token);
     }

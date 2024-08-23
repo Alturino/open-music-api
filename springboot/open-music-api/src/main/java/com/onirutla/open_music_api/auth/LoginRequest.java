@@ -1,9 +1,11 @@
 package com.onirutla.open_music_api.auth;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.onirutla.open_music_api.core.StrictStringDeserializer;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 public record LoginRequest(
-    @NotBlank @Size(min = 8) String username,
-    @NotBlank @Size(min = 6, max = 64) String password) {
+        @NotBlank String username,
+        @NotBlank @JsonDeserialize(using = StrictStringDeserializer.class) String password
+) {
 }

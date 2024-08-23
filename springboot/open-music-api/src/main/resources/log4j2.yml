@@ -1,0 +1,39 @@
+Configuration:
+  Appenders:
+    Console:
+      name: ConsoleAppender
+      target: SYSTEM_OUT
+      JSONLayout:
+        compact: true
+        eventEol: true
+        includeTimeMillis: true
+        locationInfo: true
+        properties: true
+    File:
+      - name: FileAppender
+        fileName: logs/log.jsonl
+        JSONLayout:
+          compact: true
+          eventEol: true
+          includeTimeMillis: true
+          locationInfo: true
+          properties: true
+  Loggers:
+    Logger:
+      - name: com.onirutla.open_music_api
+        level: debug
+        additivity: false
+        AppenderRef:
+          - ref: ConsoleAppender
+          - ref: FileAppender
+      - name: org.hibernate
+        level: info
+        additivity: false
+        AppenderRef:
+          - ref: ConsoleAppender
+          - ref: FileAppender
+    Root:
+      level: debug
+      AppenderRef:
+        - ref: ConsoleAppender
+        - ref: FileAppender

@@ -1,0 +1,43 @@
+environment:
+  secret_key: ${SECRET_KEY}
+debug: false
+spring:
+  main:
+    banner-mode: off
+  jackson:
+    mapper:
+      apply-default-values: false
+      allow-coercion-of-scalars: false
+      use-static-typing: true
+      default-view-inclusion: false
+  datasource:
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+  application:
+    name: open_music_api
+  jpa:
+    show-sql: true
+    database: postgresql
+    generate-ddl: true
+    properties:
+      hibernate:
+        format_sql: true
+        generate_statistics: true
+logging:
+  config: classpath:log4j2.yml
+  charset:
+    file: UTF-8
+    console: UTF-8
+  file:
+    name: log.jsonl
+    path: logs/
+  level:
+    root: info
+    sql: info
+    web: debug
+    org:
+      hibernate: info
+      springframework: info
+  log4j2:
+    config:
+      override: classpath:log4j2.yml

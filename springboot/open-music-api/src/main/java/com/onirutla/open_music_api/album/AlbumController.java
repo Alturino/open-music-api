@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.integration.support.MapBuilder;
+import org.springframework.integration.support.StringObjectMapBuilder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,12 +33,12 @@ public class AlbumController {
     }
 
     @GetMapping
-    public ResponseEntity<Map<Object, Object>> findAllAlbums() {
+    public ResponseEntity<Map<String, Object>> findAllAlbums() {
         List<AlbumEntity> albums = repository.findAll();
         if (albums.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No albums found");
         }
-        Map<Object, Object> body = new MapBuilder<>()
+        Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "success")
                 .put("message", "Album not empty")
                 .put("albums", albums)
@@ -47,10 +47,10 @@ public class AlbumController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Map<Object, Object>> findAlbumById(@PathVariable(value = "id") String albumId) {
+    public ResponseEntity<Map<String, Object>> findAlbumById(@PathVariable(value = "id") String albumId) {
         AlbumEntity album = repository.findById(albumId).orElseThrow();
         log.atInfo().log("album={}", album.toString());
-        Map<Object, Object> body = new MapBuilder<>()
+        Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "success")
                 .put("message", String.format("Album with id=%s is found", albumId))
                 .put("data", Map.ofEntries(Map.entry("album", album)))
@@ -59,22 +59,24 @@ public class AlbumController {
     }
 
     @PostMapping
-    public ResponseEntity<Map<Object, Object>> insertAlbum(@Valid @RequestBody AlbumDto album) {
+    public ResponseEntity<Map<String, Object>> insertAlbum(@Valid @RequestBody AlbumDto album) {
         AlbumEntity newAlbum = repository.save(AlbumEntity.builder()
                 .name(album.name())
                 .year(album.year())
                 .build());
-        Map<Object, Object> body = new MapBuilder<>()
+        Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "success")
                 .put("message", String.format("Album with id=%s is inserted", newAlbum.getId()))
                 .put("data", Map.ofEntries(Map.entry("albumId", newAlbum.getId())))
                 .get();
-        return ResponseEntity.status(201).body(body);
+        return ResponseEntity.status(HttpStatus.CREATED).body(body);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Map<Object, Object>> updateAlbum(@PathVariable(value = "id") String albumId,
-                                                           @Valid @RequestBody AlbumDto album) {
+    public ResponseEntity<Map<String, Object>> updateAlbum(
+            @PathVariable(value = "id") String albumId,
+            @Valid @RequestBody AlbumDto album
+    ) {
 
         AlbumEntity oldAlbum = repository.findById(albumId).orElseThrow();
         AlbumEntity newAlbum = AlbumEntity.builder()
@@ -89,7 +91,7 @@ public class AlbumController {
                 .addKeyValue("newAlbum", newAlbum.toString())
                 .log("updateAlbum");
         repository.save(newAlbum);
-        Map<Object, Object> response = new MapBuilder<>()
+        Map<String, Object> response = new StringObjectMapBuilder()
                 .put("status", "success")
                 .put("message", String.format("Album with id=%s is updated", albumId))
                 .put("data", album)
@@ -98,10 +100,10 @@ public class AlbumController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Map<Object, Object>> deleteAlbum(@PathVariable(value = "id") String albumId) {
+    public ResponseEntity<Map<String, Object>> deleteAlbum(@PathVariable(value = "id") String albumId) {
         repository.findById(albumId).orElseThrow();
         repository.deleteById(albumId);
-        Map<Object, Object> response = new MapBuilder<>()
+        Map<String, Object> response = new StringObjectMapBuilder()
                 .put("status", "success")
                 .put("message", String.format("Album with id=%s is deleted", albumId))
                 .get();
