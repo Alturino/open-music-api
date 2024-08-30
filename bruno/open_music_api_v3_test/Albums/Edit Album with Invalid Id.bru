@@ -1,0 +1,41 @@
+meta {
+  name: Edit Album with Invalid Id
+  type: http
+  seq: 6
+}
+
+put {
+  url: http://localhost:{{port}}/albums/xxx
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "name": "Viva la vida Revision",
+      "year": 2010
+  }
+}
+
+tests {
+  test('it should response 404 status code', () => {
+  //     expect(pm.response).to.have.status(404);
+  });
+  
+  test('response Content-Type header should have application/json value', () => {
+  //     expect(pm.response.headers.get('Content-Type')).to.includes('application/json');
+  }); 
+  
+  test('response body should an object', () => {
+      const responseJson = res.getBody();
+      expect(responseJson).to.be.an('object');
+  });
+  
+  test('response body should have correct property and value', () => {
+      const responseJson = res.getBody();
+      
+      expect(responseJson.status).to.equal('fail');
+      expect(responseJson.message).to.be.a('string');
+  });
+  
+}

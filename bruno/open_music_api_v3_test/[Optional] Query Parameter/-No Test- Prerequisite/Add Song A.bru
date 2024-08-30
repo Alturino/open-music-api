@@ -1,0 +1,26 @@
+meta {
+  name: Add Song A
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:{{port}}/songs
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "title": "Kupu-kupu Malam",
+      "year": 2008,
+      "performer": "Chrisye",
+      "genre": "Pop",
+      "duration": 120
+  }
+}
+
+tests {
+  const { data: { songId } } = res.getBody();
+  bru.setEnvVar('songIdA', songId);
+}

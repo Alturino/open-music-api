@@ -1,0 +1,38 @@
+meta {
+  name: -Cache Test- Get Album Like Count -Again-
+  type: http
+  seq: 9
+}
+
+get {
+  url: http://localhost:{{port}}/albums/{{albumId}}/likes
+  body: none
+  auth: none
+}
+
+tests {
+  test('it should response 200 status code', () => {
+  //     expect(pm.response).to.have.status(200);
+  });
+  
+  test('response Content-Type header should have application/json value', () => {
+  //     expect(pm.response.headers.get('Content-Type')).to.includes('application/json');
+  }); 
+  
+  test('respose should have X-Data-Source header with value "cache"', () => {
+  //     expect(pm.response.headers.get('X-Data-Source')).to.equal("cache");
+  });
+  
+  test('response body should an object', () => {
+      const responseJson = res.getBody();
+      expect(responseJson).to.be.an('object');
+  });
+  
+  test('response body have correct property and value', () => {
+      const responseJson = res.getBody();
+  
+      expect(responseJson.status).to.equal('success');
+      expect(responseJson.data).to.be.an('object');
+      expect(responseJson.data.likes).to.equal(1);
+  });
+}

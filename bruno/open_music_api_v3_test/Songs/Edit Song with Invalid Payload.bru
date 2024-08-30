@@ -1,0 +1,68 @@
+meta {
+  name: Edit Song with Invalid Payload
+  type: http
+  seq: 7
+}
+
+put {
+  url: http://localhost:{{port}}/songs/{{songId}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {{currentBadSongPayload}}
+}
+
+script:pre-request {
+  let badSongPayloads = bru.getEnvVar('badSongPayloads');
+  
+  if (!badSongPayloads | badSongPayloads.length === 0) {
+      badSongPayloads = [
+          {},
+          { title: 1 },
+          { title: 'Life in Technicolor' },
+          { title: 'Life in Technicolor', year: 'dummy' },
+          { title: 'Life in Technicolor', year: 2008 },
+          { title: 'Life in Technicolor', year: 2008, performer: true },
+          { title: 'Life in Technicolor', year: 2008, performer: 'Coldplay' },
+          { title: 'Life in Technicolor', year: 2008, performer: 'Coldplay', genre: 123 },
+      ]
+  }
+  
+  const currentBadSongPayload = badSongPayloads.shift();
+  bru.setEnvVar('currentBadSongPayload', JSON.stringify(currentBadSongPayload));
+  bru.setEnvVar('badSongPayloads', badSongPayloads);
+}
+
+tests {
+  test('it should response 400 status code', () => {
+  //     expect(pm.response).to.have.status(400);
+  });
+  
+  test('response Content-Type header should have application/json value', () => {
+  //     expect(pm.response.headers.get('Content-Type')).to.includes('application/json');
+  }); 
+  
+  test('response body should an object', () => {
+      const responseJson = res.getBody();
+      expect(responseJson).to.be.an('object');
+  });
+  
+  test('response body have correct property and value', () => {
+      const responseJson = res.getBody();
+  
+      expect(responseJson.status).to.equal('fail');
+      expect(responseJson.message).to.be.a('string');
+  })
+  
+  const repeatRequestUntilDatasetEmpty = () => {
+      const badSongPayloads = bru.getEnvVar('badSongPayloads');
+   
+      if(badSongPayloads && badSongPayloads.length > 0) {
+          bru.setNextRequest('Edit Song with Invalid Payload');
+      }
+  }
+   
+  repeatRequestUntilDatasetEmpty();
+}

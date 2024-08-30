@@ -1,0 +1,26 @@
+meta {
+  name: Add Song C
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:{{port}}/songs
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "title": "Cinta Mati",
+      "year": 2008,
+      "performer": "Dewa 98",
+      "genre": "Pop",
+      "duration": 120
+  }
+}
+
+tests {
+  const { data: { songId } } = res.getBody();
+  bru.setEnvVar('songIdC', songId);
+}

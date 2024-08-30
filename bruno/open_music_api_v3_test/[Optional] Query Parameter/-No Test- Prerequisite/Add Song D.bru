@@ -1,0 +1,26 @@
+meta {
+  name: Add Song D
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:{{port}}/songs
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "title": "Kupu-kupu Malam",
+      "year": 2008,
+      "performer": "Peterpan",
+      "genre": "Rock",
+      "duration": 120
+  }
+}
+
+tests {
+  const { data: { songId } } = res.getBody();
+  bru.setEnvVar('songIdD', songId);
+}

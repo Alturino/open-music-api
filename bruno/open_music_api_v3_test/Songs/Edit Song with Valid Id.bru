@@ -1,0 +1,67 @@
+meta {
+  name: Edit Song with Valid Id
+  type: http
+  seq: 9
+}
+
+put {
+  url: http://localhost:{{port}}/songs/{{songId}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "title": "Life in Technicolor revision",
+      "year": 2010,
+      "performer": "Coldplay 2",
+      "genre": "Hip Hop",
+      "duration": 125
+  }
+}
+
+tests {
+  test('it should response 200 status code', () => {
+  //     expect(pm.response).to.have.status(200);
+  });
+  
+  test('response Content-Type header should have application/json value', () => {
+  //     expect(pm.response.headers.get('Content-Type')).to.includes('application/json');
+  }); 
+  
+  test('response body should an object', () => {
+      const responseJson = res.getBody();
+      expect(responseJson).to.be.an('object');
+  });
+  
+  test('response body should have correct property and value', () => {
+      const responseJson = res.getBody();
+      
+      expect(responseJson.status).to.equal('success');
+      expect(responseJson.message).to.be.a('string');
+  });
+  
+  test('when GET detail song', () => {
+      const songId = bru.getEnvVar('songId');
+      const port = bru.getEnvVar('port');
+  //     pm.sendRequest(`http://localhost:${port}/songs/${songId}`, (error, response) => {
+          if (!error) {
+              test('it should response with revised content', () => {
+                  expect(response.code).to.equal(200);
+  
+                  const responseJson = response.json();
+  
+                  expect(responseJson.status).to.equal('success');
+                  expect(responseJson.data.song).to.be.an('object');
+                  expect(responseJson.data.song.id).to.equal(songId);
+                  expect(responseJson.data.song.title).to.equal('Life in Technicolor revision');
+                  expect(responseJson.data.song.year).to.equal(2010);
+                  expect(responseJson.data.song.performer).to.equal('Coldplay 2');
+                  expect(responseJson.data.song.genre).to.equal('Hip Hop');
+                  expect(responseJson.data.song.duration).to.equal(125)
+              });
+          }
+      });
+  });
+  
+}

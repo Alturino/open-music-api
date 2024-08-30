@@ -1,0 +1,62 @@
+meta {
+  name: Add User with Already Taken Username
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:{{port}}/users
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "username": "dicoding",
+      "password": "secret",
+      "fullname": "Dicoding Indonesia"
+  }
+}
+
+script:pre-request {
+  const port = bru.getEnvVar('port');
+  
+  const requestParams = {
+    url: `http://localhost:${port}/users`,
+    method: 'POST',
+    header: {
+      'Content-Type': 'application/json',
+    },
+    body: {
+      mode: 'raw',
+      raw: JSON.stringify({ username: 'dicoding', password: 'secret', fullname: 'Dicoding Indonesia' })
+    }
+  };
+  // pm.sendRequest(requestParams, (_, error) => {
+      if (error) {
+          console.error(error);
+      }
+  });
+}
+
+tests {
+  test('it should response 400 status code', () => {
+  //     expect(pm.response).to.have.status(400);
+  });
+  
+  test('response Content-Type header should have application/json value', () => {
+  //     expect(pm.response.headers.get('Content-Type')).to.includes('application/json');
+  }); 
+  
+  test('response body should an object', () => {
+      const responseJson = res.getBody();
+      expect(responseJson).to.be.an('object');
+  });
+  
+  test('response body have correct property and value', () => {
+      const responseJson = res.getBody();
+  
+      expect(responseJson.status).to.equal('fail');
+      expect(responseJson.message).to.be.a('string');
+  });
+}

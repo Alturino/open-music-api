@@ -1,0 +1,50 @@
+meta {
+  name: Seach Song using Title and Performer
+  type: http
+  seq: 3
+}
+
+get {
+  url: http://localhost:{{port}}/songs?title=kupu&performer=peter
+  body: none
+  auth: none
+}
+
+params:query {
+  title: kupu
+  performer: peter
+}
+
+tests {
+  test('it should response 200 status code', () => {
+  //     expect(pm.response).to.have.status(200);
+  });
+  
+  test('response Content-Type header should have application/json value', () => {
+  //     expect(pm.response.headers.get('Content-Type')).to.includes('application/json');
+  }); 
+  
+  test('response body should an object', () => {
+      const responseJson = res.getBody();
+      expect(responseJson).to.be.an('object');
+  });
+  
+  test('response body have correct property and value', () => {
+      const responseJson = res.getBody();
+  
+      expect(responseJson.status).to.equal('success');
+      expect(responseJson.data).to.be.an('object');
+      expect(responseJson.data.songs).to.be.an('array');
+      expect(responseJson.data.songs).to.length(1);
+  
+      const songs = responseJson.data.songs;
+      songs.forEach((song) => {
+          expect(Object.keys(song)).to.length(3);
+          expect(song.id).to.be.ok;
+          expect(song.title).to.be.ok;
+          expect(song.title.toLowerCase()).to.includes('kupu');
+          expect(song.performer).to.be.ok;
+          expect(song.performer.toLowerCase()).to.includes('peter');
+      });
+  });
+}

@@ -1,0 +1,23 @@
+meta {
+  name: Add Album
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:{{port}}/albums
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "name": "Viva la vida",
+      "year": 2008
+  }
+}
+
+tests {
+  const responseJson = res.getBody();
+  bru.setEnvVar('albumId', responseJson.data.albumId);
+}

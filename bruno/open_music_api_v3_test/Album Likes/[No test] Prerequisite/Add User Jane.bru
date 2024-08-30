@@ -1,0 +1,19 @@
+meta {
+  name: Add User Jane
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:{{port}}/users
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "username": "jane",
+      "password": "secret",
+      "fullname": "John Doe"
+  }
+}

@@ -1,0 +1,61 @@
+meta {
+  name: Edit Album with Valid Id
+  type: http
+  seq: 7
+}
+
+put {
+  url: http://localhost:{{port}}/albums/{{albumId}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "name": "Viva la vida Revision",
+      "year": 2010
+  }
+}
+
+tests {
+  test('it should response 200 status code', () => {
+  //     expect(pm.response).to.have.status(200);
+  });
+  
+  test('response Content-Type header should have application/json value', () => {
+  //     expect(pm.response.headers.get('Content-Type')).to.includes('application/json');
+  }); 
+  
+  test('response body should an object', () => {
+      const responseJson = res.getBody();
+      expect(responseJson).to.be.an('object');
+  });
+  
+  test('response body should have correct property and value', () => {
+      const responseJson = res.getBody();
+      
+      expect(responseJson.status).to.equal('success');
+      expect(responseJson.message).to.be.a('string');
+  });
+  
+  test('when GET detail albums', () => {
+      const albumId = bru.getEnvVar('albumId');
+      const port = bru.getEnvVar('port');
+  //     pm.sendRequest(`http://localhost:${port}/albums/${albumId}`, (error, response) => {
+          if (!error) {
+              test('it should response with revised content', () => {
+                  expect(response.code).to.equal(200);
+  
+                  const responseJson = response.json();
+  
+                  expect(responseJson.status).to.equal('success');
+                  expect(responseJson.data.album).to.be.an('object');
+                  expect(responseJson.data.album.id).to.equal(albumId);
+                  expect(responseJson.data.album.name).to.equal('Viva la vida Revision');
+                  expect(responseJson.data.album.year).to.equal(2010);
+              });
+          }
+      });
+  });
+  
+}

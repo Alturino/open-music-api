@@ -1,0 +1,29 @@
+meta {
+  name: Add User Tom
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:{{port}}/users
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "username": "{{usernameTom}}",
+      "password": "secret",
+      "fullname": "Tom Riddle"
+  }
+}
+
+script:pre-request {
+  const usernameTom = `tom${+ new Date()}`;
+  bru.setEnvVar('usernameTom', usernameTom);
+}
+
+tests {
+  const { data: { userId } } = res.getBody();
+  bru.setEnvVar('userIdTom', userId);
+}

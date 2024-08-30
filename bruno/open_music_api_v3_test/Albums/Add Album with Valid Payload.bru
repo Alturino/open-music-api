@@ -1,0 +1,43 @@
+meta {
+  name: Add Album with Valid Payload
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:{{port}}/albums
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "name": "Viva la vida",
+      "year": 2008
+  }
+}
+
+tests {
+  test('it should response 201 status code', () => {
+  //     expect(pm.response).to.have.status(201);
+  });
+  
+  test('response Content-Type header should have application/json value', () => {
+  //     expect(pm.response.headers.get('Content-Type')).to.includes('application/json');
+  }); 
+  
+  test('response body should an object', () => {
+      const responseJson = res.getBody();
+      expect(responseJson).to.be.an('object');
+  });
+  
+  test('response body should have correct property and value', () => {
+      const responseJson = res.getBody();
+      
+      expect(responseJson.status).to.equal('success');
+      expect(responseJson.data).to.be.an('object');
+      expect(responseJson.data.albumId).to.be.a('string');
+  
+      bru.setEnvVar('albumId', responseJson.data.albumId);
+  });
+}

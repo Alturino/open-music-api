@@ -1,0 +1,66 @@
+meta {
+  name: Add User with Invalid Payload
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:{{port}}/users
+  body: json
+  auth: none
+}
+
+body:json {
+  {{currentBadUserPayload}}
+}
+
+script:pre-request {
+  let badUserPayloads = bru.getEnvVar('badUserPayloads');
+  
+  if (!badUserPayloads | badUserPayloads.length === 0) {
+      badUserPayloads = [
+          {},
+          { username: 1 },
+          { username: 'dicoding' },
+          { username: 'dicoding', password: true },
+          { username: 'dicoding', passowrd: 'secret' },
+          { username: 'dicoding', password: 'secret', fullname: 0 }
+      ];
+  }
+  
+  const currentBadUserPayload = badUserPayloads.shift();
+  bru.setEnvVar('currentBadUserPayload', JSON.stringify(currentBadUserPayload));
+  bru.setEnvVar('badUserPayloads', badUserPayloads);
+}
+
+tests {
+  test('it should response 400 status code', () => {
+  //     expect(pm.response).to.have.status(400);
+  });
+  
+  test('response Content-Type header should have application/json value', () => {
+  //     expect(pm.response.headers.get('Content-Type')).to.includes('application/json');
+  }); 
+  
+  test('response body should an object', () => {
+      const responseJson = res.getBody();
+      expect(responseJson).to.be.an('object');
+  });
+  
+  test('response body have correct property and value', () => {
+      const responseJson = res.getBody();
+  
+      expect(responseJson.status).to.equal('fail');
+      expect(responseJson.message).to.be.a('string');
+  })
+  
+  const repeatRequestUntilDatasetEmpty = () => {
+      const badUserPayloads = bru.getEnvVar('badUserPayloads');
+   
+      if(badUserPayloads && badUserPayloads.length > 0) {
+          bru.setNextRequest('Add User with Invalid Payload');
+      }
+  }
+   
+  repeatRequestUntilDatasetEmpty();
+}

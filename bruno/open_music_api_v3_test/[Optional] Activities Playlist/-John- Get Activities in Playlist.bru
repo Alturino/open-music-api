@@ -1,0 +1,58 @@
+meta {
+  name: -John- Get Activities in Playlist
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://localhost:{{port}}/playlists/{{playlistIdJohn}}/activities
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessTokenJohn}}
+}
+
+tests {
+  test('it should response 200 status code', () => {
+  //     expect(pm.response).to.have.status(200);
+  });
+  
+  test('response Content-Type header should have application/json value', () => {
+  //     expect(pm.response.headers.get('Content-Type')).to.includes('application/json');
+  }); 
+  
+  test('response body should an object', () => {
+      const responseJson = res.getBody();
+      expect(responseJson).to.be.an('object');
+  });
+  
+  test('it should response with valid body', () => {
+      const expectedPlaylistId = bru.getEnvVar('playlistIdJohn');
+      const responseJson = res.getBody();
+      expect(responseJson.status).to.equal('success');
+      expect(responseJson.data).to.be.an('object');
+      const { playlistId, activities } = responseJson.data;
+      expect(playlistId).to.equal(expectedPlaylistId);
+      expect(activities).to.be.an('array');
+      expect(activities).to.length(3);
+  
+      const [ activity1, activity2, activity3 ] = activities;
+  
+      expect(activity1.username).to.equal('john');
+      expect(activity1.title).to.equal('Life in Technicolor');
+      expect(activity1.action).to.equal('add');
+      expect(activity1.time).to.be.a('string');
+  
+      expect(activity2.username).to.equal('john');
+      expect(activity2.title).to.equal('Fix You');
+      expect(activity2.action).to.equal('add');
+      expect(activity2.time).to.be.a('string');
+  
+      expect(activity3.username).to.equal('john');
+      expect(activity3.title).to.equal('Life in Technicolor');
+      expect(activity3.action).to.equal('delete');
+      expect(activity3.time).to.be.a('string');
+  });
+}

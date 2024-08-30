@@ -1,0 +1,11 @@
+meta {
+  name: Delete Song D
+  type: http
+  seq: 7
+}
+
+delete {
+  url: http://localhost:{{port}}/songs/{{songIdD}}
+  body: json
+  auth: none
+}

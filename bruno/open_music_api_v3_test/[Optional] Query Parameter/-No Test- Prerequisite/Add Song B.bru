@@ -1,0 +1,26 @@
+meta {
+  name: Add Song B
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:{{port}}/songs
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "title": "Cinta",
+      "year": 2008,
+      "performer": "Chrisye",
+      "genre": "Pop",
+      "duration": 120
+  }
+}
+
+tests {
+  const { data: { songId } } = res.getBody();
+  bru.setEnvVar('songIdB', songId);
+}

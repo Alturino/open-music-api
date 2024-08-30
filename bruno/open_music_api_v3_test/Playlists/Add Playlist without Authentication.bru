@@ -1,0 +1,30 @@
+meta {
+  name: Add Playlist without Authentication
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:{{port}}/playlists
+  body: json
+  auth: none
+}
+
+body:json {
+  {}
+}
+
+tests {
+  test('it should response 401 status code', () => {
+  //     expect(pm.response).to.have.status(401);
+  });
+  
+  test('response Content-Type header should have application/json value', () => {
+  //     expect(pm.response.headers.get('Content-Type')).to.includes('application/json');
+  }); 
+  
+  test('response body should an object', () => {
+      const responseJson = res.getBody();
+      expect(responseJson).to.be.an('object');
+  });
+}

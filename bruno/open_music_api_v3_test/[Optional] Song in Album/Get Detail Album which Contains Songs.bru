@@ -1,0 +1,41 @@
+meta {
+  name: Get Detail Album which Contains Songs
+  type: http
+  seq: 3
+}
+
+get {
+  url: http://localhost:{{port}}/albums/{{albumId}}
+  body: none
+  auth: none
+}
+
+tests {
+  test('it should response 200 status code', () => {
+  //     expect(pm.response).to.have.status(200);
+  });
+  
+  test('response Content-Type header should have application/json value', () => {
+  //     expect(pm.response.headers.get('Content-Type')).to.includes('application/json');
+  }); 
+  
+  test('response body should an object', () => {
+      const responseJson = res.getBody();
+      expect(responseJson).to.be.an('object');
+  });
+  
+  test('response body should have correct property and value', () => {
+      const responseJson = res.getBody();
+      const albumId = bru.getEnvVar('albumId');
+      
+      expect(responseJson.status).to.equal('success');
+      expect(responseJson.data).to.be.an('object');
+      expect(responseJson.data.album).to.be.an('object');
+      expect(responseJson.data.album.id).to.equal(albumId);
+      expect(responseJson.data.album.name).to.equal('Viva la vida');
+      expect(responseJson.data.album.year).to.equal(2008);
+      expect(responseJson.data.album.songs).to.be.an('array');
+      expect(responseJson.data.album.songs).to.length(2);
+  });
+  
+}

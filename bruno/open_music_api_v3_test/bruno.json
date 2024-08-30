@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Open Music API V3 Test",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

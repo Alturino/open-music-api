@@ -1,0 +1,38 @@
+meta {
+  name: Add Cover Album with Valid File
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:{{port}}/albums/{{albumId}}/covers
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  cover: @file(/home/dimas/Downloads/picture-small.jpg)
+}
+
+tests {
+  test('it should response 201 status code', () => {
+  //     expect(pm.response).to.have.status(201);
+  });
+  
+  test('response Content-Type header should have application/json value', () => {
+  //     expect(pm.response.headers.get('Content-Type')).to.includes('application/json');
+  }); 
+  
+  test('response body should an object', () => {
+      const responseJson = res.getBody();
+      expect(responseJson).to.be.an('object');
+  });
+  
+  test('response body should have correct property and value', () => {
+      const responseJson = res.getBody();
+      
+      expect(responseJson.status).to.equal('success');
+      expect(responseJson.message).to.be.an('string');
+  });
+  
+}

@@ -1,0 +1,23 @@
+meta {
+  name: Login with User John
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:{{port}}/authentications
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "username": "john",
+      "password": "secret"
+  }
+}
+
+tests {
+  const { data: { accessToken } } = res.getBody();
+  bru.setEnvVar('accessTokenJohn', accessToken);
+}

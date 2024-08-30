@@ -1,0 +1,37 @@
+meta {
+  name: -Jane- Get Activities in Not Found Playlist
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:{{port}}/playlists/xxx/activities
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessTokenJane}}
+}
+
+tests {
+  test('it should response 404 status code', () => {
+  //     expect(pm.response).to.have.status(404);
+  });
+  
+  test('response Content-Type header should have application/json value', () => {
+  //     expect(pm.response.headers.get('Content-Type')).to.includes('application/json');
+  }); 
+  
+  test('response body should an object', () => {
+      const responseJson = res.getBody();
+      expect(responseJson).to.be.an('object');
+  });
+  
+  test('response body have correct property and value', () => {
+      const responseJson = res.getBody();
+  
+      expect(responseJson.status).to.equal('fail');
+      expect(responseJson.message).to.be.a('string');
+  });
+}
