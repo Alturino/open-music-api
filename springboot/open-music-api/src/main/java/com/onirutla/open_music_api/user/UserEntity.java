@@ -41,13 +41,13 @@ public class UserEntity implements UserDetails {
     @Column(unique = true)
     private String username;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String password;
 
     @Column(name = "full_name")
     private String fullname;
 
-    @Column(unique = true)
+    @Column(unique = true, columnDefinition = "TEXT")
     private String refreshToken;
 
     @CreationTimestamp

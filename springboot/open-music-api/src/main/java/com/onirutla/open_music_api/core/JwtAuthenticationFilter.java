@@ -1,11 +1,14 @@
 package com.onirutla.open_music_api.core;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.io.Encoders;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 @Component
 @RequiredArgsConstructor
@@ -25,6 +29,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+    private final Environment env;
 
     @Override
     protected void doFilterInternal(
@@ -44,8 +49,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        final String jwt = authHeader.substring(7);
-        final String username = jwtService.extractUsername(jwt);
+        String jwt = authHeader.substring(7);
+
+        String secretKey = env.getProperty("environment.access_token_secret_key");
+        String encodedSecretKey = Encoders.BASE64.encode(secretKey.getBytes(StandardCharsets.UTF_8));
+        Claims claims = jwtService.getTokenClaims(encodedSecretKey, jwt);
+        String username = claims.getSubject();
         if (username == null) {
             log.atDebug()
                     .addKeyValue("auth_header", authHeader)
@@ -57,13 +66,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        boolean isJwtNotValid = !jwtService.isJwtValid(jwt, userDetails);
-        if (userDetails == null || isJwtNotValid) {
+        boolean isJwtNotValid = !jwtService.isAccessTokenValid(jwt, userDetails);
+        if (isJwtNotValid) {
             log.atDebug()
                     .addKeyValue("jwt", jwt)
                     .addKeyValue("username", username)
-                    .addKeyValue("user_details", userDetails == null ? null : userDetails.getUsername())
-                    .addKeyValue("is_jwt_not_valid", isJwtNotValid)
+                    .addKeyValue("user_details", userDetails.getUsername())
+                    .addKeyValue("is_jwt_not_valid", true)
                     .addKeyValue("process", "authentication")
                     .log();
             filterChain.doFilter(request, response);

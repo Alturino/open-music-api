@@ -1,5 +1,6 @@
 environment:
-  secret_key: ${SECRET_KEY}
+  access_token_secret_key: ${ACCESS_TOKEN_SECRET_KEY}
+  refresh_token_secret_key: ${REFRESH_TOKEN_SECRET_KEY}
 debug: false
 spring:
   main:
@@ -11,7 +12,7 @@ spring:
       use-static-typing: true
       default-view-inclusion: false
   datasource:
-    username: ${POSTGRES_USERNAME}
+    username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
   application:
     name: open_music_api
@@ -34,7 +35,7 @@ logging:
   level:
     root: info
     sql: info
-    web: debug
+    web: info
     org:
       hibernate: info
       springframework: info

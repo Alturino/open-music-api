@@ -1,4 +1,6 @@
 .env
+.idea/**
+gradle.properties
 HELP.md
 .gradle
 ./.gradle

@@ -1,5 +1,6 @@
 package com.onirutla.open_music_api.core;
 
+import com.onirutla.open_music_api.core.exception.BadRequestException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -99,5 +100,18 @@ public class GlobalExceptionHandler {
                 .put("message", ex.getLocalizedMessage())
                 .get();
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorBody);
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<Map<String, Object>> handleValidationException(BadRequestException ex) {
+        log.atError()
+                .setMessage(ex.getMessage())
+                .addKeyValue("exception", ex.getClass().getSimpleName())
+                .log();
+        Map<String, Object> errorBody = new StringObjectMapBuilder()
+                .put("status", "fail")
+                .put("message", ex.getMessage())
+                .get();
+        return ResponseEntity.badRequest().body(errorBody);
     }
 }
