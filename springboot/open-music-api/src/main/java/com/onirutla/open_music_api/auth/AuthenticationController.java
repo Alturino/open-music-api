@@ -16,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -149,8 +150,8 @@ public class AuthenticationController {
                 .log("refresh token saved to database");
 
         Map<String, Object> data = new StringObjectMapBuilder()
-                .put("accessToken", accessToken)
-                .put("refreshToken", refreshToken)
+                .put("access_token", accessToken)
+                .put("refresh_token", refreshToken)
                 .get();
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "success")
@@ -161,10 +162,23 @@ public class AuthenticationController {
     }
 
     @PutMapping
-    public ResponseEntity<Map<String, Object>> refreshToken(@RequestBody @Valid RefreshTokenRequest request) {
+    public ResponseEntity<Map<String, Object>> updateRefreshToken(@RequestBody @Valid RefreshTokenRequest request) {
+        log.atDebug()
+                .addKeyValue("process", "update_refresh_token")
+                .addKeyValue("refresh_token", request.refreshToken())
+                .log("initiating update refresh token");
+
         UserEntity user = userRepository
                 .findByRefreshToken(request.refreshToken())
-                .orElseThrow(() -> new BadRequestException("refresh token not found"));
+                .orElseThrow(() -> {
+                    BadRequestException e = new BadRequestException("refresh token not found");
+                    log.atDebug()
+                            .addKeyValue("process", "update_refresh_token")
+                            .addKeyValue("refresh_token", request.refreshToken())
+                            .setCause(e)
+                            .log(e.getMessage());
+                    return e;
+                });
 
         boolean isValid = jwtService.isRefreshTokenKeyValid(request.refreshToken(), user);
         if (!isValid) {
@@ -185,6 +199,53 @@ public class AuthenticationController {
                 .put("status", "success")
                 .put("message", "refresh token success")
                 .put("data", data)
+                .get();
+        return ResponseEntity.ok(body);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Map<String, Object>> deleteRefreshToken(@RequestBody @Valid RefreshTokenRequest request) {
+        log.atDebug()
+                .addKeyValue("process", "delete_refresh_token")
+                .addKeyValue("refresh_token", request.refreshToken())
+                .log("initiating delete refresh token");
+
+        log.atDebug()
+                .addKeyValue("process", "delete_refresh_token")
+                .addKeyValue("refresh_token", request.refreshToken())
+                .log("finding user by refresh token");
+        UserEntity user = userRepository.findByRefreshToken(request.refreshToken())
+                .orElseThrow(() -> {
+                    BadRequestException e = new BadRequestException("refresh token not found");
+                    log.atError()
+                            .addKeyValue("process", "delete_refresh_token")
+                            .addKeyValue("refresh_token", request.refreshToken())
+                            .setCause(e)
+                            .log(e.getMessage());
+                    return e;
+                });
+        log.atDebug()
+                .addKeyValue("process", "delete_refresh_token")
+                .addKeyValue("refresh_token", request.refreshToken())
+                .addKeyValue("user", user)
+                .log("user with refresh token {} is found", user);
+
+        log.atDebug()
+                .addKeyValue("process", "delete_refresh_token")
+                .addKeyValue("refresh_token", request.refreshToken())
+                .addKeyValue("user", user)
+                .log("initiating delete refresh token");
+        user.setRefreshToken("");
+        userRepository.save(user);
+        log.atDebug()
+                .addKeyValue("process", "delete_refresh_token")
+                .addKeyValue("refresh_token", request.refreshToken())
+                .addKeyValue("user", user)
+                .log("refresh token deleted");
+
+        Map<String, Object> body = new StringObjectMapBuilder()
+                .put("status", "success")
+                .put("message", "delete refresh token success")
                 .get();
         return ResponseEntity.ok(body);
     }
