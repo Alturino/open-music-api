@@ -50,6 +50,9 @@ public class SongEntity {
     @Column(name = "album_id")
     private String albumId;
 
+    @Column(name = "playlist_id")
+    private String playlistId;
+
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     @JsonIgnore
@@ -62,7 +65,16 @@ public class SongEntity {
 
     @Override
     public String toString() {
-        return "%s(id = %s, title = %s, year = %d, performer = %s, genre = %s, duration = %d, createdAt = %s, updatedAt = %s)"
-                .formatted(getClass().getSimpleName(), id, title, year, performer, genre, duration, createdAt, updatedAt);
+        return "%s(id = %s, title = %s, year = %d, performer = %s, genre = %s, duration = %d, createdAt = %s, updatedAt = %s)".formatted(
+                getClass().getSimpleName(),
+                id,
+                title,
+                year,
+                performer,
+                genre,
+                duration,
+                createdAt,
+                updatedAt
+        );
     }
 }

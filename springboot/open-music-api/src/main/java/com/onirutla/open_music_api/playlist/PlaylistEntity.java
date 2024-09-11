@@ -1,18 +1,13 @@
-package com.onirutla.open_music_api.album;
+package com.onirutla.open_music_api.playlist;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.onirutla.open_music_api.song.SongEntity;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,47 +18,59 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 @AllArgsConstructor
 @Builder
-@Entity(name = "albums")
+@Entity(name = "playlists")
 @Getter
-@JsonNaming(PropertyNamingStrategies.LowerCamelCaseStrategy.class)
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @NoArgsConstructor
 @Setter
-@Table(name = "albums")
-public class AlbumEntity {
+@Table(name = "playlists")
+public class PlaylistEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    @Column(name = "owner_id", nullable = false)
+    private String ownerId;
+
     @Column(nullable = false)
-    private String name;
+    private String genre;
+
+    @Column(nullable = false)
+    private String performer;
+
+    @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false)
+    private int duration;
 
     @Column(nullable = false)
     private int year;
 
     @CreationTimestamp
     @JsonIgnore
-    @Column(updatable = false)
+    @Column(updatable = false, nullable = false)
     private Timestamp createdAt;
 
     @UpdateTimestamp
     @JsonIgnore
-    @Column
+    @Column(nullable = false)
     private Timestamp updatedAt;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "album_id")
-    private List<SongEntity> songs;
 
     @Override
     public String toString() {
-        return "%s(id = %s, name = %s, year = %d, createdAt = %s, updatedAt = %s)".formatted(
+        return "%s(id = '%s', ownerId = '%s', genre = '%s', performer = '%s', title = '%s', duration = %d, year = %d, createdAt = %s, updatedAt = %s)".formatted(
                 getClass().getSimpleName(),
                 id,
-                name,
+                ownerId,
+                genre,
+                performer,
+                title,
+                duration,
                 year,
                 createdAt,
                 updatedAt
