@@ -47,7 +47,7 @@ public class UserEntity implements UserDetails {
     @Column(name = "full_name")
     private String fullname;
 
-    @Column(unique = true, columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String refreshToken;
 
     @CreationTimestamp

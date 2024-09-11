@@ -150,8 +150,8 @@ public class AuthenticationController {
                 .log("refresh token saved to database");
 
         Map<String, Object> data = new StringObjectMapBuilder()
-                .put("access_token", accessToken)
-                .put("refresh_token", refreshToken)
+                .put("accessToken", accessToken)
+                .put("refreshToken", refreshToken)
                 .get();
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "success")
@@ -228,14 +228,14 @@ public class AuthenticationController {
                 .addKeyValue("process", "delete_refresh_token")
                 .addKeyValue("refresh_token", request.refreshToken())
                 .addKeyValue("user", user)
-                .log("user with refresh token {} is found", user);
+                .log("user with refresh token {} is found", user.getRefreshToken());
 
         log.atDebug()
                 .addKeyValue("process", "delete_refresh_token")
                 .addKeyValue("refresh_token", request.refreshToken())
                 .addKeyValue("user", user)
                 .log("initiating delete refresh token");
-        user.setRefreshToken("");
+        user.setRefreshToken(null);
         userRepository.save(user);
         log.atDebug()
                 .addKeyValue("process", "delete_refresh_token")
