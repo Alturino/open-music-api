@@ -1,6 +1,5 @@
-package com.onirutla.open_music_api.playlist;
+package com.onirutla.open_music_api.playlist.collaboration;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.persistence.Column;
@@ -15,41 +14,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.sql.Timestamp;
 
 @AllArgsConstructor
 @Builder
-@Entity(name = "playlists")
+@Entity(name = "collaborations")
 @Getter
 @JsonNaming(PropertyNamingStrategies.LowerCamelCaseStrategy.class)
 @NoArgsConstructor
 @Setter
-@Table(name = "playlists")
+@Table(name = "collaborations")
 @ToString
-public class PlaylistEntity {
-
+public class CollaborationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(name = "owner_id", nullable = false)
-    private String ownerId;
+    @Column(name = "collaborator_id", nullable = false)
+    private String collaboratorId;
 
-    @Column(nullable = false)
-    private String name;
-
-    @CreationTimestamp
-    @JsonIgnore
-    @Column(updatable = false, nullable = false)
-    private Timestamp createdAt;
-
-    @UpdateTimestamp
-    @JsonIgnore
-    @Column(nullable = false)
-    private Timestamp updatedAt;
-
-
+    @Column(name = "playlist_id", nullable = false)
+    private String playlistId;
 }

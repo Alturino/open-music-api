@@ -3,13 +3,18 @@ package com.onirutla.open_music_api.user;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.onirutla.open_music_api.playlist.PlaylistEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,6 +28,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 
 @AllArgsConstructor
 @Builder
@@ -31,8 +37,8 @@ import java.util.Collection;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonNaming(PropertyNamingStrategies.LowerCamelCaseStrategy.class)
 @RequiredArgsConstructor
-@ToString
 @Setter
+@ToString
 public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -57,6 +63,10 @@ public class UserEntity implements UserDetails {
     @UpdateTimestamp
     @Column(updatable = false)
     private LocalDateTime updatedAt;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id")
+    private List<PlaylistEntity> playlists;
 
     @Enumerated(EnumType.STRING)
     private UserRole userRole;

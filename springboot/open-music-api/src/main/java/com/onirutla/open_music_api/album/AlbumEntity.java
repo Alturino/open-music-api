@@ -19,6 +19,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -33,6 +34,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Table(name = "albums")
+@ToString
 public class AlbumEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -54,19 +56,8 @@ public class AlbumEntity {
     @Column
     private Timestamp updatedAt;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "album_id")
     private List<SongEntity> songs;
 
-    @Override
-    public String toString() {
-        return "%s(id = %s, name = %s, year = %d, createdAt = %s, updatedAt = %s)".formatted(
-                getClass().getSimpleName(),
-                id,
-                name,
-                year,
-                createdAt,
-                updatedAt
-        );
-    }
 }

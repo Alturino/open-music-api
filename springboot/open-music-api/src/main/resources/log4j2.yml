@@ -3,12 +3,18 @@ Configuration:
     Console:
       name: ConsoleAppender
       target: SYSTEM_OUT
-      JSONLayout:
-        compact: true
-        eventEol: true
-        includeTimeMillis: true
-        locationInfo: true
-        properties: true
+# debug purpose only
+      PatternLayout:
+        alwaysWriteExceptions: true
+        charset: utf-8
+        disableAnsi: false
+        pattern: '%highlight{timestamp="%d{DEFAULT_NANOS}" level=%level{lowerCase=false} thread_id=%threadId process_id=%processId{defaultValue} logger_location=%location class=%class map="%mdc{key}" ndc="%NDC" message="%message"}\n'
+#      JSONLayout:
+#        compact: true
+#        eventEol: true
+#        includeTimeMillis: true
+#        locationInfo: true
+#        properties: true
     File:
       - name: FileAppender
         fileName: logs/log.jsonl

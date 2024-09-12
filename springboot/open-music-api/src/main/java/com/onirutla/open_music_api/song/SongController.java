@@ -1,6 +1,7 @@
 package com.onirutla.open_music_api.song;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,16 +21,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@Slf4j
-@RestController
 @RequestMapping(value = "songs", produces = { MediaType.APPLICATION_JSON_VALUE })
+@RequiredArgsConstructor
+@RestController
+@Slf4j
 public class SongController {
 
     private final SongRepository repository;
-
-    SongController(SongRepository repository) {
-        this.repository = repository;
-    }
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> findAllSongs(

@@ -1,5 +1,7 @@
 package com.onirutla.open_music_api.core;
 
+import com.onirutla.open_music_api.user.UserEntity;
+import com.onirutla.open_music_api.user.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.io.Encoders;
 import jakarta.servlet.FilterChain;
@@ -13,8 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -28,8 +29,9 @@ import java.nio.charset.StandardCharsets;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final UserDetailsService userDetailsService;
+    private final UserRepository repository;
     private final Environment env;
+    private final UserRepository userRepository;
 
     @Override
     protected void doFilterInternal(
@@ -65,13 +67,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        boolean isJwtNotValid = !jwtService.isAccessTokenValid(jwt, userDetails);
+        UserEntity user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username));
+        boolean isJwtNotValid = !jwtService.isAccessTokenValid(jwt, user);
         if (isJwtNotValid) {
             log.atDebug()
                     .addKeyValue("jwt", jwt)
                     .addKeyValue("username", username)
-                    .addKeyValue("user_details", userDetails.getUsername())
+                    .addKeyValue("user_details", user.getUsername())
                     .addKeyValue("is_jwt_not_valid", true)
                     .addKeyValue("process", "authentication")
                     .log();
@@ -80,9 +83,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                userDetails.getUsername(),
+                user.getId(),
                 null,
-                userDetails.getAuthorities()
+                user.getAuthorities()
         );
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authentication);

@@ -25,10 +25,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
-@Slf4j
-@RestController
 @RequestMapping(value = "/authentications")
 @RequiredArgsConstructor
+@RestController
+@Slf4j
 public class AuthenticationController {
 
     private final UserRepository userRepository;
