@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.lang.NonNull;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -29,7 +30,6 @@ import java.nio.charset.StandardCharsets;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final UserRepository repository;
     private final Environment env;
     private final UserRepository userRepository;
 
@@ -39,19 +39,38 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
+        log.atDebug()
+                .addKeyValue("process", "authentication")
+                .log("initiating process authentication");
+
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        log.atDebug()
+                .addKeyValue("process", "authentication")
+                .addKeyValue("auth_header", authHeader)
+                .addKeyValue("auth_header", authHeader)
+                .addKeyValue("auth_header_is_null", authHeader == null)
+                .addKeyValue("auth_header_is_bearer", authHeader != null && authHeader.startsWith("Bearer "))
+                .log("retrieved auth_header={}", authHeader);
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             log.atDebug()
+                    .addKeyValue("process", "authentication")
                     .addKeyValue("auth_header", authHeader)
                     .addKeyValue("auth_header_is_null", authHeader == null)
                     .addKeyValue("auth_header_is_bearer", authHeader != null && authHeader.startsWith("Bearer "))
-                    .addKeyValue("process", "authentication")
-                    .log();
+                    .log("authentication is not valid");
             filterChain.doFilter(request, response);
             return;
         }
 
         String jwt = authHeader.substring(7);
+        log.atDebug()
+                .addKeyValue("process", "authentication")
+                .addKeyValue("auth_header", authHeader)
+                .addKeyValue("auth_header_is_null", false)
+                .addKeyValue("auth_header_is_bearer", authHeader.startsWith("Bearer "))
+                .addKeyValue("jwt", jwt)
+                .log("retrieved jwt={}", jwt);
+
 
         String secretKey = env.getProperty("environment.access_token_secret_key");
         String encodedSecretKey = Encoders.BASE64.encode(secretKey.getBytes(StandardCharsets.UTF_8));
@@ -59,10 +78,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String username = claims.getSubject();
         if (username == null) {
             log.atDebug()
-                    .addKeyValue("auth_header", authHeader)
-                    .addKeyValue("username", null)
                     .addKeyValue("process", "authentication")
-                    .log();
+                    .addKeyValue("auth_header", authHeader)
+                    .addKeyValue("auth_header_is_null", false)
+                    .addKeyValue("auth_header_is_bearer", authHeader.startsWith("Bearer "))
+                    .addKeyValue("jwt", jwt)
+                    .log("username should not be null");
             filterChain.doFilter(request, response);
             return;
         }
@@ -72,12 +93,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         boolean isJwtNotValid = !jwtService.isAccessTokenValid(jwt, user);
         if (isJwtNotValid) {
             log.atDebug()
-                    .addKeyValue("jwt", jwt)
-                    .addKeyValue("username", username)
-                    .addKeyValue("user_details", user.getUsername())
-                    .addKeyValue("is_jwt_not_valid", true)
                     .addKeyValue("process", "authentication")
-                    .log();
+                    .addKeyValue("auth_header", authHeader)
+                    .addKeyValue("auth_header_is_null", false)
+                    .addKeyValue("auth_header_is_bearer", authHeader.startsWith("Bearer "))
+                    .addKeyValue("jwt", jwt)
+                    .log("jwt should be valid");
             filterChain.doFilter(request, response);
             return;
         }

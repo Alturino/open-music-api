@@ -3,9 +3,9 @@ package com.onirutla.open_music_api.core.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.BAD_REQUEST)
-public class BadRequestException extends RuntimeException {
-    public BadRequestException(String message) {
+@ResponseStatus(HttpStatus.FORBIDDEN)
+public class ForbiddenException extends RuntimeException {
+    public ForbiddenException(String message) {
         super(message);
     }
 }

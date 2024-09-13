@@ -21,6 +21,15 @@ public class StrictStringDeserializer extends StringDeserializer {
             ctxt.reportInputMismatch(String.class, p.getCurrentToken().getClass().getTypeName());
             return null;
         }
+        if (p.getCurrentToken().isNumeric()) {
+            log.atDebug()
+                    .setMessage("token is not a valid String")
+                    .addKeyValue("process", "deserialize")
+                    .addKeyValue("token", p.getCurrentToken().asString())
+                    .log();
+            ctxt.reportInputMismatch(String.class, p.getCurrentToken().getClass().getTypeName());
+            return null;
+        }
         return super.deserialize(p, ctxt);
     }
 }

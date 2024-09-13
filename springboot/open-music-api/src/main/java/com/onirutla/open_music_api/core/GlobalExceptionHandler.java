@@ -1,6 +1,9 @@
 package com.onirutla.open_music_api.core;
 
 import com.onirutla.open_music_api.core.exception.BadRequestException;
+import com.onirutla.open_music_api.core.exception.ForbiddenException;
+import com.onirutla.open_music_api.core.exception.NotFoundException;
+import com.onirutla.open_music_api.core.exception.UnauthorizedRequestException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -30,11 +33,11 @@ public class GlobalExceptionHandler {
                 .setMessage(ex.getMessage())
                 .addKeyValue("exception", ex.getClass().getSimpleName())
                 .log();
-        Map<String, Object> errorBody = new StringObjectMapBuilder()
+        Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "fail")
                 .put("message", errorMessage)
                 .get();
-        return ResponseEntity.badRequest().body(errorBody);
+        return ResponseEntity.badRequest().body(body);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
@@ -43,11 +46,11 @@ public class GlobalExceptionHandler {
                 .setMessage(ex.getMessage())
                 .addKeyValue("exception", ex.getClass().getSimpleName())
                 .log();
-        Map<String, Object> errorBody = new StringObjectMapBuilder()
+        Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "fail")
                 .put("message", ex.getLocalizedMessage())
                 .get();
-        return ResponseEntity.badRequest().body(errorBody);
+        return ResponseEntity.badRequest().body(body);
     }
 
     @ExceptionHandler(NoSuchElementException.class)
@@ -56,11 +59,11 @@ public class GlobalExceptionHandler {
                 .setMessage(ex.getMessage())
                 .addKeyValue("exception", ex.getClass().getSimpleName())
                 .log();
-        Map<String, Object> errorBody = new StringObjectMapBuilder()
+        Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "fail")
                 .put("message", ex.getLocalizedMessage())
                 .get();
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorBody);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
@@ -69,25 +72,12 @@ public class GlobalExceptionHandler {
                 .setMessage(ex.getMessage())
                 .addKeyValue("exception", ex.getClass().getSimpleName())
                 .log();
-        Map<String, Object> errorBody = new StringObjectMapBuilder()
+        Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "fail")
                 .put("message", ex.getLocalizedMessage())
                 .get();
-        return ResponseEntity.badRequest().body(errorBody);
+        return ResponseEntity.badRequest().body(body);
     }
-
-//    @ExceptionHandler(UsernameNotFoundException.class)
-//    public ResponseEntity<Map<String, Object>> handleUsernameNotFoundException(UsernameNotFoundException ex) {
-//        log.atError()
-//                .setMessage(ex.getMessage())
-//                .addKeyValue("exception", ex.getClass().getSimpleName())
-//                .log();
-//        Map<String, Object> errorBody = new StringObjectMapBuilder()
-//                .put("status", "fail")
-//                .put("message", ex.getLocalizedMessage())
-//                .get();
-//        return ResponseEntity.badRequest().body(errorBody);
-//    }
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<Map<String, Object>> handleBadCredentialsException(BadCredentialsException ex) {
@@ -95,11 +85,11 @@ public class GlobalExceptionHandler {
                 .setMessage(ex.getMessage())
                 .addKeyValue("exception", ex.getClass().getSimpleName())
                 .log();
-        Map<String, Object> errorBody = new StringObjectMapBuilder()
+        Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "fail")
                 .put("message", ex.getLocalizedMessage())
                 .get();
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorBody);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
     }
 
     @ExceptionHandler(BadRequestException.class)
@@ -108,10 +98,50 @@ public class GlobalExceptionHandler {
                 .setMessage(ex.getMessage())
                 .addKeyValue("exception", ex.getClass().getSimpleName())
                 .log();
-        Map<String, Object> errorBody = new StringObjectMapBuilder()
+        Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "fail")
                 .put("message", ex.getMessage())
                 .get();
-        return ResponseEntity.badRequest().body(errorBody);
+        return ResponseEntity.badRequest().body(body);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleNotFoundException(NotFoundException e) {
+        log.atError()
+                .setCause(e)
+                .addKeyValue("exception", e.getClass().getSimpleName())
+                .log(e.getMessage());
+        Map<String, Object> body = new StringObjectMapBuilder()
+                .put("status", "fail")
+                .put("message", e.getMessage())
+                .get();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+
+    @ExceptionHandler(UnauthorizedRequestException.class)
+    public ResponseEntity<Map<String, Object>> handleUnauthorizedRequestException(UnauthorizedRequestException e) {
+        log.atError()
+                .setCause(e)
+                .addKeyValue("exception", e.getClass().getSimpleName())
+                .log(e.getMessage());
+        Map<String, Object> body = new StringObjectMapBuilder()
+                .put("status", "fail")
+                .put("message", e.getMessage())
+                .get();
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
+    }
+
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<Map<String, Object>> handleForbiddenException(ForbiddenException e) {
+        log.atError()
+                .setCause(e)
+                .addKeyValue("exception", e.getClass().getSimpleName())
+                .log(e.getMessage());
+        Map<String, Object> body = new StringObjectMapBuilder()
+                .put("status", "fail")
+                .put("message", e.getMessage())
+                .get();
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(body);
     }
 }

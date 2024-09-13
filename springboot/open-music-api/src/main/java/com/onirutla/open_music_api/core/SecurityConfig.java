@@ -1,5 +1,6 @@
 package com.onirutla.open_music_api.core;
 
+import com.onirutla.open_music_api.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(4);
-
+    private final UserRepository userRepository;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
@@ -32,15 +33,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         log.atTrace()
-                .setMessage("initiating securityFilterChain")
+                .addKeyValue("process", "securityFilterChain")
                 .addKeyValue("class", "SecurityConfig")
-                .log();
+                .log("initiating securityFilterChain");
         DefaultSecurityFilterChain defaultSecurityFilterChain = http.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/albums/**").permitAll()
                         .requestMatchers("/songs/**").permitAll()
                         .requestMatchers("/users/**").permitAll()
                         .requestMatchers("/authentications/**").permitAll()
-                        .requestMatchers("/playlists/**").authenticated()
+                        .requestMatchers("/playlists/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)

@@ -5,11 +5,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PlaylistRepository extends JpaRepository<PlaylistEntity, String> {
-    List<PlaylistEntity> findByOwnerId(String ownerId);
+    @Query("select p from playlists as p left join collaborations as c on p.id = c.playlistId where p.id = :id and (c.collaboratorId = :ownerId or p.ownerId = :ownerId)")
+    Optional<PlaylistEntity> findByIdAndOwnerId(String id, String ownerId);
 
-    @Query("select p from playlists as p left join collaborations as c on p.id = c.playlistId where c.collaboratorId = :userId or p.ownerId = :userId")
-    List<PlaylistEntity> findByUserId(String userId);
+    @Query("select p from playlists as p left join collaborations as c on p.id = c.playlistId where c.collaboratorId = :ownerId or p.ownerId = :ownerId")
+    List<PlaylistEntity> findByOwnerId(String ownerId);
 }

@@ -1,6 +1,10 @@
 package com.onirutla.open_music_api.playlist;
 
+import com.onirutla.open_music_api.core.exception.ForbiddenException;
 import com.onirutla.open_music_api.core.exception.NotFoundException;
+import com.onirutla.open_music_api.core.exception.UnauthorizedRequestException;
+import com.onirutla.open_music_api.song.SongEntity;
+import com.onirutla.open_music_api.song.SongRepository;
 import com.onirutla.open_music_api.user.UserEntity;
 import com.onirutla.open_music_api.user.UserRepository;
 import jakarta.validation.Valid;
@@ -11,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.integration.support.StringObjectMapBuilder;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +32,7 @@ public class PlaylistController {
 
     private final PlaylistRepository playlistRepository;
     private final UserRepository userRepository;
+    private final SongRepository songRepository;
 
     @PostMapping
     public ResponseEntity<Map<String, Object>> insertPlaylist(@RequestBody @Valid PlaylistPostRequest request) {
@@ -42,28 +48,24 @@ public class PlaylistController {
         log.atDebug()
                 .addKeyValue("process", "insert_playlist")
                 .addKeyValue("user_id", userId)
-                .addKeyValue("owner_id", userId)
                 .addKeyValue("request", request)
-                .log("validating if authenticated user exists");
-        UserEntity authUser = userRepository.findById(userId)
-                .orElseThrow(() -> {
-                    NotFoundException e = new NotFoundException("authenticated user is not exists");
-                    log.atError()
-                            .addKeyValue("process", "insert_playlist")
-                            .addKeyValue("user_id", userId)
-                            .addKeyValue("owner_id", userId)
-                            .addKeyValue("request", request)
-                            .setCause(e)
-                            .log(e.getMessage());
-                    return e;
-                });
+                .log("finding user_id={}", userId);
+        UserEntity authUser = userRepository.findById(userId).orElseThrow(() -> {
+            UnauthorizedRequestException e = new UnauthorizedRequestException(String.format("user_id=%s not found", userId));
+            log.atError()
+                    .addKeyValue("process", "insert_playlist")
+                    .addKeyValue("user_id", userId)
+                    .addKeyValue("request", request)
+                    .setCause(e)
+                    .log(e.getMessage());
+            return e;
+        });
         log.atDebug()
                 .addKeyValue("process", "insert_playlist")
                 .addKeyValue("user_id", userId)
-                .addKeyValue("owner_id", userId)
                 .addKeyValue("user", authUser)
                 .addKeyValue("request", request)
-                .log("validated authenticated user exists");
+                .log("founded user_id={}", userId);
 
         log.atDebug()
                 .addKeyValue("process", "insert_playlist")
@@ -87,7 +89,6 @@ public class PlaylistController {
 
         Map<String, Object> data = new StringObjectMapBuilder()
                 .put("playlistId", playlist.getId())
-                .put("ownerId", playlist.getOwnerId())
                 .get();
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "success")
@@ -109,29 +110,31 @@ public class PlaylistController {
         log.atDebug()
                 .addKeyValue("process", "get_playlists")
                 .addKeyValue("user_id", userId)
-                .log("validating if authenticated user exists");
-        UserEntity authUser = userRepository.findById(userId)
-                .orElseThrow(() -> {
-                    NotFoundException e = new NotFoundException("authenticated user not found");
-                    log.atError()
-                            .setCause(e)
-                            .addKeyValue("process", "get_playlists")
-                            .addKeyValue("user_id", userId)
-                            .log(e.getMessage());
-                    return e;
-                });
+                .log("finding user_id={}", userId);
+        UserEntity authUser = userRepository.findById(userId).orElseThrow(() -> {
+            NotFoundException e = new NotFoundException(String.format("user_id=%s not found", userId));
+            log.atError()
+                    .setCause(e)
+                    .addKeyValue("process", "get_playlists")
+                    .addKeyValue("user_id", userId)
+                    .log(e.getMessage());
+            return e;
+        });
         log.atDebug()
                 .addKeyValue("process", "get_playlists")
                 .addKeyValue("user_id", userId)
                 .addKeyValue("user", authUser)
-                .log("validated authenticated user exists");
+                .log("founded user_id={}", userId);
 
         log.atDebug()
                 .addKeyValue("process", "get_playlists")
                 .addKeyValue("user_id", userId)
                 .addKeyValue("user", authUser)
-                .log("finding playlists for user_id={}", userId);
-        List<PlaylistEntity> playlists = playlistRepository.findByUserId(userId);
+                .log("finding playlists with user_id={}", userId);
+        List<PlaylistResponse> playlists = playlistRepository.findByOwnerId(userId)
+                .stream()
+                .map((playlist) -> new PlaylistResponse(playlist.getId(), playlist.getName(), authUser.getUsername()))
+                .toList();
         if (playlists.isEmpty()) {
             throw new NotFoundException(String.format("playlist not found for user_id=%s", userId));
         }
@@ -140,7 +143,7 @@ public class PlaylistController {
                 .addKeyValue("user_id", userId)
                 .addKeyValue("user", authUser)
                 .addKeyValue("playlists", playlists)
-                .log("founded playlists for user_id={}", userId);
+                .log("founded playlists with user_id={}", userId);
 
         Map<String, Object> data = new StringObjectMapBuilder()
                 .put("playlists", playlists)
@@ -150,5 +153,87 @@ public class PlaylistController {
                 .put("data", data)
                 .get();
         return ResponseEntity.ok(body);
+    }
+
+    @PostMapping("/{playlistId}/songs")
+    public ResponseEntity<Map<String, Object>> addSongToUserPlaylist(@RequestBody @Valid AddSongToUserPlaylistRequest request, @PathVariable String playlistId) {
+        log.atDebug()
+                .addKeyValue("process", "add_song_to_playlist")
+                .addKeyValue("playlist_id", playlistId)
+                .addKeyValue("request", request)
+                .log("initiating process add_song_to_playlist");
+
+
+        String userId = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal()
+                .toString();
+
+        log.atDebug()
+                .addKeyValue("process", "add_song_to_playlist")
+                .addKeyValue("user_id", userId)
+                .addKeyValue("request", request)
+                .log("finding playlist_id={}", playlistId);
+        PlaylistEntity playlist = playlistRepository.findById(playlistId).orElseThrow(() -> {
+            NotFoundException e = new NotFoundException(String.format("playlist not found with playlist_id=%s", playlistId));
+            log.atError()
+                    .setCause(e)
+                    .addKeyValue("process", "add_song_to_playlist")
+                    .addKeyValue("user_id", userId)
+                    .addKeyValue("playlist_id", playlistId)
+                    .addKeyValue("request", request)
+                    .log(e.getMessage());
+            return e;
+        });
+        if (!playlist.getOwnerId().equals(userId)) {
+            throw new ForbiddenException("user do not have access to the playlist_id=%s".formatted(playlistId));
+        }
+
+        log.atDebug()
+                .addKeyValue("process", "add_song_to_playlist")
+                .addKeyValue("user_id", userId)
+                .addKeyValue("playlist_id", playlistId)
+                .addKeyValue("request", request)
+                .log("finding song_id={}", request.songId());
+        SongEntity song = songRepository.findById(request.songId()).orElseThrow(() -> {
+            NotFoundException e = new NotFoundException(String.format("song with id=%s not found", request.songId()));
+            log.atError()
+                    .setCause(e)
+                    .addKeyValue("process", "add_song_to_playlist")
+                    .addKeyValue("user_id", userId)
+                    .addKeyValue("playlist_id", playlistId)
+                    .addKeyValue("request", request)
+                    .log(e.getMessage());
+            return e;
+        });
+        log.atDebug()
+                .addKeyValue("process", "add_song_to_playlist")
+                .addKeyValue("user_id", userId)
+                .addKeyValue("playlist_id", playlistId)
+                .addKeyValue("request", request)
+                .log("founded song_id={}", request.songId());
+
+        log.atDebug()
+                .addKeyValue("process", "add_song_to_playlist")
+                .addKeyValue("user_id", userId)
+                .addKeyValue("old_playlist_id", song.getPlaylistId())
+                .addKeyValue("playlist_id", playlistId)
+                .addKeyValue("request", request)
+                .log("updating song playlist_id from playlist_id={}, to playlist_id={}", song.getPlaylistId(), playlistId);
+        song.setPlaylistId(playlistId);
+        songRepository.save(song);
+        log.atDebug()
+                .addKeyValue("process", "add_song_to_playlist")
+                .addKeyValue("user_id", userId)
+                .addKeyValue("old_playlist_id", song.getPlaylistId())
+                .addKeyValue("playlist_id", playlistId)
+                .addKeyValue("request", request)
+                .log("updated song playlist_id from playlist_id={}, to playlist_id={}", song.getPlaylistId(), playlistId);
+
+        Map<String, Object> body = new StringObjectMapBuilder()
+                .put("status", "success")
+                .put("message", String.format("updated song playlist_id from playlist_id=%s to playlist_id=%s", song.getPlaylistId(), playlistId))
+                .get();
+        return ResponseEntity.status(HttpStatus.CREATED).body(body);
     }
 }
