@@ -1,7 +1,5 @@
 package com.onirutla.open_music_api.playlist.collaboration;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,20 +8,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 @AllArgsConstructor
 @Builder
+@Data
 @Entity(name = "collaborations")
-@Getter
-@JsonNaming(PropertyNamingStrategies.LowerCamelCaseStrategy.class)
 @NoArgsConstructor
-@Setter
 @Table(name = "collaborations")
-@ToString
 public class CollaborationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

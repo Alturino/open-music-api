@@ -49,7 +49,7 @@ public class AlbumController {
         log.atInfo().log("album={}", album.toString());
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "success")
-                .put("message", String.format("Album with id=%s is found", albumId))
+                .put("message", "Album with id=%s is found".formatted(albumId))
                 .put("data", Map.ofEntries(Map.entry("album", album)))
                 .get();
         return ResponseEntity.ok(body);
@@ -63,7 +63,7 @@ public class AlbumController {
                 .build());
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "success")
-                .put("message", String.format("Album with id=%s is inserted", newAlbum.getId()))
+                .put("message", "Album with id=%s is inserted".formatted(newAlbum.getId()))
                 .put("data", Map.ofEntries(Map.entry("albumId", newAlbum.getId())))
                 .get();
         return ResponseEntity.status(HttpStatus.CREATED).body(body);
@@ -90,7 +90,7 @@ public class AlbumController {
         repository.save(newAlbum);
         Map<String, Object> response = new StringObjectMapBuilder()
                 .put("status", "success")
-                .put("message", String.format("Album with id=%s is updated", albumId))
+                .put("message", "Album with id=%s is updated".formatted(albumId))
                 .put("data", album)
                 .get();
         return ResponseEntity.ok(response);
@@ -102,7 +102,7 @@ public class AlbumController {
         repository.deleteById(albumId);
         Map<String, Object> response = new StringObjectMapBuilder()
                 .put("status", "success")
-                .put("message", String.format("Album with id=%s is deleted", albumId))
+                .put("message", "Album with id=%s is deleted".formatted(albumId))
                 .get();
         return ResponseEntity.ok(response);
     }

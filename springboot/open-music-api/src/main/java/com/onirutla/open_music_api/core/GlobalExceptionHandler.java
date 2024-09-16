@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleValidationException(MethodArgumentNotValidException ex) {
         List<String> fieldError = ex.getFieldErrors()
                 .stream()
-                .map(error -> String.format("field=%s, message=%s", error.getField(), error.getDefaultMessage()))
+                .map(error -> "field=%s, message=%s".formatted(error.getField(), error.getDefaultMessage()))
                 .toList();
         String errorMessage = String.join(" ", fieldError);
         log.atError()

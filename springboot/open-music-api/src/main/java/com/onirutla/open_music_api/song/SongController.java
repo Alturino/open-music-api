@@ -56,7 +56,7 @@ public class SongController {
         SongEntity song = repository.findById(songId).orElseThrow();
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "success")
-                .put("message", String.format("Song with id=%s is found", songId))
+                .put("message", "Song with id=%s is found".formatted(songId))
                 .put("data", Map.ofEntries(Map.entry("song", song)))
                 .get();
         return ResponseEntity.ok(body);
@@ -75,7 +75,7 @@ public class SongController {
         SongEntity newSong = repository.save(song);
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "success")
-                .put("message", String.format("Song with id=%s is inserted", newSong.getId()))
+                .put("message", "Song with id=%s is inserted".formatted(newSong.getId()))
                 .put("data", Map.ofEntries(Map.entry("songId", newSong.getId())))
                 .get();
         return ResponseEntity.status(HttpStatus.CREATED).body(body);
@@ -99,7 +99,7 @@ public class SongController {
         SongEntity updatedSong = repository.saveAndFlush(newSong);
         Map<String, Object> response = new StringObjectMapBuilder()
                 .put("status", "success")
-                .put("message", String.format("Song with id=%s is updated", songId))
+                .put("message", "Song with id=%s is updated".formatted(songId))
                 .put("data", Map.ofEntries(Map.entry("song", updatedSong)))
                 .get();
         return ResponseEntity.ok(response);
@@ -111,7 +111,7 @@ public class SongController {
         repository.deleteById(songId);
         Map<String, Object> response = new StringObjectMapBuilder()
                 .put("status", "success")
-                .put("message", String.format("Song with id=%s is deleted", songId))
+                .put("message", "Song with id=%s is deleted".formatted(songId))
                 .get();
         return ResponseEntity.ok(response);
     }

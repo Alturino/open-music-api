@@ -1,8 +1,5 @@
 package com.onirutla.open_music_api.user;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.onirutla.open_music_api.playlist.PlaylistEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -15,12 +12,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,13 +28,10 @@ import java.util.List;
 
 @AllArgsConstructor
 @Builder
-@Entity
-@Getter
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonNaming(PropertyNamingStrategies.LowerCamelCaseStrategy.class)
-@RequiredArgsConstructor
-@Setter
-@ToString
+@Data
+@Entity(name = "users")
+@NoArgsConstructor
+@Table(name = "users")
 public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

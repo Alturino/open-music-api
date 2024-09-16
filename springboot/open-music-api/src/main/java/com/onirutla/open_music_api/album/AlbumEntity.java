@@ -16,6 +16,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,13 +29,10 @@ import java.util.List;
 
 @AllArgsConstructor
 @Builder
+@Data
 @Entity(name = "albums")
-@Getter
-@JsonNaming(PropertyNamingStrategies.LowerCamelCaseStrategy.class)
 @NoArgsConstructor
-@Setter
 @Table(name = "albums")
-@ToString
 public class AlbumEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

@@ -16,7 +16,7 @@ public interface UserRepository extends JpaRepository<UserEntity, String>, UserD
 
     @Override
     default UserDetails loadUserByUsername(String username) {
-        return findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("user with username=%s not found", username)));
+        return findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("user with username=%s not found".formatted(username)));
     }
 
 
