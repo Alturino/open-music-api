@@ -13,7 +13,7 @@ public class StrictStringDeserializer extends StringDeserializer {
     @Override
     public String deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JacksonException {
         if (p.getCurrentToken().isBoolean()) {
-            log.atDebug()
+            log.atInfo()
                     .setMessage("token is not a valid String")
                     .addKeyValue("process", "deserialize")
                     .addKeyValue("token", p.getCurrentToken().asString())
@@ -22,7 +22,7 @@ public class StrictStringDeserializer extends StringDeserializer {
             return null;
         }
         if (p.getCurrentToken().isNumeric()) {
-            log.atDebug()
+            log.atInfo()
                     .setMessage("token is not a valid String")
                     .addKeyValue("process", "deserialize")
                     .addKeyValue("token", p.getCurrentToken().asString())

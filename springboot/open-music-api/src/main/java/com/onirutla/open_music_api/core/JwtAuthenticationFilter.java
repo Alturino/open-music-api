@@ -39,12 +39,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "authentication")
                 .log("initiating process authentication");
 
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "authentication")
                 .addKeyValue("auth_header", authHeader)
                 .addKeyValue("auth_header", authHeader)
@@ -52,7 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 .addKeyValue("auth_header_is_bearer", authHeader != null && authHeader.startsWith("Bearer "))
                 .log("retrieved auth_header={}", authHeader);
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            log.atDebug()
+            log.atInfo()
                     .addKeyValue("process", "authentication")
                     .addKeyValue("auth_header", authHeader)
                     .addKeyValue("auth_header_is_null", authHeader == null)
@@ -63,7 +63,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         String jwt = authHeader.substring(7);
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "authentication")
                 .addKeyValue("auth_header", authHeader)
                 .addKeyValue("auth_header_is_null", false)
@@ -77,7 +77,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         Claims claims = jwtService.getTokenClaims(encodedSecretKey, jwt);
         String username = claims.getSubject();
         if (username == null) {
-            log.atDebug()
+            log.atInfo()
                     .addKeyValue("process", "authentication")
                     .addKeyValue("auth_header", authHeader)
                     .addKeyValue("auth_header_is_null", false)
@@ -92,7 +92,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 .orElseThrow(() -> new UsernameNotFoundException(username));
         boolean isJwtNotValid = !jwtService.isAccessTokenValid(jwt, user);
         if (isJwtNotValid) {
-            log.atDebug()
+            log.atInfo()
                     .addKeyValue("process", "authentication")
                     .addKeyValue("auth_header", authHeader)
                     .addKeyValue("auth_header_is_null", false)

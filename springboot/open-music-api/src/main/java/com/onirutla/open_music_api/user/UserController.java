@@ -25,18 +25,18 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<Map<String, Object>> register(@RequestBody @Valid RegisterRequest request) {
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "register")
                 .addKeyValue("request_body", request)
                 .log("initiating process register");
 
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "register")
                 .addKeyValue("request_body", request)
                 .addKeyValue("password", request.password())
                 .log("hashing password");
         String hashedPassword = passwordEncoder.encode(request.password());
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "register")
                 .addKeyValue("request_body", request)
                 .addKeyValue("password", request.password())
@@ -49,7 +49,7 @@ public class UserController {
                 .fullname(request.fullname())
                 .userRole(UserRole.USER)
                 .build();
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "register")
                 .addKeyValue("request_body", request)
                 .addKeyValue("password", request.password())
@@ -57,7 +57,7 @@ public class UserController {
                 .addKeyValue("user", user)
                 .log("saving user");
         repository.save(user);
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "register")
                 .addKeyValue("request_body", request)
                 .addKeyValue("password", request.password())
@@ -70,7 +70,7 @@ public class UserController {
                 .put("message", "User created")
                 .put("data", Map.ofEntries(Map.entry("userId", user.getId())))
                 .get();
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "register")
                 .addKeyValue("request_body", request)
                 .addKeyValue("password", request.password())

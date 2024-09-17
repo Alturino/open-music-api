@@ -82,7 +82,7 @@ public class AlbumController {
                 .name(album.name())
                 .createdAt(oldAlbum.getCreatedAt())
                 .build();
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("albumId", albumId)
                 .addKeyValue("oldAlbum", oldAlbum.toString())
                 .addKeyValue("newAlbum", newAlbum.toString())

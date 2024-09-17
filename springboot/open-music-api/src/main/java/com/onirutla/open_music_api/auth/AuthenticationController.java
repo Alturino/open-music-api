@@ -37,7 +37,7 @@ public class AuthenticationController {
 
     @PostMapping
     public ResponseEntity<Map<String, Object>> login(@RequestBody @Valid LoginRequest request) {
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "login")
                 .addKeyValue("login_request", request.toString())
                 .addKeyValue("password_type", request.password().getClass().getTypeName())
@@ -56,14 +56,14 @@ public class AuthenticationController {
                             .log("username not found");
                     return e;
                 });
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "login")
                 .addKeyValue("login_request", request.toString())
                 .addKeyValue("password_type", request.password().getClass().getTypeName())
                 .addKeyValue("username", request.username())
                 .log("user with username {} found", request.username());
 
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "login")
                 .addKeyValue("login_request", request.toString())
                 .addKeyValue("password_type", request.password().getClass().getTypeName())
@@ -83,7 +83,7 @@ public class AuthenticationController {
                     .log("password is invalid");
             throw e;
         }
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "login")
                 .addKeyValue("login_request", request.toString())
                 .addKeyValue("password_type", request.password().getClass().getTypeName())
@@ -103,28 +103,28 @@ public class AuthenticationController {
                 .put("authorities", user.getAuthorities())
                 .get();
 
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "login")
                 .addKeyValue("login_request", request.toString())
                 .addKeyValue("password_type", request.password().getClass().getTypeName())
                 .addKeyValue("username", request.username())
                 .log("initiating access token generation");
         String accessToken = jwtService.generateAccessToken(Jwts.claims().add(claims).build(), user);
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "login")
                 .addKeyValue("login_request", request.toString())
                 .addKeyValue("password_type", request.password().getClass().getTypeName())
                 .addKeyValue("username", request.username())
                 .log("finished access token generation");
 
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "login")
                 .addKeyValue("login_request", request.toString())
                 .addKeyValue("password_type", request.password().getClass().getTypeName())
                 .addKeyValue("username", request.username())
                 .log("initiating refresh token generation");
         String refreshToken = jwtService.generateRefreshToken(Jwts.claims().add(claims).build(), user);
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "login")
                 .addKeyValue("login_request", request.toString())
                 .addKeyValue("password_type", request.password().getClass().getTypeName())
@@ -132,7 +132,7 @@ public class AuthenticationController {
                 .addKeyValue("refresh_token", refreshToken)
                 .log("finished refresh token generation");
 
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "login")
                 .addKeyValue("login_request", request.toString())
                 .addKeyValue("password_type", request.password().getClass().getTypeName())
@@ -141,7 +141,7 @@ public class AuthenticationController {
                 .log("saving refresh token to database");
         user.setRefreshToken(refreshToken);
         userRepository.save(user);
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "login")
                 .addKeyValue("login_request", request.toString())
                 .addKeyValue("password_type", request.password().getClass().getTypeName())
@@ -163,7 +163,7 @@ public class AuthenticationController {
 
     @PutMapping
     public ResponseEntity<Map<String, Object>> updateRefreshToken(@RequestBody @Valid RefreshTokenRequest request) {
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "update_refresh_token")
                 .addKeyValue("refresh_token", request.refreshToken())
                 .log("initiating update refresh token");
@@ -172,7 +172,7 @@ public class AuthenticationController {
                 .findByRefreshToken(request.refreshToken())
                 .orElseThrow(() -> {
                     BadRequestException e = new BadRequestException("refresh token not found");
-                    log.atDebug()
+                    log.atInfo()
                             .addKeyValue("process", "update_refresh_token")
                             .addKeyValue("refresh_token", request.refreshToken())
                             .setCause(e)
@@ -205,12 +205,12 @@ public class AuthenticationController {
 
     @DeleteMapping
     public ResponseEntity<Map<String, Object>> deleteRefreshToken(@RequestBody @Valid RefreshTokenRequest request) {
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "delete_refresh_token")
                 .addKeyValue("refresh_token", request.refreshToken())
                 .log("initiating delete refresh token");
 
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "delete_refresh_token")
                 .addKeyValue("refresh_token", request.refreshToken())
                 .log("finding user by refresh token");
@@ -224,20 +224,20 @@ public class AuthenticationController {
                             .log(e.getMessage());
                     return e;
                 });
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "delete_refresh_token")
                 .addKeyValue("refresh_token", request.refreshToken())
                 .addKeyValue("user", user)
                 .log("user with refresh token {} is found", user.getRefreshToken());
 
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "delete_refresh_token")
                 .addKeyValue("refresh_token", request.refreshToken())
                 .addKeyValue("user", user)
                 .log("initiating delete refresh token");
         user.setRefreshToken(null);
         userRepository.save(user);
-        log.atDebug()
+        log.atInfo()
                 .addKeyValue("process", "delete_refresh_token")
                 .addKeyValue("refresh_token", request.refreshToken())
                 .addKeyValue("user", user)

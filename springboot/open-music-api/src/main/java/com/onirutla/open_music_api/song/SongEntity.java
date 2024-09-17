@@ -49,9 +49,6 @@ public class SongEntity {
     @Column(name = "album_id")
     private String albumId;
 
-    @Column(name = "playlist_id")
-    private String playlistId;
-
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     @JsonIgnore

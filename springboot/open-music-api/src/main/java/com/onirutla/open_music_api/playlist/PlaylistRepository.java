@@ -1,5 +1,6 @@
 package com.onirutla.open_music_api.playlist;
 
+import com.onirutla.open_music_api.song.SongEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

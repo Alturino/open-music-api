@@ -38,7 +38,8 @@ logging:
     web: info
     org:
       hibernate: info
-      springframework: info
+      springframework:
+        orm.jpa.JpaTransactionManager: debug
   log4j2:
     config:
       override: classpath:log4j2.yml

@@ -19,30 +19,27 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Builder
 @Data
-@Entity(name = "playlists")
+@Entity(name = "playlists_and_songs")
 @NoArgsConstructor
-@Table(name = "playlists")
-public class PlaylistEntity {
-
+@Table(name = "playlists_and_songs")
+public class PlaylistAndSongEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(name = "owner_id", nullable = false)
-    private String ownerId;
+    @Column(name = "playlist_id", nullable = false)
+    private String playlistId;
 
-    @Column(nullable = false)
-    private String name;
+    @Column(name = "song_id", nullable = false)
+    private String songId;
 
     @CreationTimestamp
+    @Column(nullable = false, updatable = false)
     @JsonIgnore
-    @Column(updatable = false, nullable = false)
     private Timestamp createdAt;
 
     @UpdateTimestamp
-    @JsonIgnore
     @Column(nullable = false)
+    @JsonIgnore
     private Timestamp updatedAt;
-
-
 }
