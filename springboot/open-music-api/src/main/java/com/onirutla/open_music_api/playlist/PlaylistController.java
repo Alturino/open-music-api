@@ -69,7 +69,7 @@ public class PlaylistController {
                 .addKeyValue("user_id", userId)
                 .addKeyValue("user", authUser)
                 .addKeyValue("request", request)
-                .log("founded user_id={}", userId);
+                .log("found user_id={}", userId);
 
         log.atInfo()
                 .addKeyValue("process", "insert_playlist")
@@ -128,7 +128,7 @@ public class PlaylistController {
                 .addKeyValue("process", "get_playlists")
                 .addKeyValue("user_id", userId)
                 .addKeyValue("user", authUser)
-                .log("founded user_id={}", userId);
+                .log("found user_id={}", userId);
 
         log.atInfo()
                 .addKeyValue("process", "get_playlists")
@@ -147,7 +147,7 @@ public class PlaylistController {
                 .addKeyValue("user_id", userId)
                 .addKeyValue("user", authUser)
                 .addKeyValue("playlists", playlists)
-                .log("founded playlists with user_id={}", userId);
+                .log("found playlists with user_id={}", userId);
 
         Map<String, Object> data = new StringObjectMapBuilder()
                 .put("playlists", playlists)
@@ -223,7 +223,7 @@ public class PlaylistController {
                 .addKeyValue("user_id", userId)
                 .addKeyValue("playlist_id", playlistId)
                 .addKeyValue("request", request)
-                .log("founded song_id={}", request.songId());
+                .log("found song_id={}", request.songId());
 
         log.atInfo()
                 .addKeyValue("process", "add_song_to_playlist")
@@ -258,10 +258,19 @@ public class PlaylistController {
                 .addKeyValue("playlist_id", playlistId)
                 .log("initiating process get_songs_in_playlist with playlist_id={}", playlistId);
 
+        log.atInfo()
+                .addKeyValue("process", "get_songs_in_playlist")
+                .addKeyValue("playlist_id", playlistId)
+                .log("retrieving user_id from authentication");
         String userId = SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getPrincipal()
                 .toString();
+        log.atInfo()
+                .addKeyValue("process", "get_songs_in_playlist")
+                .addKeyValue("playlist_id", playlistId)
+                .addKeyValue("user_id", userId)
+                .log("retrieved user_id={} from authentication", userId);
 
         log.atInfo()
                 .addKeyValue("process", "get_songs_in_playlist")
@@ -273,7 +282,7 @@ public class PlaylistController {
                 .addKeyValue("process", "get_songs_in_playlist")
                 .addKeyValue("playlist_id", playlistId)
                 .addKeyValue("user_id", userId)
-                .log("founded playlist and song playlist_id={} user_id={}", playlistId, userId);
+                .log("found playlist and song playlist_id={} user_id={}", playlistId, userId);
 
         Map<String, Object> data = new StringObjectMapBuilder()
                 .put("playlist", playlistAndSongs)
@@ -288,6 +297,17 @@ public class PlaylistController {
 
     @DeleteMapping("/{playlistId}/songs")
     public ResponseEntity<Map<String, Object>> deleteSongInPlaylist(@RequestBody @Valid SongInPlaylistRequest request, @PathVariable String playlistId) {
+        log.atInfo()
+                .addKeyValue("process", "delete_song_in_playlist")
+                .addKeyValue("playlist_id", playlistId)
+                .addKeyValue("song_id", request.songId())
+                .log("initiating process delete_song_in_playlist with playlist_id={}", playlistId);
+
+        log.atInfo()
+                .addKeyValue("process", "delete_song_in_playlist")
+                .addKeyValue("playlist_id", playlistId)
+                .addKeyValue("song_id", request.songId())
+                .log("retrieving user_id from authentication");
         String userId = SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getPrincipal()
@@ -297,7 +317,7 @@ public class PlaylistController {
                 .addKeyValue("playlist_id", playlistId)
                 .addKeyValue("song_id", request.songId())
                 .addKeyValue("user_id", userId)
-                .log("initiating process delete_song_in_playlist with playlist_id={}, user_id={}", playlistId, userId);
+                .log("retrieved user_id={} from authentication", userId);
 
         log.atInfo()
                 .addKeyValue("process", "delete_song_in_playlist")

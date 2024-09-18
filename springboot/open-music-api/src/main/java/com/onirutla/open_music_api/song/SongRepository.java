@@ -24,7 +24,7 @@ public interface SongRepository extends JpaRepository<SongEntity, String> {
             left join playlists_and_songs as ps on p.id = ps.playlistId
             left join songs as s on ps.songId = s.id
             left join collaborations as c on p.id = c.playlistId
-            where ps.playlistId = :playlistId and (p.ownerId = :userId or c.collaboratorId = :userId)
+            where ps.playlistId = :playlistId and (p.ownerId = :ownerId or c.collaboratorId = :ownerId)
             """
     )
     List<SongEntity> findSongByOwnerIdAndPlaylistIdAndSongId(String ownerId, String playlistId);
