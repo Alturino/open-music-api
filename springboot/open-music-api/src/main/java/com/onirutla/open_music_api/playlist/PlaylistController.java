@@ -319,47 +319,65 @@ public class PlaylistController {
                 .addKeyValue("user_id", userId)
                 .log("retrieved user_id={} from authentication", userId);
 
-        log.atInfo()
-                .addKeyValue("process", "delete_song_in_playlist")
-                .addKeyValue("playlist_id", playlistId)
-                .addKeyValue("song_id", request.songId())
-                .addKeyValue("user_id", userId)
-                .log("finding playlist with playlist_id={}", playlistId);
-        PlaylistEntity playlist = playlistRepository.findById(playlistId).orElseThrow(() -> {
-            NotFoundException e = new NotFoundException("playlist with playlist_id=%s not found".formatted(playlistId));
-            log.atError()
-                    .setCause(e)
-                    .addKeyValue("process", "delete_song_in_playlist")
-                    .addKeyValue("playlist_id", playlistId)
-                    .addKeyValue("song_id", request.songId())
-                    .addKeyValue("user_id", userId)
-                    .log(e.getMessage());
-            return e;
-        });
-        log.atInfo()
-                .addKeyValue("process", "delete_song_in_playlist")
-                .addKeyValue("playlist_id", playlistId)
-                .addKeyValue("playlist", playlist)
-                .addKeyValue("song_id", request.songId())
-                .addKeyValue("user_id", userId)
-                .log("found playlist with playlist_id={}", playlistId);
-
-        SongEntity song = songRepository.findById(request.songId()).orElseThrow(() -> {
-            NotFoundException e = new NotFoundException("song with song_id=%s".formatted(request.songId()));
-            log.atError()
-                    .setCause(e)
-                    .addKeyValue("process", "delete_song_in_playlist")
-                    .addKeyValue("playlist_id", playlistId)
-                    .addKeyValue("playlist", playlist)
-                    .addKeyValue("song_id", request.songId())
-                    .addKeyValue("user_id", userId)
-                    .log(e.getMessage());
-            return e;
-        });
+        boolean isDeleted = playlistService.deleteSongInPlaylist(userId, playlistId, request.songId());
+        if (!isDeleted) {
+            Map<String, Object> errorBody = new StringObjectMapBuilder()
+                    .put("status", "failed")
+                    .put("message", "unknown error when deleting song from playlist with playlist_id=%s".formatted(playlistId))
+                    .get();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorBody);
+        }
 
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "success")
-                .put("message", "success delete song song_id=%s playlist_id=%s".formatted(request.songId(), playlistId))
+                .put("message", "success delete song with song_id=%s from playlist with playlist_id=%s".formatted(request.songId(), playlistId))
+                .get();
+        return ResponseEntity.ok(body);
+    }
+
+    @DeleteMapping("/{playlistId}")
+    public ResponseEntity<Map<String, Object>> deletePlaylist(@PathVariable String playlistId) {
+        log.atInfo()
+                .addKeyValue("process", "delete_playlist")
+                .addKeyValue("playlist_id", playlistId)
+                .log("initiating process delete_playlist with playlist_id={}", playlistId);
+
+        log.atInfo()
+                .addKeyValue("process", "delete_playlist")
+                .addKeyValue("playlist_id", playlistId)
+                .log("retrieving user_id from authentication");
+        String userId = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal()
+                .toString();
+        log.atInfo()
+                .addKeyValue("process", "delete_playlist")
+                .addKeyValue("playlist_id", playlistId)
+                .addKeyValue("user_id", userId)
+                .log("retrieved user_id={} from authentication", userId);
+
+        log.atInfo()
+                .addKeyValue("process", "delete_playlist")
+                .addKeyValue("playlist_id", playlistId)
+                .addKeyValue("user_id", userId)
+                .log("deleting playlist with playlist_id={}", playlistId);
+        boolean isPlaylistDeleted = playlistService.deletePlaylist(userId, playlistId);
+        if (!isPlaylistDeleted) {
+            Map<String, Object> errorBody = new StringObjectMapBuilder()
+                    .put("status", "failed")
+                    .put("message", "unknown error when deleting song from playlist with playlist_id=%s".formatted(playlistId))
+                    .get();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorBody);
+        }
+        log.atInfo()
+                .addKeyValue("process", "delete_playlist")
+                .addKeyValue("playlist_id", playlistId)
+                .addKeyValue("user_id", userId)
+                .log("deleted playlist with playlist_id={}", playlistId);
+
+        Map<String, Object> body = new StringObjectMapBuilder()
+                .put("status", "success")
+                .put("message", "deleted playlist with playlist_id=%s".formatted(playlistId))
                 .get();
         return ResponseEntity.ok(body);
     }
