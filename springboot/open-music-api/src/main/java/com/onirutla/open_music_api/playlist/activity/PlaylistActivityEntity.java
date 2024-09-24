@@ -1,6 +1,9 @@
 package com.onirutla.open_music_api.playlist.activity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -9,6 +12,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.sql.Timestamp;
+
+enum Action {
+    Add, Update, Delete
+}
 
 @AllArgsConstructor
 @Builder
@@ -20,4 +31,24 @@ public class PlaylistActivityEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+
+    @Column(name = "playlist_id")
+    private String playlistId;
+
+    @Column(name = "song_id")
+    private String songId;
+
+    @Column(name = "user_id")
+    private String userId;
+
+    @Enumerated(value = EnumType.STRING)
+    private Action action;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private Timestamp createdAt;
+
+    @UpdateTimestamp
+    @Column
+    private Timestamp updatedAt;
 }
