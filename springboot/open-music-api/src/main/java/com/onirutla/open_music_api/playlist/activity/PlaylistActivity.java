@@ -1,10 +1,11 @@
 package com.onirutla.open_music_api.playlist.activity;
 
+import java.time.Instant;
+
 public record PlaylistActivity(
-        String id,
-        String playlistId,
-        String songId,
-        String userId,
-        Action action
+        String username,
+        String title,
+        PlaylistActivityAction playlistActivityAction,
+        Instant time
 ) {
 }

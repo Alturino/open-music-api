@@ -28,21 +28,28 @@ public class PlaylistController {
 
     @PostMapping
     public ResponseEntity<Map<String, Object>> insertPlaylist(@RequestBody @Valid PlaylistPostRequest request) {
+        String userId = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal()
+                .toString();
         log.atInfo()
                 .addKeyValue("process", "insert_playlist")
                 .addKeyValue("request", request)
-                .log("received request to insert playlist with request={}", request);
+                .addKeyValue("user_id", userId)
+                .log("received request to insert playlist with request={} by user_id={}", request, userId);
 
         log.atInfo()
                 .addKeyValue("process", "insert_playlist")
                 .addKeyValue("request", request)
-                .log("inserting playlist with request={}", request);
-        PlaylistEntity insertedPlaylist = playlistService.insertPlaylist(request);
+                .addKeyValue("user_id", userId)
+                .log("inserting playlist with request={} to user_id={}", request, userId);
+        PlaylistEntity insertedPlaylist = playlistService.insertPlaylist(request, userId);
         log.atInfo()
                 .addKeyValue("process", "insert_playlist")
                 .addKeyValue("request", request)
                 .addKeyValue("playlist", insertedPlaylist)
-                .log("inserted playlist={} with request={}", insertedPlaylist, request);
+                .addKeyValue("user_id", userId)
+                .log("inserted playlist={} with request={} to user_id={}", insertedPlaylist, request, userId);
         Map<String, Object> data = new StringObjectMapBuilder()
                 .put("playlistId", insertedPlaylist.getId())
                 .get();

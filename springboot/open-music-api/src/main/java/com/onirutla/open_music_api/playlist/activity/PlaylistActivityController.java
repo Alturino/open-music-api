@@ -1,6 +1,6 @@
 package com.onirutla.open_music_api.playlist.activity;
 
-import com.onirutla.open_music_api.core.exception.NotFoundException;
+import com.onirutla.open_music_api.core.exception.ForbiddenException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -20,51 +20,40 @@ import java.util.Map;
 @Slf4j
 public class PlaylistActivityController {
 
-    private final PlaylistActivityRepository playlistActivityRepository;
+    private final PlaylistActivityService playlistActivityService;
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> getActivitiesInPlaylist(@PathVariable(name = "playlistId") String playlistId) {
-        log.atInfo()
-                .addKeyValue("process", "get_activities_in_playlist")
-                .addKeyValue("playlistId", playlistId)
-                .log("initiating process get_activities_in_playlist");
-
-        log.atInfo()
-                .addKeyValue("process", "get_activities_in_playlist")
-                .addKeyValue("playlistId", playlistId)
-                .log("retrieving userId");
         String userId = SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getPrincipal()
                 .toString();
         log.atInfo()
                 .addKeyValue("process", "get_activities_in_playlist")
-                .addKeyValue("playlistId", playlistId)
-                .addKeyValue("userId", userId)
-                .log("retrieved userId={}", userId);
+                .addKeyValue("playlist_id", playlistId)
+                .addKeyValue("user_id", userId)
+                .log("received request get_activities_in_playlist by user_id={} for playlist_id={}", userId, playlistId);
+
 
         log.atInfo()
                 .addKeyValue("process", "get_activities_in_playlist")
-                .addKeyValue("playlistId", playlistId)
-                .addKeyValue("userId", userId)
+                .addKeyValue("playlist_id", playlistId)
+                .addKeyValue("user_id", userId)
                 .log("finding activities with playlist_id={} and user_id={}", playlistId, userId);
-        List<PlaylistActivity> activities = playlistActivityRepository.findPlaylistActivityEntitiesByPlaylistIdAndUserId(playlistId, userId)
-                .stream()
-                .map((activity) -> new PlaylistActivity(activity.getId(), activity.getPlaylistId(), activity.getSongId(), activity.getUserId(), activity.getAction()))
-                .toList();
+        List<PlaylistActivity> activities = playlistActivityService.getActivitiesInPlaylist(playlistId, userId);
         if (activities.isEmpty()) {
-            NotFoundException e = new NotFoundException("activities for playlist_id=%s not found".formatted(playlistId));
+            ForbiddenException e = new ForbiddenException("user_id=%s is forbidden to access playlist".formatted(userId));
             log.atError()
                     .setCause(e)
-                    .addKeyValue("playlistId", playlistId)
-                    .addKeyValue("userId", userId)
+                    .addKeyValue("playlist_id", playlistId)
+                    .addKeyValue("user_id", userId)
                     .log(e.getMessage());
             throw e;
         }
         log.atInfo()
                 .addKeyValue("process", "get_activities_in_playlist")
-                .addKeyValue("playlistId", playlistId)
-                .addKeyValue("userId", userId)
+                .addKeyValue("playlist_id", playlistId)
+                .addKeyValue("user_id", userId)
                 .addKeyValue("activities", activities)
                 .log("found activities with playlist_id={} and user_id={}", playlistId, userId);
 
@@ -76,6 +65,6 @@ public class PlaylistActivityController {
                 .put("status", "success")
                 .put("data", data)
                 .get();
-        return ResponseEntity.internalServerError().body(body);
+        return ResponseEntity.ok(body);
     }
 }

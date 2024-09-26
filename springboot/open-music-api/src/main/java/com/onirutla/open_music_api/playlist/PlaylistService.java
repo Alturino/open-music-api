@@ -3,6 +3,9 @@ package com.onirutla.open_music_api.playlist;
 import com.onirutla.open_music_api.core.exception.ForbiddenException;
 import com.onirutla.open_music_api.core.exception.NotFoundException;
 import com.onirutla.open_music_api.core.exception.UnauthorizedRequestException;
+import com.onirutla.open_music_api.playlist.activity.PlaylistActivityAction;
+import com.onirutla.open_music_api.playlist.activity.PlaylistActivityEntity;
+import com.onirutla.open_music_api.playlist.activity.PlaylistActivityRepository;
 import com.onirutla.open_music_api.song.Song;
 import com.onirutla.open_music_api.song.SongEntity;
 import com.onirutla.open_music_api.song.SongRepository;
@@ -10,7 +13,6 @@ import com.onirutla.open_music_api.user.UserEntity;
 import com.onirutla.open_music_api.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +26,7 @@ public class PlaylistService {
     private final PlaylistRepository playlistRepository;
     private final SongRepository songRepository;
     private final UserRepository userRepository;
+    private final PlaylistActivityRepository playlistActivityRepository;
     private final PlaylistAndSongRepository playlistAndSongRepository;
 
     @Transactional
@@ -212,6 +215,33 @@ public class PlaylistService {
                 .addKeyValue("song_id", songId)
                 .addKeyValue("song", song)
                 .log("deleted song with song_id={} from playlist with playlist_id={}", songId, playlistId);
+
+        PlaylistActivityEntity playlistActivity = PlaylistActivityEntity.builder()
+                .songId(songId)
+                .playlistId(playlistId)
+                .userId(userId)
+                .playlistActivityAction(PlaylistActivityAction.DELETE)
+                .build();
+        log.atInfo()
+                .addKeyValue("user_id", userId)
+                .addKeyValue("user", user)
+                .addKeyValue("playlist_id", playlistId)
+                .addKeyValue("playlist", playlist)
+                .addKeyValue("song_id", songId)
+                .addKeyValue("song", song)
+                .addKeyValue("playlist_activity", playlistActivity)
+                .log("inserting playlist_activity={}", playlistActivity);
+        PlaylistActivityEntity insertedActivity = playlistActivityRepository.save(playlistActivity);
+        log.atInfo()
+                .addKeyValue("user_id", userId)
+                .addKeyValue("user", user)
+                .addKeyValue("playlist_id", playlistId)
+                .addKeyValue("playlist", playlist)
+                .addKeyValue("song_id", songId)
+                .addKeyValue("song", song)
+                .addKeyValue("playlist_activity", insertedActivity)
+                .log("inserted playlist_activity={}", insertedActivity);
+
         return true;
     }
 
@@ -227,9 +257,12 @@ public class PlaylistService {
                 .addKeyValue("process", "delete_playlist")
                 .addKeyValue("playlist_id", playlistId)
                 .addKeyValue("user_id", userId)
-                .log("checking if user with user_id={} have access to playlist with playlist_id={}", userId, playlistId);
+                .log("checking if user with user_id={} have access to playlist with playlist_id={}", userId,
+                     playlistId
+                );
         userRepository.isOwnerOrCollaboratorPlaylist(userId, playlistId).orElseThrow(() -> {
-            ForbiddenException e = new ForbiddenException("user do not have access to the playlist_id=%s".formatted(playlistId));
+            ForbiddenException e = new ForbiddenException(
+                    "user do not have access to the playlist_id=%s".formatted(playlistId));
             log.atError()
                     .setCause(e)
                     .addKeyValue("process", "delete_playlist")
@@ -243,7 +276,6 @@ public class PlaylistService {
                 .addKeyValue("playlist_id", playlistId)
                 .addKeyValue("user_id", userId)
                 .log("checked user with user_id={} have access to playlist with playlist_id={}", userId, playlistId);
-
 
         log.atInfo()
                 .addKeyValue("process", "delete_playlist")
@@ -273,20 +305,17 @@ public class PlaylistService {
     }
 
     @Transactional
-    public PlaylistEntity insertPlaylist(PlaylistPostRequest request) {
+    public PlaylistEntity insertPlaylist(PlaylistPostRequest request, String userId) {
         log.atInfo()
                 .addKeyValue("process", "insert_playlist")
                 .addKeyValue("request", request)
-                .log("initiating process insert_playlist with request={}", request);
-
-        String userId = SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getPrincipal()
-                .toString();
-        log.atInfo()
-                .addKeyValue("process", "insert_playlist")
                 .addKeyValue("user_id", userId)
+                .log("initiating process insert_playlist with request={} by user_id={}", request, userId);
+
+        log.atInfo()
+                .addKeyValue("process", "insert_playlist")
                 .addKeyValue("request", request)
+                .addKeyValue("user_id", userId)
                 .log("finding user_id={}", userId);
         UserEntity authUser = userRepository.findById(userId).orElseThrow(() -> {
             UnauthorizedRequestException e = new UnauthorizedRequestException("user_id=%s not found".formatted(userId));
@@ -376,17 +405,23 @@ public class PlaylistService {
     }
 
     @Transactional
-    public PlaylistAndSongEntity addSongToUserPlaylist(SongInPlaylistRequest request, String playlistId, String userId) {
+    public PlaylistAndSongEntity addSongToUserPlaylist(
+            SongInPlaylistRequest request,
+            String playlistId,
+            String userId
+    ) {
         log.atInfo()
                 .addKeyValue("process", "add_song_to_playlist")
                 .addKeyValue("playlist_id", playlistId)
-                .addKeyValue("request", request)
-                .log("initiating process add_song_to_playlist");
+                .addKeyValue("user_id", userId)
+                .addKeyValue("song_id", request.songId())
+                .log("initiating process add_song_to_playlist song_id={} to playlist_id={} by user_id={}", request.songId(), playlistId, userId);
 
         log.atInfo()
                 .addKeyValue("process", "add_song_to_playlist")
                 .addKeyValue("user_id", userId)
-                .addKeyValue("request", request)
+                .addKeyValue("song_id", request.songId())
+                .addKeyValue("playlist_id", playlistId)
                 .log("finding playlist_id={}", playlistId);
         PlaylistEntity playlist = playlistRepository.findById(playlistId).orElseThrow(() -> {
             NotFoundException e = new NotFoundException("playlist not found with playlist_id=%s".formatted(playlistId));
@@ -395,7 +430,7 @@ public class PlaylistService {
                     .addKeyValue("process", "add_song_to_playlist")
                     .addKeyValue("user_id", userId)
                     .addKeyValue("playlist_id", playlistId)
-                    .addKeyValue("request", request)
+                    .addKeyValue("song_id", request.songId())
                     .log(e.getMessage());
             return e;
         });
@@ -406,16 +441,25 @@ public class PlaylistService {
                     .addKeyValue("process", "add_song_to_playlist")
                     .addKeyValue("user_id", userId)
                     .addKeyValue("playlist_id", playlistId)
-                    .addKeyValue("request", request)
+                    .addKeyValue("playlist", playlist)
+                    .addKeyValue("song_id", request.songId())
                     .log(e.getMessage());
             throw e;
         }
+        log.atInfo()
+                .addKeyValue("process", "add_song_to_playlist")
+                .addKeyValue("user_id", userId)
+                .addKeyValue("song_id", request.songId())
+                .addKeyValue("playlist_id", playlistId)
+                .addKeyValue("playlist", playlist)
+                .log("found playlist_id={}", playlistId);
+
 
         log.atInfo()
                 .addKeyValue("process", "add_song_to_playlist")
                 .addKeyValue("user_id", userId)
                 .addKeyValue("playlist_id", playlistId)
-                .addKeyValue("request", request)
+                .addKeyValue("song_id", request.songId())
                 .log("finding song_id={}", request.songId());
         SongEntity song = songRepository.findById(request.songId()).orElseThrow(() -> {
             NotFoundException e = new NotFoundException("song with id=%s not found".formatted(request.songId()));
@@ -424,7 +468,7 @@ public class PlaylistService {
                     .addKeyValue("process", "add_song_to_playlist")
                     .addKeyValue("user_id", userId)
                     .addKeyValue("playlist_id", playlistId)
-                    .addKeyValue("request", request)
+                    .addKeyValue("song_id", request.songId())
                     .log(e.getMessage());
             return e;
         });
@@ -432,28 +476,59 @@ public class PlaylistService {
                 .addKeyValue("process", "add_song_to_playlist")
                 .addKeyValue("user_id", userId)
                 .addKeyValue("playlist_id", playlistId)
-                .addKeyValue("request", request)
+                .addKeyValue("song_id", request.songId())
+                .addKeyValue("song", song)
                 .log("found song_id={}", request.songId());
 
+        PlaylistAndSongEntity playlistAndSong = PlaylistAndSongEntity.builder()
+                .playlistId(playlistId)
+                .songId(request.songId())
+                .build();
         log.atInfo()
                 .addKeyValue("process", "add_song_to_playlist")
                 .addKeyValue("user_id", userId)
                 .addKeyValue("playlist_id", playlistId)
-                .addKeyValue("request", request)
-                .log("updating song playlist_id from playlist_id={}, to playlist_id={}", request.songId(), playlistId);
-        PlaylistAndSongEntity playlistAndSongEntity = PlaylistAndSongEntity.builder()
-                .playlistId(playlistId)
-                .songId(request.songId())
-                .build();
-        playlistAndSongRepository.save(playlistAndSongEntity);
+                .addKeyValue("song_id", request.songId())
+                .addKeyValue("playlist_and_song", playlistAndSong)
+                .addKeyValue("song", song)
+                .log("inserting song_id={} to playlist_id={} by user_id={}", request.songId(), playlistId, userId);
+        PlaylistAndSongEntity insertedPlaylistAndSong = playlistAndSongRepository.save(playlistAndSong);
         log.atInfo()
                 .addKeyValue("process", "add_song_to_playlist")
                 .addKeyValue("user_id", userId)
                 .addKeyValue("old_playlist_id", request.songId())
                 .addKeyValue("playlist_id", playlistId)
-                .addKeyValue("request", request)
-                .log("updated song playlist_id from playlist_id={}, to playlist_id={}", request.songId(), playlistId);
-        return playlistAndSongEntity;
+                .addKeyValue("song_id", request.songId())
+                .addKeyValue("song", song)
+                .addKeyValue("playlist_and_song", insertedPlaylistAndSong)
+                .log("inserted song_id={} to playlist_id={} by user_id={}", request.songId(), playlistId, userId);
+
+        PlaylistActivityEntity playlistActivity = PlaylistActivityEntity.builder()
+                .playlistId(playlistId)
+                .songId(request.songId())
+                .userId(userId)
+                .playlistActivityAction(PlaylistActivityAction.ADD)
+                .build();
+        log.atInfo()
+                .addKeyValue("process", "add_song_to_playlist")
+                .addKeyValue("user_id", userId)
+                .addKeyValue("playlist_id", playlistId)
+                .addKeyValue("playlist_activity", playlistActivity)
+                .addKeyValue("song_id", request.songId())
+                .addKeyValue("song", song)
+                .log("inserting playlist_activity={} by user_id={} adding song_id={} to playlist_id={}", playlistActivity, userId, request.songId(), playlistId);
+        PlaylistActivityEntity insertedPlaylistActivity = playlistActivityRepository.save(playlistActivity);
+        log.atInfo()
+                .addKeyValue("process", "add_song_to_playlist")
+                .addKeyValue("user_id", userId)
+                .addKeyValue("playlist_activity", insertedPlaylistActivity)
+                .addKeyValue("playlist_id", playlistId)
+                .addKeyValue("playlist", playlist)
+                .addKeyValue("song_id", request.songId())
+                .addKeyValue("song", song)
+                .log("inserted playlist_activity={} by user_id={} adding song_id={} to playlist_id={}", playlistActivity, userId, request.songId(), playlistId);
+
+        return playlistAndSong;
     }
 
 }

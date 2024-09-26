@@ -16,10 +16,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 
-enum Action {
-    Add, Update, Delete
-}
-
 @AllArgsConstructor
 @Builder
 @Data
@@ -41,7 +37,7 @@ public class PlaylistActivityEntity {
     private String userId;
 
     @Enumerated(value = EnumType.STRING)
-    private Action action;
+    private PlaylistActivityAction playlistActivityAction;
 
     @CreationTimestamp
     @Column(updatable = false)
