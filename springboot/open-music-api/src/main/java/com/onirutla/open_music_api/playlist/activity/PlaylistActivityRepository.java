@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PlaylistActivityRepository extends JpaRepository<PlaylistActivity, String> {
-    @Query("select pa from playlists as p inner join playlist_activities as pa on p.id = pa.playlistId where p.ownerId = :userId")
-    List<PlaylistActivity> findByPlaylistIdAndUserId(String playlistId, String userId);
+public interface PlaylistActivityRepository extends JpaRepository<PlaylistActivityEntity, String> {
+    @Query("select pa from playlists as p inner join playlist_activities as pa on p.id = pa.playlistId where p.id = :playlistId and p.ownerId = :userId")
+    List<PlaylistActivityEntity> findPlaylistActivityEntitiesByPlaylistIdAndUserId(String playlistId, String userId);
 }

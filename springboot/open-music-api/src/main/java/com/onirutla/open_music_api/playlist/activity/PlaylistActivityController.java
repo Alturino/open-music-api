@@ -48,7 +48,10 @@ public class PlaylistActivityController {
                 .addKeyValue("playlistId", playlistId)
                 .addKeyValue("userId", userId)
                 .log("finding activities with playlist_id={} and user_id={}", playlistId, userId);
-        List<PlaylistActivity> activities = playlistActivityRepository.findByPlaylistIdAndUserId(playlistId, userId);
+        List<PlaylistActivity> activities = playlistActivityRepository.findPlaylistActivityEntitiesByPlaylistIdAndUserId(playlistId, userId)
+                .stream()
+                .map((activity) -> new PlaylistActivity(activity.getId(), activity.getPlaylistId(), activity.getSongId(), activity.getUserId(), activity.getAction()))
+                .toList();
         if (activities.isEmpty()) {
             NotFoundException e = new NotFoundException("activities for playlist_id=%s not found".formatted(playlistId));
             log.atError()
@@ -68,7 +71,6 @@ public class PlaylistActivityController {
         Map<String, Object> data = new StringObjectMapBuilder()
                 .put("playlistId", playlistId)
                 .put("activities", activities)
-                .
                 .get();
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "success")
