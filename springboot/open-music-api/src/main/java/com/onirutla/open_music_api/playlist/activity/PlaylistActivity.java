@@ -5,7 +5,7 @@ import java.time.Instant;
 public record PlaylistActivity(
         String username,
         String title,
-        PlaylistActivityAction playlistActivityAction,
+        String action,
         Instant time
 ) {
 }

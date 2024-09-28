@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@RequestMapping(value = "songs", produces = { MediaType.APPLICATION_JSON_VALUE })
+@RequestMapping(value = "songs", produces = {MediaType.APPLICATION_JSON_VALUE})
 @RequiredArgsConstructor
 @RestController
 @Slf4j
@@ -34,15 +34,35 @@ public class SongController {
             @RequestParam(value = "title", required = false) Optional<String> title,
             @RequestParam(value = "performer", required = false) Optional<String> performer
     ) {
+        log.atInfo()
+                .addKeyValue("process", "find_all_songs")
+                .addKeyValue("title", title)
+                .addKeyValue("performer", performer)
+                .log("received request find_all_songs title={} performer={}", title, performer);
+
+        log.atInfo()
+                .addKeyValue("process", "find_all_songs")
+                .addKeyValue("title", title)
+                .addKeyValue("performer", performer)
+                .log("finding songs title={} performer={}", title, performer);
         List<SongResponse> songs = repository
                 .findSongByTitleOrPerformer(title.orElse(""), performer.orElse(""))
                 .stream()
                 .map(song -> new SongResponse(song.getId(), song.getTitle(), song.getPerformer()))
                 .toList();
+        log.atInfo()
+                .addKeyValue("process", "find_all_songs")
+                .addKeyValue("title", title)
+                .addKeyValue("performer", performer)
+                .log("found songs title={} performer={}", title, performer);
+
+        Map<String, Object> data = new StringObjectMapBuilder()
+                .put("songs", songs)
+                .get();
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "success")
                 .put("message", "Song not empty")
-                .put("data", Map.ofEntries(Map.entry("songs", songs)))
+                .put("data", data)
                 .get();
         return ResponseEntity.ok(body);
     }

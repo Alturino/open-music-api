@@ -11,7 +11,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
+import java.util.Locale;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -83,16 +85,13 @@ public class PlaylistActivityService {
                 .log("finding activities with playlist_id={} and user_id={}", playlistId, userId);
         List<PlaylistActivity> activities = playlistActivityRepository.findPlaylistActivityEntitiesByPlaylistIdAndUserId(playlistId, userId)
                 .stream()
+                .map((object) -> new PlaylistActivity(
+                        object.get("username").toString(),
+                        object.get("title").toString(),
+                        object.get("playlist_activity_action").toString().toLowerCase(Locale.ROOT),
+                        ((Timestamp) object.get("created_at")).toInstant()
+                ))
                 .toList();
-        if (activities.isEmpty()) {
-            ForbiddenException e = new ForbiddenException("user_id=%s is forbidden to access playlist".formatted(userId));
-            log.atError()
-                    .setCause(e)
-                    .addKeyValue("playlist_id", playlistId)
-                    .addKeyValue("user_id", userId)
-                    .log(e.getMessage());
-            throw e;
-        }
         log.atInfo()
                 .addKeyValue("process", "get_activities_in_playlist")
                 .addKeyValue("playlist_id", playlistId)

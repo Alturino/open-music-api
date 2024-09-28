@@ -12,7 +12,7 @@ public interface SongRepository extends JpaRepository<SongEntity, String> {
     @Query("""
             select s
             from songs as s
-            where s.title ilike '%:title%' and s.performer ilike '%:performer%'
+            where s.title ilike %:title% and s.performer ilike %:performer%
             """
     )
     List<SongEntity> findSongByTitleOrPerformer(@Param("title") String title, @Param("performer") String performer);
