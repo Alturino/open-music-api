@@ -36,13 +36,13 @@ public class PlaylistController {
                 .addKeyValue("process", "insert_playlist")
                 .addKeyValue("request", request)
                 .addKeyValue("user_id", userId)
-                .log("received request to insert playlist with request={} by user_id={}", request, userId);
+                .log("received request to insert request={} by user_id={}", request, userId);
 
         log.atInfo()
                 .addKeyValue("process", "insert_playlist")
                 .addKeyValue("request", request)
                 .addKeyValue("user_id", userId)
-                .log("inserting playlist with request={} to user_id={}", request, userId);
+                .log("inserting request={} to user_id={}", request, userId);
         PlaylistEntity insertedPlaylist = playlistService.insertPlaylist(request, userId);
         log.atInfo()
                 .addKeyValue("process", "insert_playlist")
@@ -74,7 +74,7 @@ public class PlaylistController {
         log.atInfo()
                 .addKeyValue("process", "get_playlists")
                 .addKeyValue("user_id", userId)
-                .log("finding playlist for user with user_id={}", userId);
+                .log("finding playlist for user_id={}", userId);
         List<PlaylistResponse> playlists = playlistService.getPlaylists(userId)
                 .stream()
                 .toList();
@@ -82,7 +82,7 @@ public class PlaylistController {
                 .addKeyValue("process", "get_playlists")
                 .addKeyValue("user_id", userId)
                 .addKeyValue("playlists", playlists)
-                .log("found playlist for user with user_id={}", userId);
+                .log("found playlist for user_id={}", userId);
 
         Map<String, Object> data = new StringObjectMapBuilder()
                 .put("playlists", playlists)
@@ -181,14 +181,14 @@ public class PlaylistController {
         if (!isDeleted) {
             Map<String, Object> errorBody = new StringObjectMapBuilder()
                     .put("status", "failed")
-                    .put("message", "unknown error when deleting song from playlist with playlist_id=%s".formatted(playlistId))
+                    .put("message", "unknown error when deleting song from playlist_id=%s".formatted(playlistId))
                     .get();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorBody);
         }
 
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "success")
-                .put("message", "success delete song with song_id=%s from playlist with playlist_id=%s".formatted(request.songId(), playlistId))
+                .put("message", "success delete song_id=%s from playlist_id=%s".formatted(request.songId(), playlistId))
                 .get();
         return ResponseEntity.ok(body);
     }
@@ -209,12 +209,12 @@ public class PlaylistController {
                 .addKeyValue("process", "delete_playlist")
                 .addKeyValue("playlist_id", playlistId)
                 .addKeyValue("user_id", userId)
-                .log("deleting playlist with playlist_id={} from user_id={}", playlistId, userId);
+                .log("deleting playlist_id={} from user_id={}", playlistId, userId);
         boolean isPlaylistDeleted = playlistService.deletePlaylist(userId, playlistId);
         if (!isPlaylistDeleted) {
             Map<String, Object> errorBody = new StringObjectMapBuilder()
                     .put("status", "failed")
-                    .put("message", "unknown error when deleting song from playlist with playlist_id=%s".formatted(playlistId))
+                    .put("message", "unknown error when deleting song from playlist_id=%s".formatted(playlistId))
                     .get();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorBody);
         }
@@ -222,11 +222,11 @@ public class PlaylistController {
                 .addKeyValue("process", "delete_playlist")
                 .addKeyValue("playlist_id", playlistId)
                 .addKeyValue("user_id", userId)
-                .log("deleting playlist with playlist_id={} from user_id={}", playlistId, userId);
+                .log("deleting playlist_id={} from user_id={}", playlistId, userId);
 
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "success")
-                .put("message", "deleted playlist with playlist_id=%s".formatted(playlistId))
+                .put("message", "deleted playlist_id=%s".formatted(playlistId))
                 .get();
         return ResponseEntity.ok(body);
     }

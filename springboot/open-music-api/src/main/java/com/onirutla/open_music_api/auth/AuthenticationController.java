@@ -42,26 +42,24 @@ public class AuthenticationController {
                 .addKeyValue("login_request", request.toString())
                 .addKeyValue("password_type", request.password().getClass().getTypeName())
                 .addKeyValue("username", request.username())
-                .log("finding user by username");
-        UserEntity user = userRepository
-                .findByUsername(request.username())
-                .orElseThrow(() -> {
-                    BadCredentialsException e = new BadCredentialsException("username is incorrect");
-                    log.atError()
-                            .addKeyValue("process", "login")
-                            .addKeyValue("username", request.username())
-                            .addKeyValue("login_request", request.toString())
-                            .addKeyValue("password_type", request.password().getClass().getTypeName())
-                            .setCause(e)
-                            .log("username not found");
-                    return e;
-                });
+                .log("finding username={}", request.username());
+        UserEntity user = userRepository.findByUsername(request.username()).orElseThrow(() -> {
+            BadCredentialsException e = new BadCredentialsException("username=%s is incorrect".formatted(request.username()));
+            log.atError()
+                    .addKeyValue("process", "login")
+                    .addKeyValue("username", request.username())
+                    .addKeyValue("login_request", request.toString())
+                    .addKeyValue("password_type", request.password().getClass().getTypeName())
+                    .setCause(e)
+                    .log("username not found");
+            return e;
+        });
         log.atInfo()
                 .addKeyValue("process", "login")
                 .addKeyValue("login_request", request.toString())
                 .addKeyValue("password_type", request.password().getClass().getTypeName())
                 .addKeyValue("username", request.username())
-                .log("user with username {} found", request.username());
+                .log("username={} found", request.username());
 
         log.atInfo()
                 .addKeyValue("process", "login")
@@ -213,14 +211,14 @@ public class AuthenticationController {
         log.atInfo()
                 .addKeyValue("process", "delete_refresh_token")
                 .addKeyValue("refresh_token", request.refreshToken())
-                .log("finding user by refresh token");
+                .log("finding refresh_token={}", request.refreshToken());
         UserEntity user = userRepository.findByRefreshToken(request.refreshToken())
                 .orElseThrow(() -> {
-                    BadRequestException e = new BadRequestException("refresh token not found");
+                    BadRequestException e = new BadRequestException("refresh_token=%s not found".formatted(request.refreshToken()));
                     log.atError()
+                            .setCause(e)
                             .addKeyValue("process", "delete_refresh_token")
                             .addKeyValue("refresh_token", request.refreshToken())
-                            .setCause(e)
                             .log(e.getMessage());
                     return e;
                 });
@@ -228,7 +226,7 @@ public class AuthenticationController {
                 .addKeyValue("process", "delete_refresh_token")
                 .addKeyValue("refresh_token", request.refreshToken())
                 .addKeyValue("user", user)
-                .log("user with refresh token {} is found", user.getRefreshToken());
+                .log("refresh_token={} is found", user.getRefreshToken());
 
         log.atInfo()
                 .addKeyValue("process", "delete_refresh_token")
@@ -241,7 +239,7 @@ public class AuthenticationController {
                 .addKeyValue("process", "delete_refresh_token")
                 .addKeyValue("refresh_token", request.refreshToken())
                 .addKeyValue("user", user)
-                .log("refresh token deleted");
+                .log("refresh_token={} deleted", request.refreshToken());
 
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "success")

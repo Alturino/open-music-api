@@ -1,5 +1,6 @@
 package com.onirutla.open_music_api.user;
 
+import com.onirutla.open_music_api.collaboration.CollaborationEntity;
 import com.onirutla.open_music_api.playlist.PlaylistEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

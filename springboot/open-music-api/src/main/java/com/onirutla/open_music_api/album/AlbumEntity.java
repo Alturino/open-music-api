@@ -45,12 +45,10 @@ public class AlbumEntity {
     private int year;
 
     @CreationTimestamp
-    @JsonIgnore
     @Column(updatable = false)
     private Timestamp createdAt;
 
     @UpdateTimestamp
-    @JsonIgnore
     @Column
     private Timestamp updatedAt;
 

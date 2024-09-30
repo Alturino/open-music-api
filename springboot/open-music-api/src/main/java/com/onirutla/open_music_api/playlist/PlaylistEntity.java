@@ -1,6 +1,5 @@
 package com.onirutla.open_music_api.playlist;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,14 +34,10 @@ public class PlaylistEntity {
     private String name;
 
     @CreationTimestamp
-    @JsonIgnore
     @Column(updatable = false, nullable = false)
     private Timestamp createdAt;
 
     @UpdateTimestamp
-    @JsonIgnore
     @Column(nullable = false)
     private Timestamp updatedAt;
-
-
 }

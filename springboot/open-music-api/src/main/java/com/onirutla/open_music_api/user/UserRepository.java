@@ -18,14 +18,25 @@ public interface UserRepository extends JpaRepository<UserEntity, String>, UserD
     @Query("""
             select u
             from users as u
-                     left join collaborations as c on u.id = c.collaboratorId
-                     inner join playlists as p on u.id = p.ownerId
-            where (c.collaboratorId = :userId or p.ownerId = :userId) and p.id = :playlistId
-            """)
+                 inner join collaborations as c on u.id = c.ownerId
+                 inner join playlists as p on p.id = c.playlistId
+            where (c.ownerId = :userId or c.collaboratorId = :userId) and c.playlistId = :playlistId
+            """
+    )
     Optional<UserEntity> isOwnerOrCollaboratorPlaylist(String userId, String playlistId);
+
+    @Query("""
+            select u
+            from users as u
+                 inner join collaborations as c on u.id = c.ownerId
+                 inner join playlists as p on p.id = c.playlistId
+            where c.ownerId = :userId and c.playlistId = :playlistId
+            """
+    )
+    Optional<UserEntity> isHaveDeleteAccess(String userId, String playlistId);
 
     @Override
     default UserDetails loadUserByUsername(String username) {
-        return findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("user with username=%s not found".formatted(username)));
+        return findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("username=%s not found".formatted(username)));
     }
 }

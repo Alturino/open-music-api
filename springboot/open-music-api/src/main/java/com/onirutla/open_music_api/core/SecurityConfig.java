@@ -1,6 +1,5 @@
 package com.onirutla.open_music_api.core;
 
-import com.onirutla.open_music_api.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +21,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(4);
-    private final UserRepository userRepository;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
@@ -42,6 +40,7 @@ public class SecurityConfig {
                         .requestMatchers("/users/**").permitAll()
                         .requestMatchers("/authentications/**").permitAll()
                         .requestMatchers("/playlists/**").permitAll()
+                        .requestMatchers("/collaborations/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
