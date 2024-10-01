@@ -23,11 +23,11 @@ import java.util.List;
 @Slf4j
 public class PlaylistService {
 
+    private final PlaylistActivityRepository playlistActivityRepository;
+    private final PlaylistAndSongRepository playlistAndSongRepository;
     private final PlaylistRepository playlistRepository;
     private final SongRepository songRepository;
     private final UserRepository userRepository;
-    private final PlaylistActivityRepository playlistActivityRepository;
-    private final PlaylistAndSongRepository playlistAndSongRepository;
 
     @Transactional
     public PlaylistAndSong getSongsInPlaylist(String userId, String playlistId) {
@@ -57,9 +57,9 @@ public class PlaylistService {
                 .addKeyValue("process", "get_playlist_and_songs")
                 .addKeyValue("user_id", userId)
                 .addKeyValue("playlist_id", playlistId)
-                .log("checking if user_id={} have access to playlist_id={}", userId, playlistId);
-        UserEntity user = userRepository.isOwnerOrCollaboratorPlaylist(userId, playlistId).orElseThrow(() -> {
-            ForbiddenException e = new ForbiddenException("user_id=%s is forbidden to access playlist_id=%s".formatted(userId, playlistId));
+                .log("checking if user_id={} have read access to playlist_id={}", userId, playlistId);
+        UserEntity owner = userRepository.isOwnerOrCollaboratorPlaylist(userId, playlistId).orElseThrow(() -> {
+            ForbiddenException e = new ForbiddenException("user_id=%s is do not have read access to  playlist_id=%s".formatted(userId, playlistId));
             log.atError()
                     .setCause(e)
                     .addKeyValue("user_id", userId)
@@ -70,8 +70,9 @@ public class PlaylistService {
         log.atInfo()
                 .addKeyValue("process", "get_playlist_and_songs")
                 .addKeyValue("user_id", userId)
+                .addKeyValue("owner", owner)
                 .addKeyValue("playlist_id", playlistId)
-                .log("checked user_id={} have access to playlist_id={}", userId, playlistId);
+                .log("checked user_id={} have read access to playlist_id={}", userId, playlistId);
 
         log.atInfo()
                 .addKeyValue("process", "get_playlist_and_songs")
@@ -86,6 +87,7 @@ public class PlaylistService {
         log.atInfo()
                 .addKeyValue("process", "get_playlist_and_songs")
                 .addKeyValue("user_id", userId)
+                .addKeyValue("owner", owner)
                 .addKeyValue("playlist_id", playlistId)
                 .addKeyValue("playlist", playlist)
                 .addKeyValue("songs", songs)
@@ -93,7 +95,7 @@ public class PlaylistService {
 
         return new PlaylistAndSong(
                 playlist.getId(),
-                user.getUsername(),
+                owner.getUsername(),
                 playlist.getName(),
                 songs
         );
@@ -132,7 +134,7 @@ public class PlaylistService {
                 .addKeyValue("playlist_id", playlistId)
                 .addKeyValue("playlist", playlist)
                 .addKeyValue("song_id", songId)
-                .log("finding song song_id={}", songId);
+                .log("finding song_id={}", songId);
         SongEntity song = songRepository.findById(songId).orElseThrow(() -> {
             NotFoundException e = new NotFoundException("song_id=%s not found".formatted(songId));
             log.atError()
@@ -155,15 +157,15 @@ public class PlaylistService {
                 .log("found song song_id={}", playlistId);
 
         log.atInfo()
-                .addKeyValue("process", "get_playlist_and_songs")
+                .addKeyValue("process", "delete_song_in_playlist")
                 .addKeyValue("user_id", userId)
                 .addKeyValue("playlist_id", playlistId)
                 .addKeyValue("playlist", playlist)
                 .addKeyValue("song_id", songId)
                 .addKeyValue("song", song)
-                .log("checking if user_id={} have delete access to playlist_id={}", userId, playlistId);
-        UserEntity user = userRepository.isHaveDeleteAccess(userId, playlistId).orElseThrow(() -> {
-            ForbiddenException e = new ForbiddenException("user_id=%s is forbidden to delete playlist_id=%s".formatted(userId, playlistId));
+                .log("checking if user_id={} have delete access to song in playlist_id={}", userId, playlistId);
+        UserEntity owner = userRepository.isOwnerOrCollaboratorPlaylist(userId, playlistId).orElseThrow(() -> {
+            ForbiddenException e = new ForbiddenException("user_id=%s is forbidden to delete song in playlist_id=%s".formatted(userId, playlistId));
             log.atError()
                     .setCause(e)
                     .addKeyValue("user_id", userId)
@@ -174,19 +176,19 @@ public class PlaylistService {
             return e;
         });
         log.atInfo()
-                .addKeyValue("process", "get_playlist_and_songs")
+                .addKeyValue("process", "delete_song_in_playlist")
                 .addKeyValue("user_id", userId)
-                .addKeyValue("user", user)
+                .addKeyValue("owner", owner)
                 .addKeyValue("playlist_id", playlistId)
                 .addKeyValue("playlist", playlist)
                 .addKeyValue("song_id", songId)
                 .addKeyValue("song", song)
-                .log("checked user_id={} have delete access to playlist_id={}", userId, playlistId);
+                .log("checked user_id={} have delete access to song in playlist_id={}", userId, playlistId);
 
         log.atInfo()
                 .addKeyValue("process", "delete_song_in_playlist")
                 .addKeyValue("user_id", userId)
-                .addKeyValue("user", user)
+                .addKeyValue("user", owner)
                 .addKeyValue("playlist_id", playlistId)
                 .addKeyValue("playlist", playlist)
                 .addKeyValue("song_id", songId)
@@ -198,7 +200,7 @@ public class PlaylistService {
                     .setCause(e)
                     .addKeyValue("process", "delete_song_in_playlist")
                     .addKeyValue("user_id", userId)
-                    .addKeyValue("user", user)
+                    .addKeyValue("user", owner)
                     .addKeyValue("playlist_id", playlistId)
                     .addKeyValue("playlist", playlist)
                     .addKeyValue("song_id", songId)
@@ -209,7 +211,7 @@ public class PlaylistService {
         log.atInfo()
                 .addKeyValue("process", "delete_song_in_playlist")
                 .addKeyValue("user_id", userId)
-                .addKeyValue("user", user)
+                .addKeyValue("user", owner)
                 .addKeyValue("playlist_id", playlistId)
                 .addKeyValue("playlist", playlist)
                 .addKeyValue("song_id", songId)
@@ -224,7 +226,7 @@ public class PlaylistService {
                 .build();
         log.atInfo()
                 .addKeyValue("user_id", userId)
-                .addKeyValue("user", user)
+                .addKeyValue("user", owner)
                 .addKeyValue("playlist_id", playlistId)
                 .addKeyValue("playlist", playlist)
                 .addKeyValue("song_id", songId)
@@ -234,7 +236,7 @@ public class PlaylistService {
         PlaylistActivityEntity insertedActivity = playlistActivityRepository.save(playlistActivity);
         log.atInfo()
                 .addKeyValue("user_id", userId)
-                .addKeyValue("user", user)
+                .addKeyValue("user", owner)
                 .addKeyValue("playlist_id", playlistId)
                 .addKeyValue("playlist", playlist)
                 .addKeyValue("song_id", songId)
@@ -257,11 +259,9 @@ public class PlaylistService {
                 .addKeyValue("process", "delete_playlist")
                 .addKeyValue("playlist_id", playlistId)
                 .addKeyValue("user_id", userId)
-                .log("checking if user_id={} have access to playlist_id={}", userId,
-                     playlistId
-                );
-        userRepository.isOwnerOrCollaboratorPlaylist(userId, playlistId).orElseThrow(() -> {
-            ForbiddenException e = new ForbiddenException("user_id=%s do not have access to the playlist_id=%s".formatted(userId, playlistId));
+                .log("checking if user_id={} have access to delete playlist_id={}", userId, playlistId);
+        userRepository.isOwnerPlaylist(userId, playlistId).orElseThrow(() -> {
+            ForbiddenException e = new ForbiddenException("user_id=%s do not have access to delete playlist_id=%s".formatted(userId, playlistId));
             log.atError()
                     .setCause(e)
                     .addKeyValue("process", "delete_playlist")
@@ -274,7 +274,7 @@ public class PlaylistService {
                 .addKeyValue("process", "delete_playlist")
                 .addKeyValue("playlist_id", playlistId)
                 .addKeyValue("user_id", userId)
-                .log("checked user_id={} have access to playlist_id={}", userId, playlistId);
+                .log("checked user_id={} have access to delete playlist_id={}", userId, playlistId);
 
         log.atInfo()
                 .addKeyValue("process", "delete_playlist")
@@ -423,7 +423,7 @@ public class PlaylistService {
                 .addKeyValue("playlist_id", playlistId)
                 .log("finding playlist_id={}", playlistId);
         PlaylistEntity playlist = playlistRepository.findById(playlistId).orElseThrow(() -> {
-            NotFoundException e = new NotFoundException("playlist not found with playlist_id=%s".formatted(playlistId));
+            NotFoundException e = new NotFoundException("playlist_id=%s not found".formatted(playlistId));
             log.atError()
                     .setCause(e)
                     .addKeyValue("process", "add_song_to_playlist")
@@ -449,7 +449,7 @@ public class PlaylistService {
                 .addKeyValue("song_id", request.songId())
                 .log("finding song_id={}", request.songId());
         SongEntity song = songRepository.findById(request.songId()).orElseThrow(() -> {
-            NotFoundException e = new NotFoundException("id=%s not found".formatted(request.songId()));
+            NotFoundException e = new NotFoundException("song_id=%s not found".formatted(request.songId()));
             log.atError()
                     .setCause(e)
                     .addKeyValue("process", "add_song_to_playlist")
@@ -466,6 +466,34 @@ public class PlaylistService {
                 .addKeyValue("song_id", request.songId())
                 .addKeyValue("song", song)
                 .log("found song_id={}", request.songId());
+
+        log.atInfo()
+                .addKeyValue("process", "add_song_to_playlist")
+                .addKeyValue("user_id", userId)
+                .addKeyValue("playlist_id", playlistId)
+                .addKeyValue("song_id", request.songId())
+                .addKeyValue("song", song)
+                .log("checking if user_id={} have insert access to song in playlist_id={}", userId, playlistId);
+        UserEntity owner = userRepository.isOwnerOrCollaboratorPlaylist(userId, playlistId).orElseThrow(() -> {
+            ForbiddenException e = new ForbiddenException("user_id=%s do not have insert access to playlist_id=%s".formatted(userId, playlistId));
+            log.atError()
+                    .setCause(e)
+                    .addKeyValue("process", "add_song_to_playlist")
+                    .addKeyValue("user_id", userId)
+                    .addKeyValue("playlist_id", playlistId)
+                    .addKeyValue("song_id", request.songId())
+                    .addKeyValue("song", song)
+                    .log(e.getMessage());
+            return e;
+        });
+        log.atInfo()
+                .addKeyValue("process", "add_song_to_playlist")
+                .addKeyValue("user_id", userId)
+                .addKeyValue("user", owner)
+                .addKeyValue("playlist_id", playlistId)
+                .addKeyValue("song_id", request.songId())
+                .addKeyValue("song", song)
+                .log("checked user_id={} have insert access to song in playlist_id={}", userId, playlistId);
 
         PlaylistAndSongEntity playlistAndSong = PlaylistAndSongEntity.builder()
                 .playlistId(playlistId)

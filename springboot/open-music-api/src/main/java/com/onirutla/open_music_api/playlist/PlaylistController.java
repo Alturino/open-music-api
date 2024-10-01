@@ -124,7 +124,7 @@ public class PlaylistController {
 
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "success")
-                .put("message", "updated song playlist_id from playlist_id=%s to playlist_id=%s".formatted(request.songId(), playlistId))
+                .put("message", "inserted song_id=%s to playlist_id=%s by user_id=%s".formatted(request.songId(), playlistId, userId))
                 .get();
         return ResponseEntity.status(HttpStatus.CREATED).body(body);
     }

@@ -26,7 +26,7 @@ public class CollaborationService {
         log.atInfo()
                 .addKeyValue("process", "create_collaboration")
                 .addKeyValue("request", request)
-                .addKeyValue("owner_user_id", ownerUserId)
+                .addKeyValue("requester_user_id", ownerUserId)
                 .addKeyValue("collaborator_user_id", request.userId())
                 .addKeyValue("playlist_id", request.playlistId())
                 .log("initiating process create_collaboration for playlist_id={} by user_id={} to user_id={}", request.playlistId(), request.userId(), ownerUserId);
@@ -34,7 +34,7 @@ public class CollaborationService {
         log.atInfo()
                 .addKeyValue("process", "create_collaboration")
                 .addKeyValue("request", request)
-                .addKeyValue("owner_user_id", ownerUserId)
+                .addKeyValue("requester_user_id", ownerUserId)
                 .addKeyValue("collaborator_user_id", request.userId())
                 .addKeyValue("playlist_id", request.playlistId())
                 .log("find user_id={}", ownerUserId);
@@ -44,7 +44,7 @@ public class CollaborationService {
                     .setCause(e)
                     .addKeyValue("process", "create_collaboration")
                     .addKeyValue("request", request)
-                    .addKeyValue("owner_user_id", ownerUserId)
+                    .addKeyValue("requester_user_id", ownerUserId)
                     .addKeyValue("collaborator_user_id", request.userId())
                     .addKeyValue("playlist_id", request.playlistId())
                     .log(e.getMessage());
@@ -53,7 +53,7 @@ public class CollaborationService {
         log.atInfo()
                 .addKeyValue("process", "create_collaboration")
                 .addKeyValue("request", request)
-                .addKeyValue("owner_user_id", ownerUserId)
+                .addKeyValue("requester_user_id", ownerUserId)
                 .addKeyValue("collaborator_user_id", request.userId())
                 .addKeyValue("playlist_id", request.playlistId())
                 .addKeyValue("owner_user", ownerUser)
@@ -62,7 +62,7 @@ public class CollaborationService {
         log.atInfo()
                 .addKeyValue("process", "create_collaboration")
                 .addKeyValue("request", request)
-                .addKeyValue("owner_user_id", ownerUserId)
+                .addKeyValue("requester_user_id", ownerUserId)
                 .addKeyValue("collaborator_user_id", request.userId())
                 .addKeyValue("playlist_id", request.playlistId())
                 .log("find user_id={}", request.userId());
@@ -72,7 +72,7 @@ public class CollaborationService {
                     .setCause(e)
                     .addKeyValue("process", "create_collaboration")
                     .addKeyValue("request", request)
-                    .addKeyValue("owner_user_id", ownerUserId)
+                    .addKeyValue("requester_user_id", ownerUserId)
                     .addKeyValue("collaborator_user_id", request.userId())
                     .addKeyValue("playlist_id", request.playlistId())
                     .log(e.getMessage());
@@ -81,7 +81,7 @@ public class CollaborationService {
         log.atInfo()
                 .addKeyValue("process", "create_collaboration")
                 .addKeyValue("request", request)
-                .addKeyValue("owner_user_id", ownerUserId)
+                .addKeyValue("requester_user_id", ownerUserId)
                 .addKeyValue("collaborator_user_id", request.userId())
                 .addKeyValue("playlist_id", request.playlistId())
                 .addKeyValue("collaborator_user", collaboratorUser)
@@ -90,7 +90,7 @@ public class CollaborationService {
         log.atInfo()
                 .addKeyValue("process", "create_collaboration")
                 .addKeyValue("request", request)
-                .addKeyValue("owner_user_id", ownerUserId)
+                .addKeyValue("requester_user_id", ownerUserId)
                 .addKeyValue("collaborator_user_id", request.userId())
                 .addKeyValue("playlist_id", request.playlistId())
                 .log("find playlist_id={}", request.playlistId());
@@ -100,7 +100,7 @@ public class CollaborationService {
                     .setCause(e)
                     .addKeyValue("process", "create_collaboration")
                     .addKeyValue("request", request)
-                    .addKeyValue("owner_user_id", ownerUserId)
+                    .addKeyValue("requester_user_id", ownerUserId)
                     .addKeyValue("collaborator_user_id", request.userId())
                     .addKeyValue("playlist_id", request.playlistId())
                     .log(e.getMessage());
@@ -109,7 +109,7 @@ public class CollaborationService {
         log.atInfo()
                 .addKeyValue("process", "create_collaboration")
                 .addKeyValue("request", request)
-                .addKeyValue("owner_user_id", ownerUserId)
+                .addKeyValue("requester_user_id", ownerUserId)
                 .addKeyValue("collaborator_user_id", request.userId())
                 .addKeyValue("playlist_id", request.playlistId())
                 .addKeyValue("playlist", playlist)
@@ -119,7 +119,7 @@ public class CollaborationService {
         log.atInfo()
                 .addKeyValue("process", "create_collaboration")
                 .addKeyValue("request", request)
-                .addKeyValue("owner_user_id", ownerUserId)
+                .addKeyValue("requester_user_id", ownerUserId)
                 .addKeyValue("collaborator_user_id", request.userId())
                 .addKeyValue("playlist_id", request.playlistId())
                 .addKeyValue("playlist", playlist)
@@ -131,7 +131,7 @@ public class CollaborationService {
                     .setCause(e)
                     .addKeyValue("process", "create_collaboration")
                     .addKeyValue("request", request)
-                    .addKeyValue("owner_user_id", ownerUserId)
+                    .addKeyValue("requester_user_id", ownerUserId)
                     .addKeyValue("collaborator_user_id", request.userId())
                     .addKeyValue("playlist_id", request.playlistId())
                     .log(e.getMessage());
@@ -140,7 +140,7 @@ public class CollaborationService {
         log.atInfo()
                 .addKeyValue("process", "create_collaboration")
                 .addKeyValue("request", request)
-                .addKeyValue("owner_user_id", ownerUserId)
+                .addKeyValue("requester_user_id", ownerUserId)
                 .addKeyValue("collaborator_user_id", request.userId())
                 .addKeyValue("playlist_id", request.playlistId())
                 .addKeyValue("playlist", playlist)
@@ -155,7 +155,7 @@ public class CollaborationService {
         log.atInfo()
                 .addKeyValue("process", "create_collaboration")
                 .addKeyValue("request", request)
-                .addKeyValue("owner_user_id", ownerUserId)
+                .addKeyValue("requester_user_id", ownerUserId)
                 .addKeyValue("collaborator_user_id", request.userId())
                 .addKeyValue("playlist_id", request.playlistId())
                 .addKeyValue("playlist", playlist)
@@ -166,7 +166,7 @@ public class CollaborationService {
         log.atInfo()
                 .addKeyValue("process", "create_collaboration")
                 .addKeyValue("request", request)
-                .addKeyValue("owner_user_id", ownerUserId)
+                .addKeyValue("requester_user_id", ownerUserId)
                 .addKeyValue("collaborator_user_id", request.userId())
                 .addKeyValue("playlist_id", request.playlistId())
                 .addKeyValue("playlist", playlist)
@@ -179,29 +179,29 @@ public class CollaborationService {
     }
 
     @Transactional
-    public CollaborationEntity deleteCollaboration(CollaborationRequest request, String ownerUserId) {
+    public CollaborationEntity deleteCollaboration(CollaborationRequest request, String requesterUserId) {
         log.atInfo()
                 .addKeyValue("process", "delete_collaboration")
                 .addKeyValue("request", request)
-                .addKeyValue("owner_user_id", ownerUserId)
+                .addKeyValue("requester_user_id", requesterUserId)
                 .addKeyValue("collaborator_user_id", request.userId())
                 .addKeyValue("playlist_id", request.playlistId())
-                .log("initiating process delete_collaboration for playlist_id={} by user_id={} to user_id={}", request.playlistId(), request.userId(), ownerUserId);
+                .log("initiating process delete_collaboration for playlist_id={} by requester_user_id={} to collaborator_id={}", request.playlistId(), requesterUserId, request.userId());
 
         log.atInfo()
                 .addKeyValue("process", "delete_collaboration")
                 .addKeyValue("request", request)
-                .addKeyValue("owner_user_id", ownerUserId)
+                .addKeyValue("requester_user_id", requesterUserId)
                 .addKeyValue("collaborator_user_id", request.userId())
                 .addKeyValue("playlist_id", request.playlistId())
-                .log("find user_id={}", ownerUserId);
-        UserEntity ownerUser = userRepository.findById(ownerUserId).orElseThrow(() -> {
-            UnauthorizedRequestException e = new UnauthorizedRequestException("user_id=%s not found".formatted(ownerUserId));
+                .log("find user_id={}", requesterUserId);
+        UserEntity ownerUser = userRepository.findById(requesterUserId).orElseThrow(() -> {
+            UnauthorizedRequestException e = new UnauthorizedRequestException("user_id=%s not found".formatted(requesterUserId));
             log.atError()
                     .setCause(e)
                     .addKeyValue("process", "delete_collaboration")
                     .addKeyValue("request", request)
-                    .addKeyValue("owner_user_id", ownerUserId)
+                    .addKeyValue("requester_user_id", requesterUserId)
                     .addKeyValue("collaborator_user_id", request.userId())
                     .addKeyValue("playlist_id", request.playlistId())
                     .log(e.getMessage());
@@ -210,26 +210,26 @@ public class CollaborationService {
         log.atInfo()
                 .addKeyValue("process", "delete_collaboration")
                 .addKeyValue("request", request)
-                .addKeyValue("user_id", ownerUserId)
+                .addKeyValue("user_id", requesterUserId)
                 .addKeyValue("collaborator_user_id", request.userId())
                 .addKeyValue("playlist_id", request.playlistId())
                 .addKeyValue("owner_user", ownerUser)
-                .log("found user_id={}", ownerUserId);
+                .log("found user_id={}", requesterUserId);
 
         log.atInfo()
                 .addKeyValue("process", "delete_collaboration")
                 .addKeyValue("request", request)
-                .addKeyValue("owner_user_id", ownerUserId)
+                .addKeyValue("requester_user_id", requesterUserId)
                 .addKeyValue("collaborator_user_id", request.userId())
                 .addKeyValue("playlist_id", request.playlistId())
-                .log("checking if user_id={} is the owner of playlist_id={}", ownerUserId, request.playlistId());
-        playlistRepository.findByIdAndOwnerId(request.playlistId(), ownerUserId).orElseThrow(() -> {
-            NotFoundException e = new NotFoundException("user_id=%s is not the owner of playlist_id=%s".formatted(ownerUserId, request.playlistId()));
+                .log("checking if requester_user_id={} is the owner of playlist_id={}", requesterUserId, request.playlistId());
+        playlistRepository.findByIdAndOwnerId(request.playlistId(), requesterUserId).orElseThrow(() -> {
+            NotFoundException e = new NotFoundException("user_id=%s is not the owner of playlist_id=%s".formatted(requesterUserId, request.playlistId()));
             log.atError()
                     .setCause(e)
                     .addKeyValue("process", "delete_collaboration")
                     .addKeyValue("request", request)
-                    .addKeyValue("owner_user_id", ownerUserId)
+                    .addKeyValue("requester_user_id", requesterUserId)
                     .addKeyValue("collaborator_user_id", request.userId())
                     .addKeyValue("playlist_id", request.playlistId())
                     .log(e.getMessage());
@@ -238,28 +238,40 @@ public class CollaborationService {
         log.atInfo()
                 .addKeyValue("process", "delete_collaboration")
                 .addKeyValue("request", request)
-                .addKeyValue("owner_user_id", ownerUserId)
+                .addKeyValue("requester_user_id", requesterUserId)
                 .addKeyValue("collaborator_user_id", request.userId())
                 .addKeyValue("playlist_id", request.playlistId())
-                .log("checked user_id={} is the owner of playlist_id={}", ownerUserId, request.playlistId());
+                .log("checked requester_user_id={} is the owner of playlist_id={}", requesterUserId, request.playlistId());
 
         log.atInfo()
                 .addKeyValue("process", "delete_collaboration")
                 .addKeyValue("request", request)
-                .addKeyValue("owner_user_id", ownerUserId)
+                .addKeyValue("requester_user_id", requesterUserId)
                 .addKeyValue("collaborator_user_id", request.userId())
                 .addKeyValue("playlist_id", request.playlistId())
-                .log("deleting collaborations with owner_user_id={} playlist_id={} collaborator_user_id={}", ownerUserId, request.playlistId(), request.userId());
-        collaborationRepository.deleteByOwnerIdAndPlaylistIdAndCollaboratorId(ownerUserId, request.playlistId(), request.userId());
+                .log("deleting collaborations with requester_user_id={} playlist_id={} collaborator_user_id={}", requesterUserId, request.playlistId(), request.userId());
+        CollaborationEntity deletedCollaboration = collaborationRepository.deleteByOwnerIdAndPlaylistIdAndCollaboratorId(requesterUserId, request.playlistId(), request.userId()).orElseThrow(() -> {
+            ForbiddenException e = new ForbiddenException("requester_user_id=%s do not have delete access to playlist_id=%s".formatted(requesterUserId, request.playlistId()));
+            log.atError()
+                    .setCause(e)
+                    .addKeyValue("process", "delete_collaboration")
+                    .addKeyValue("request", request)
+                    .addKeyValue("requester_user_id", requesterUserId)
+                    .addKeyValue("collaborator_user_id", request.userId())
+                    .addKeyValue("playlist_id", request.playlistId())
+                    .log(e.getMessage());
+            return e;
+        });
         log.atInfo()
                 .addKeyValue("process", "delete_collaboration")
                 .addKeyValue("request", request)
-                .addKeyValue("owner_user_id", ownerUserId)
+                .addKeyValue("requester_user_id", requesterUserId)
                 .addKeyValue("collaborator_user_id", request.userId())
                 .addKeyValue("playlist_id", request.playlistId())
-                .log("deleted collaborations with owner_user_id={} playlist_id={} collaborator_user_id={}", ownerUserId, request.playlistId(), request.userId());
+                .addKeyValue("deleted_collaboration", deletedCollaboration)
+                .log("deleted collaborations with requester_user_id={} playlist_id={} collaborator_user_id={}", requesterUserId, request.playlistId(), request.userId());
 
-        return null;
+        return deletedCollaboration;
     }
 
 }

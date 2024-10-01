@@ -18,9 +18,9 @@ public interface UserRepository extends JpaRepository<UserEntity, String>, UserD
     @Query("""
             select u
             from users as u
-                 inner join collaborations as c on u.id = c.ownerId
-                 inner join playlists as p on p.id = c.playlistId
-            where (c.ownerId = :userId or c.collaboratorId = :userId) and c.playlistId = :playlistId
+                     inner join playlists as p on u.id = p.ownerId
+                     inner join collaborations as c on p.id = c.playlistId
+            where p.id = :playlistId and (c.collaboratorId = :userId or c.ownerId = :userId)
             """
     )
     Optional<UserEntity> isOwnerOrCollaboratorPlaylist(String userId, String playlistId);
@@ -28,12 +28,12 @@ public interface UserRepository extends JpaRepository<UserEntity, String>, UserD
     @Query("""
             select u
             from users as u
-                 inner join collaborations as c on u.id = c.ownerId
-                 inner join playlists as p on p.id = c.playlistId
+                     inner join playlists as p on u.id = p.ownerId
+                     inner join collaborations as c on p.ownerId = c.ownerId
             where c.ownerId = :userId and c.playlistId = :playlistId
             """
     )
-    Optional<UserEntity> isHaveDeleteAccess(String userId, String playlistId);
+    Optional<UserEntity> isOwnerPlaylist(String userId, String playlistId);
 
     @Override
     default UserDetails loadUserByUsername(String username) {

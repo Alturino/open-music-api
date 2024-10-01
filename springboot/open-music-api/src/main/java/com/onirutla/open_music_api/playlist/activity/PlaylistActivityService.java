@@ -1,6 +1,5 @@
 package com.onirutla.open_music_api.playlist.activity;
 
-import com.onirutla.open_music_api.core.exception.ForbiddenException;
 import com.onirutla.open_music_api.core.exception.NotFoundException;
 import com.onirutla.open_music_api.core.exception.UnauthorizedRequestException;
 import com.onirutla.open_music_api.playlist.PlaylistEntity;

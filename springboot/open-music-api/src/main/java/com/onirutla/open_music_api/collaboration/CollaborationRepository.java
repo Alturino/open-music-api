@@ -6,12 +6,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CollaborationRepository extends JpaRepository<CollaborationEntity, String> {
     @Modifying
-    @Query(value = "delete from collaborations as c where c.owner_id = :ownerId and c.playlist_id = :playlistId and c.collaborator_id = :collaboratorId returning c", nativeQuery = true)
-    List<CollaborationEntity> deleteByOwnerIdAndPlaylistIdAndCollaboratorId(String ownerId, String playlistId, String collaboratorId);
+    @Query(value = "delete from collaborations as c where c.owner_id = :ownerId and c.playlist_id = :playlistId and c.collaborator_id = :collaboratorId returning c.*", nativeQuery = true)
+    Optional<CollaborationEntity> deleteByOwnerIdAndPlaylistIdAndCollaboratorId(String ownerId, String playlistId, String collaboratorId);
 
     List<CollaborationEntity> findCollaborationsByOwnerIdAndPlaylistIdAndCollaboratorId(String ownerId, String playlistId, String collaboratorId);
 }
