@@ -51,7 +51,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 .addKeyValue("auth_header_is_bearer", authHeader != null && authHeader.startsWith("Bearer "))
                 .log("retrieved auth_header={}", authHeader);
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            log.atInfo()
+            log.atError()
                     .addKeyValue("process", "authentication")
                     .addKeyValue("auth_header", authHeader)
                     .addKeyValue("auth_header_is_null", authHeader == null)
@@ -87,8 +87,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        UserEntity user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(username));
+        UserEntity user = userRepository.findByUsername(username).orElseThrow(() -> {
+            UsernameNotFoundException e = new UsernameNotFoundException("username=%s not found".formatted(username));
+            log.atError()
+                    .setCause(e)
+                    .addKeyValue("process", "authentication")
+                    .addKeyValue("auth_header", authHeader)
+                    .addKeyValue("auth_header_is_null", false)
+                    .addKeyValue("auth_header_is_bearer", authHeader.startsWith("Bearer "))
+                    .addKeyValue("jwt", jwt)
+                    .log(e.getMessage());
+            return e;
+        });
         boolean isJwtNotValid = !jwtService.isAccessTokenValid(jwt, user);
         if (isJwtNotValid) {
             log.atInfo()

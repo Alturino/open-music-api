@@ -46,11 +46,11 @@ public class AuthenticationController {
         UserEntity user = userRepository.findByUsername(request.username()).orElseThrow(() -> {
             BadCredentialsException e = new BadCredentialsException("username=%s is incorrect".formatted(request.username()));
             log.atError()
+                    .setCause(e)
                     .addKeyValue("process", "login")
                     .addKeyValue("username", request.username())
                     .addKeyValue("login_request", request.toString())
                     .addKeyValue("password_type", request.password().getClass().getTypeName())
-                    .setCause(e)
                     .log("username not found");
             return e;
         });

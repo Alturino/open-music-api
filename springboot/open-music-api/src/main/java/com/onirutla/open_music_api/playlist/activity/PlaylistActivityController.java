@@ -34,7 +34,6 @@ public class PlaylistActivityController {
                 .addKeyValue("user_id", userId)
                 .log("received request get_activities_in_playlist by user_id={} for playlist_id={}", userId, playlistId);
 
-
         log.atInfo()
                 .addKeyValue("process", "get_activities_in_playlist")
                 .addKeyValue("playlist_id", playlistId)
@@ -42,9 +41,10 @@ public class PlaylistActivityController {
                 .log("finding activities with playlist_id={} and user_id={}", playlistId, userId);
         List<PlaylistActivity> activities = playlistActivityService.getActivitiesInPlaylist(playlistId, userId);
         if (activities.isEmpty()) {
-            ForbiddenException e = new ForbiddenException("user_id=%s is forbidden to access playlist".formatted(userId));
+            ForbiddenException e = new ForbiddenException("user_id=%s is forbidden to access playlist_id=%s".formatted(userId, playlistId));
             log.atError()
                     .setCause(e)
+                    .addKeyValue("process", "get_activities_in_playlist")
                     .addKeyValue("playlist_id", playlistId)
                     .addKeyValue("user_id", userId)
                     .log(e.getMessage());

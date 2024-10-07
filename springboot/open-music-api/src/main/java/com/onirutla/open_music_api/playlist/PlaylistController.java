@@ -28,28 +28,30 @@ public class PlaylistController {
 
     @PostMapping
     public ResponseEntity<Map<String, Object>> insertPlaylist(@RequestBody @Valid PlaylistPostRequest request) {
-        String userId = SecurityContextHolder.getContext()
+        String requesterUserId = SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getPrincipal()
                 .toString();
         log.atInfo()
                 .addKeyValue("process", "insert_playlist")
                 .addKeyValue("request", request)
-                .addKeyValue("user_id", userId)
-                .log("received request to insert request={} by user_id={}", request, userId);
+                .addKeyValue("requester_user_id", requesterUserId)
+                .log("received request to insert request={} by user_id={}", request, requesterUserId);
 
         log.atInfo()
                 .addKeyValue("process", "insert_playlist")
                 .addKeyValue("request", request)
-                .addKeyValue("user_id", userId)
-                .log("inserting request={} to user_id={}", request, userId);
-        PlaylistEntity insertedPlaylist = playlistService.insertPlaylist(request, userId);
+                .addKeyValue("requester_user_id", requesterUserId)
+                .log("inserting request={} to user_id={}", request, requesterUserId);
+        PlaylistEntity insertedPlaylist = playlistService.insertPlaylist(request, requesterUserId);
         log.atInfo()
                 .addKeyValue("process", "insert_playlist")
                 .addKeyValue("request", request)
                 .addKeyValue("playlist", insertedPlaylist)
-                .addKeyValue("user_id", userId)
-                .log("inserted playlist={} with request={} to user_id={}", insertedPlaylist, request, userId);
+                .addKeyValue("requester_user_id", requesterUserId)
+                .log("inserted playlist={} with request={} to user_id={}", insertedPlaylist, request, requesterUserId);
+
+
         Map<String, Object> data = new StringObjectMapBuilder()
                 .put("playlistId", insertedPlaylist.getId())
                 .get();
@@ -212,9 +214,14 @@ public class PlaylistController {
                 .log("deleting playlist_id={} from user_id={}", playlistId, userId);
         boolean isPlaylistDeleted = playlistService.deletePlaylist(userId, playlistId);
         if (!isPlaylistDeleted) {
+            log.atError()
+                    .addKeyValue("process", "delete_playlist")
+                    .addKeyValue("playlist_id", playlistId)
+                    .addKeyValue("user_id", userId)
+                    .log("unknown error when deleting playlist_id={} from user_id={}", playlistId, userId);
             Map<String, Object> errorBody = new StringObjectMapBuilder()
                     .put("status", "failed")
-                    .put("message", "unknown error when deleting song from playlist_id=%s".formatted(playlistId))
+                    .put("message", "unknown error when deleting playlist_id=%s".formatted(playlistId))
                     .get();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorBody);
         }

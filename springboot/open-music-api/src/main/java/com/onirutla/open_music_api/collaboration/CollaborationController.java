@@ -101,6 +101,8 @@ public class CollaborationController {
                 .get();
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("data", data)
+                .put("status", "success")
+                .put("message", "deleted request=%s to delete collaboration for playlist_id=%s requester_user_id=%s collaborator_id=%s".formatted(request, request.playlistId(), requesterUserId, request.userId()))
                 .get();
         return ResponseEntity.ok(body);
     }
