@@ -3,7 +3,6 @@ package com.onirutla.open_music_api.album;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping(value = "albums", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(value = "/albums", produces = {MediaType.APPLICATION_JSON_VALUE})
 @RequiredArgsConstructor
 @RestController
 @Slf4j
@@ -58,9 +57,9 @@ public class AlbumController {
     @PostMapping
     public ResponseEntity<Map<String, Object>> insertAlbum(@Valid @RequestBody AlbumDto album) {
         AlbumEntity newAlbum = repository.save(AlbumEntity.builder()
-                .name(album.name())
-                .year(album.year())
-                .build());
+                                                       .name(album.name())
+                                                       .year(album.year())
+                                                       .build());
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "success")
                 .put("message", "Album with id=%s is inserted".formatted(newAlbum.getId()))
