@@ -4,13 +4,11 @@ Configuration:
       name: ConsoleAppender
       target: SYSTEM_OUT
       JsonTemplateLayout:
-        charset: utf-8
         locationInfoEnabled: true
     File:
       - name: FileAppender
         fileName: logs/log.jsonl
         JsonTemplateLayout:
-          charset: utf-8
           locationInfoEnabled: true
   Loggers:
     Logger:
