@@ -3,27 +3,15 @@ Configuration:
     Console:
       name: ConsoleAppender
       target: SYSTEM_OUT
-# debug purpose only
-      PatternLayout:
-        alwaysWriteExceptions: true
+      JsonTemplateLayout:
         charset: utf-8
-        disableAnsi: false
-        pattern: '%highlight{timestamp="%d{DEFAULT_NANOS}" level=%level{lowerCase=false} thread_id=%threadId process_id=%processId{defaultValue} logger_location=%location class=%class map="%mdc{key}" ndc="%NDC" message="%message"}\n'
-#      JSONLayout:
-#        compact: true
-#        eventEol: true
-#        includeTimeMillis: true
-#        locationInfo: true
-#        properties: true
+        locationInfoEnabled: true
     File:
       - name: FileAppender
         fileName: logs/log.jsonl
-        JSONLayout:
-          compact: true
-          eventEol: true
-          includeTimeMillis: true
-          locationInfo: true
-          properties: true
+        JsonTemplateLayout:
+          charset: utf-8
+          locationInfoEnabled: true
   Loggers:
     Logger:
       - name: com.onirutla.open_music_api
