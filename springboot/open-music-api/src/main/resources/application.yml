@@ -3,27 +3,31 @@ environment:
   refresh_token_secret_key: ${REFRESH_TOKEN_SECRET_KEY}
 debug: false
 spring:
-  main:
-    banner-mode: off
-  jackson:
-    mapper:
-      apply-default-values: false
-      allow-coercion-of-scalars: false
-      use-static-typing: true
-      default-view-inclusion: false
   datasource:
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
   application:
     name: open_music_api
+  cache:
+    cache-names: like_cache
+    redis:
+      time-to-live: 15m
+  jackson:
+    mapper:
+      allow-coercion-of-scalars: false
+      apply-default-values: false
+      default-view-inclusion: false
+      use-static-typing: true
   jpa:
-    show-sql: true
     database: postgresql
     generate-ddl: true
     properties:
       hibernate:
         format_sql: true
         generate_statistics: true
+    show-sql: true
+  main:
+    banner-mode: off
 logging:
   config: classpath:log4j2.yml
   charset:
