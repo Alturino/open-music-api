@@ -1,5 +1,5 @@
 
-package com.onirutla.open_music_api.album.like;
+package com.alturino.open_music_api.album.like;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

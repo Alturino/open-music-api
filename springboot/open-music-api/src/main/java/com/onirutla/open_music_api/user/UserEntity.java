@@ -1,7 +1,7 @@
-package com.onirutla.open_music_api.user;
+package com.alturino.open_music_api.user;
 
-import com.onirutla.open_music_api.collaboration.CollaborationEntity;
-import com.onirutla.open_music_api.playlist.PlaylistEntity;
+import com.alturino.open_music_api.collaboration.CollaborationEntity;
+import com.alturino.open_music_api.playlist.PlaylistEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

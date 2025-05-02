@@ -1,11 +1,11 @@
-package com.onirutla.open_music_api.album.like;
+package com.alturino.open_music_api.album.like;
 
-import com.onirutla.open_music_api.album.AlbumEntity;
-import com.onirutla.open_music_api.album.AlbumRepository;
-import com.onirutla.open_music_api.core.exception.BadRequestException;
-import com.onirutla.open_music_api.core.exception.NotFoundException;
-import com.onirutla.open_music_api.core.exception.UnauthorizedRequestException;
-import com.onirutla.open_music_api.user.UserRepository;
+import com.alturino.open_music_api.album.AlbumEntity;
+import com.alturino.open_music_api.album.AlbumRepository;
+import com.alturino.open_music_api.core.exception.BadRequestException;
+import com.alturino.open_music_api.core.exception.NotFoundException;
+import com.alturino.open_music_api.core.exception.UnauthorizedRequestException;
+import com.alturino.open_music_api.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

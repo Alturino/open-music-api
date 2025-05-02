@@ -1,4 +1,4 @@
-package com.onirutla.open_music_api.user;
+package com.alturino.open_music_api.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

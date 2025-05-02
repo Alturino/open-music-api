@@ -1,4 +1,4 @@
-package com.onirutla.open_music_api.collaboration;
+package com.alturino.open_music_api.collaboration;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

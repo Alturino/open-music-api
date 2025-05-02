@@ -1,6 +1,6 @@
-package com.onirutla.open_music_api.playlist.activity;
+package com.alturino.open_music_api.playlist.activity;
 
-import com.onirutla.open_music_api.core.exception.ForbiddenException;
+import com.alturino.open_music_api.core.exception.ForbiddenException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

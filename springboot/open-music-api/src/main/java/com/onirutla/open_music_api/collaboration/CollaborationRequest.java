@@ -1,4 +1,4 @@
-package com.onirutla.open_music_api.collaboration;
+package com.alturino.open_music_api.collaboration;
 
 public record CollaborationRequest(
         String playlistId,

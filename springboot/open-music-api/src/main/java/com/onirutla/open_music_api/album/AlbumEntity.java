@@ -1,6 +1,6 @@
-package com.onirutla.open_music_api.album;
+package com.alturino.open_music_api.album;
 
-import com.onirutla.open_music_api.song.SongEntity;
+import com.alturino.open_music_api.song.SongEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

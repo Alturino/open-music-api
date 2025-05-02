@@ -1,12 +1,12 @@
-package com.onirutla.open_music_api.collaboration;
+package com.alturino.open_music_api.collaboration;
 
-import com.onirutla.open_music_api.core.exception.ForbiddenException;
-import com.onirutla.open_music_api.core.exception.NotFoundException;
-import com.onirutla.open_music_api.core.exception.UnauthorizedRequestException;
-import com.onirutla.open_music_api.playlist.PlaylistEntity;
-import com.onirutla.open_music_api.playlist.PlaylistRepository;
-import com.onirutla.open_music_api.user.UserEntity;
-import com.onirutla.open_music_api.user.UserRepository;
+import com.alturino.open_music_api.core.exception.ForbiddenException;
+import com.alturino.open_music_api.core.exception.NotFoundException;
+import com.alturino.open_music_api.core.exception.UnauthorizedRequestException;
+import com.alturino.open_music_api.playlist.PlaylistEntity;
+import com.alturino.open_music_api.playlist.PlaylistRepository;
+import com.alturino.open_music_api.user.UserEntity;
+import com.alturino.open_music_api.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

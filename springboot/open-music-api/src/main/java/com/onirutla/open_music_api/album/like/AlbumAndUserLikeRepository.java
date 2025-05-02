@@ -1,4 +1,4 @@
-package com.onirutla.open_music_api.album.like;
+package com.alturino.open_music_api.album.like;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

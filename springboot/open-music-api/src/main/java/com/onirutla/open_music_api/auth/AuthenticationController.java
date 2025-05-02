@@ -1,9 +1,9 @@
-package com.onirutla.open_music_api.auth;
+package com.alturino.open_music_api.auth;
 
-import com.onirutla.open_music_api.core.JwtService;
-import com.onirutla.open_music_api.core.exception.BadRequestException;
-import com.onirutla.open_music_api.user.UserEntity;
-import com.onirutla.open_music_api.user.UserRepository;
+import com.alturino.open_music_api.core.JwtService;
+import com.alturino.open_music_api.core.exception.BadRequestException;
+import com.alturino.open_music_api.user.UserEntity;
+import com.alturino.open_music_api.user.UserRepository;
 import io.jsonwebtoken.Jwts;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

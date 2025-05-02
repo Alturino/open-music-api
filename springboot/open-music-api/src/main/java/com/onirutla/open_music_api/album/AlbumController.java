@@ -1,4 +1,4 @@
-package com.onirutla.open_music_api.album;
+package com.alturino.open_music_api.album;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

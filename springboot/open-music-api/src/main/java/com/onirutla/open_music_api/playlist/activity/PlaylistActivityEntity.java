@@ -1,4 +1,4 @@
-package com.onirutla.open_music_api.playlist.activity;
+package com.alturino.open_music_api.playlist.activity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

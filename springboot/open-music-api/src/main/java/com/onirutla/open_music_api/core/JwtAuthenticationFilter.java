@@ -1,7 +1,7 @@
-package com.onirutla.open_music_api.core;
+package com.alturino.open_music_api.core;
 
-import com.onirutla.open_music_api.user.UserEntity;
-import com.onirutla.open_music_api.user.UserRepository;
+import com.alturino.open_music_api.user.UserEntity;
+import com.alturino.open_music_api.user.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.io.Encoders;
 import jakarta.servlet.FilterChain;

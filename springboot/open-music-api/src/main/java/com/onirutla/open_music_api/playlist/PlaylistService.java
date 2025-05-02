@@ -1,15 +1,15 @@
-package com.onirutla.open_music_api.playlist;
+package com.alturino.open_music_api.playlist;
 
-import com.onirutla.open_music_api.core.exception.ForbiddenException;
-import com.onirutla.open_music_api.core.exception.NotFoundException;
-import com.onirutla.open_music_api.core.exception.UnauthorizedRequestException;
-import com.onirutla.open_music_api.playlist.activity.PlaylistActivityAction;
-import com.onirutla.open_music_api.playlist.activity.PlaylistActivityEntity;
-import com.onirutla.open_music_api.playlist.activity.PlaylistActivityService;
-import com.onirutla.open_music_api.song.Song;
-import com.onirutla.open_music_api.song.SongRepository;
-import com.onirutla.open_music_api.user.UserEntity;
-import com.onirutla.open_music_api.user.UserRepository;
+import com.alturino.open_music_api.core.exception.ForbiddenException;
+import com.alturino.open_music_api.core.exception.NotFoundException;
+import com.alturino.open_music_api.core.exception.UnauthorizedRequestException;
+import com.alturino.open_music_api.playlist.activity.PlaylistActivityAction;
+import com.alturino.open_music_api.playlist.activity.PlaylistActivityEntity;
+import com.alturino.open_music_api.playlist.activity.PlaylistActivityService;
+import com.alturino.open_music_api.song.Song;
+import com.alturino.open_music_api.song.SongRepository;
+import com.alturino.open_music_api.user.UserEntity;
+import com.alturino.open_music_api.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

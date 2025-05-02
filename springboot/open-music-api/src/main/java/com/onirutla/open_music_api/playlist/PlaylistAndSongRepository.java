@@ -1,4 +1,4 @@
-package com.onirutla.open_music_api.playlist;
+package com.alturino.open_music_api.playlist;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
