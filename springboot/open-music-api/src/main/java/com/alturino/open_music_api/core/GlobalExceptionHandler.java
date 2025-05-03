@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
         String errorMessage = String.join(" ", fieldError);
         log.atError()
                 .setMessage(ex.getMessage())
-                .addKeyValue("exception", ex.getClass().getSimpleName())
+
                 .log();
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "fail")
@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
         log.atError()
                 .setMessage(ex.getMessage())
-                .addKeyValue("exception", ex.getClass().getSimpleName())
+
                 .log();
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "fail")
@@ -57,7 +57,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleNoSuchElementException(NoSuchElementException ex) {
         log.atError()
                 .setMessage(ex.getMessage())
-                .addKeyValue("exception", ex.getClass().getSimpleName())
+
                 .log();
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "fail")
@@ -70,7 +70,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
         log.atError()
                 .setMessage(ex.getMessage())
-                .addKeyValue("exception", ex.getClass().getSimpleName())
+
                 .log();
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "fail")
@@ -83,7 +83,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleBadCredentialsException(BadCredentialsException ex) {
         log.atError()
                 .setMessage(ex.getMessage())
-                .addKeyValue("exception", ex.getClass().getSimpleName())
+
                 .log();
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "fail")
@@ -96,7 +96,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleValidationException(BadRequestException ex) {
         log.atError()
                 .setMessage(ex.getMessage())
-                .addKeyValue("exception", ex.getClass().getSimpleName())
+
                 .log();
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "fail")
@@ -109,7 +109,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleNotFoundException(NotFoundException e) {
         log.atError()
                 .setCause(e)
-                .addKeyValue("exception", e.getClass().getSimpleName())
+
                 .log(e.getMessage());
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "fail")
@@ -122,7 +122,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleUnauthorizedRequestException(UnauthorizedRequestException e) {
         log.atError()
                 .setCause(e)
-                .addKeyValue("exception", e.getClass().getSimpleName())
+
                 .log(e.getMessage());
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "fail")
@@ -136,7 +136,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleForbiddenException(ForbiddenException e) {
         log.atError()
                 .setCause(e)
-                .addKeyValue("exception", e.getClass().getSimpleName())
+
                 .log(e.getMessage());
         Map<String, Object> body = new StringObjectMapBuilder()
                 .put("status", "fail")

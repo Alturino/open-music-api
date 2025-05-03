@@ -83,9 +83,9 @@ public class AlbumController {
                 .createdAt(oldAlbum.getCreatedAt())
                 .build();
         log.atInfo()
-                .addKeyValue("albumId", albumId)
-                .addKeyValue("oldAlbum", oldAlbum.toString())
-                .addKeyValue("newAlbum", newAlbum.toString())
+
+
+
                 .log("updateAlbum");
         repository.save(newAlbum);
         Map<String, Object> response = new StringObjectMapBuilder()

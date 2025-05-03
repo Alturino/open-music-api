@@ -38,56 +38,56 @@ public class AuthenticationController {
     @PostMapping
     public ResponseEntity<Map<String, Object>> login(@RequestBody @Valid LoginRequest request) {
         log.atInfo()
-                .addKeyValue("process", "login")
-                .addKeyValue("login_request", request.toString())
-                .addKeyValue("password_type", request.password().getClass().getTypeName())
-                .addKeyValue("username", request.username())
+
+
+
+
                 .log("finding user by username");
         UserEntity user = userRepository
                 .findByUsername(request.username())
                 .orElseThrow(() -> {
                     BadCredentialsException e = new BadCredentialsException("username is incorrect");
                     log.atError()
-                            .addKeyValue("process", "login")
-                            .addKeyValue("username", request.username())
-                            .addKeyValue("login_request", request.toString())
-                            .addKeyValue("password_type", request.password().getClass().getTypeName())
+            
+            
+            
+            
                             .setCause(e)
                             .log("username not found");
                     return e;
                 });
         log.atInfo()
-                .addKeyValue("process", "login")
-                .addKeyValue("login_request", request.toString())
-                .addKeyValue("password_type", request.password().getClass().getTypeName())
-                .addKeyValue("username", request.username())
+
+
+
+
                 .log("user with username {} found", request.username());
 
         log.atInfo()
-                .addKeyValue("process", "login")
-                .addKeyValue("login_request", request.toString())
-                .addKeyValue("password_type", request.password().getClass().getTypeName())
-                .addKeyValue("username", request.username())
+
+
+
+
                 .log("checking is password valid");
         boolean isValidPassword = passwordEncoder.matches(request.password(), user.getPassword());
         if (!isValidPassword) {
             BadCredentialsException e = new BadCredentialsException("password is incorrect");
             log.atError()
-                    .addKeyValue("username", user.getUsername())
-                    .addKeyValue("request_username", request.username())
-                    .addKeyValue("password", user.getPassword())
-                    .addKeyValue("request_password", request.password())
-                    .addKeyValue("is_valid_password", false)
-                    .addKeyValue("process", "login")
+    
+    
+    
+    
+    
+    
                     .setCause(e)
                     .log("password is invalid");
             throw e;
         }
         log.atInfo()
-                .addKeyValue("process", "login")
-                .addKeyValue("login_request", request.toString())
-                .addKeyValue("password_type", request.password().getClass().getTypeName())
-                .addKeyValue("username", request.username())
+
+
+
+
                 .log("password is valid");
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(
@@ -104,49 +104,49 @@ public class AuthenticationController {
                 .get();
 
         log.atInfo()
-                .addKeyValue("process", "login")
-                .addKeyValue("login_request", request.toString())
-                .addKeyValue("password_type", request.password().getClass().getTypeName())
-                .addKeyValue("username", request.username())
+
+
+
+
                 .log("initiating access token generation");
         String accessToken = jwtService.generateAccessToken(Jwts.claims().add(claims).build(), user);
         log.atInfo()
-                .addKeyValue("process", "login")
-                .addKeyValue("login_request", request.toString())
-                .addKeyValue("password_type", request.password().getClass().getTypeName())
-                .addKeyValue("username", request.username())
+
+
+
+
                 .log("finished access token generation");
 
         log.atInfo()
-                .addKeyValue("process", "login")
-                .addKeyValue("login_request", request.toString())
-                .addKeyValue("password_type", request.password().getClass().getTypeName())
-                .addKeyValue("username", request.username())
+
+
+
+
                 .log("initiating refresh token generation");
         String refreshToken = jwtService.generateRefreshToken(Jwts.claims().add(claims).build(), user);
         log.atInfo()
-                .addKeyValue("process", "login")
-                .addKeyValue("login_request", request.toString())
-                .addKeyValue("password_type", request.password().getClass().getTypeName())
-                .addKeyValue("username", request.username())
-                .addKeyValue("refresh_token", refreshToken)
+
+
+
+
+
                 .log("finished refresh token generation");
 
         log.atInfo()
-                .addKeyValue("process", "login")
-                .addKeyValue("login_request", request.toString())
-                .addKeyValue("password_type", request.password().getClass().getTypeName())
-                .addKeyValue("username", request.username())
-                .addKeyValue("refresh_token", refreshToken)
+
+
+
+
+
                 .log("saving refresh token to database");
         user.setRefreshToken(refreshToken);
         userRepository.save(user);
         log.atInfo()
-                .addKeyValue("process", "login")
-                .addKeyValue("login_request", request.toString())
-                .addKeyValue("password_type", request.password().getClass().getTypeName())
-                .addKeyValue("username", request.username())
-                .addKeyValue("refresh_token", refreshToken)
+
+
+
+
+
                 .log("refresh token saved to database");
 
         Map<String, Object> data = new StringObjectMapBuilder()
@@ -164,8 +164,8 @@ public class AuthenticationController {
     @PutMapping
     public ResponseEntity<Map<String, Object>> updateRefreshToken(@RequestBody @Valid RefreshTokenRequest request) {
         log.atInfo()
-                .addKeyValue("process", "update_refresh_token")
-                .addKeyValue("refresh_token", request.refreshToken())
+
+
                 .log("initiating update refresh token");
 
         UserEntity user = userRepository
@@ -173,8 +173,8 @@ public class AuthenticationController {
                 .orElseThrow(() -> {
                     BadRequestException e = new BadRequestException("refresh token not found");
                     log.atInfo()
-                            .addKeyValue("process", "update_refresh_token")
-                            .addKeyValue("refresh_token", request.refreshToken())
+            
+            
                             .setCause(e)
                             .log(e.getMessage());
                     return e;
@@ -206,41 +206,41 @@ public class AuthenticationController {
     @DeleteMapping
     public ResponseEntity<Map<String, Object>> deleteRefreshToken(@RequestBody @Valid RefreshTokenRequest request) {
         log.atInfo()
-                .addKeyValue("process", "delete_refresh_token")
-                .addKeyValue("refresh_token", request.refreshToken())
+
+
                 .log("initiating delete refresh token");
 
         log.atInfo()
-                .addKeyValue("process", "delete_refresh_token")
-                .addKeyValue("refresh_token", request.refreshToken())
+
+
                 .log("finding user by refresh token");
         UserEntity user = userRepository.findByRefreshToken(request.refreshToken())
                 .orElseThrow(() -> {
                     BadRequestException e = new BadRequestException("refresh token not found");
                     log.atError()
-                            .addKeyValue("process", "delete_refresh_token")
-                            .addKeyValue("refresh_token", request.refreshToken())
+            
+            
                             .setCause(e)
                             .log(e.getMessage());
                     return e;
                 });
         log.atInfo()
-                .addKeyValue("process", "delete_refresh_token")
-                .addKeyValue("refresh_token", request.refreshToken())
-                .addKeyValue("user", user)
+
+
+
                 .log("user with refresh token {} is found", user.getRefreshToken());
 
         log.atInfo()
-                .addKeyValue("process", "delete_refresh_token")
-                .addKeyValue("refresh_token", request.refreshToken())
-                .addKeyValue("user", user)
+
+
+
                 .log("initiating delete refresh token");
         user.setRefreshToken(null);
         userRepository.save(user);
         log.atInfo()
-                .addKeyValue("process", "delete_refresh_token")
-                .addKeyValue("refresh_token", request.refreshToken())
-                .addKeyValue("user", user)
+
+
+
                 .log("refresh token deleted");
 
         Map<String, Object> body = new StringObjectMapBuilder()

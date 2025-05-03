@@ -32,20 +32,20 @@ public class JwtService {
         String username = claims.getSubject();
         boolean isExpired = claims.getExpiration().before(Date.from(Instant.now(Clock.systemUTC())));
         log.atInfo()
-                .addKeyValue("process", "validating_access_token")
-                .addKeyValue("access_token", token)
-                .addKeyValue("username", username)
-                .addKeyValue("claims", claims)
-                .addKeyValue("is_expired", isExpired)
+
+
+
+
+
                 .log("validating access token");
         boolean isValid = username != null && username.equals(userDetails.getUsername()) && jwtParser.isSigned(token) && !isExpired;
         log.atInfo()
-                .addKeyValue("process", "validating_access_token")
-                .addKeyValue("access_token", token)
-                .addKeyValue("username", username)
-                .addKeyValue("claims", claims)
-                .addKeyValue("is_expired", isExpired)
-                .addKeyValue("is_valid", isValid)
+
+
+
+
+
+
                 .log("access token validated");
         return isValid;
     }
@@ -69,20 +69,20 @@ public class JwtService {
         String username = claims.getSubject();
         boolean isExpired = claims.getExpiration().before(Date.from(Instant.now(Clock.systemUTC())));
         log.atInfo()
-                .addKeyValue("process", "validating_refresh_token")
-                .addKeyValue("refresh_token", token)
-                .addKeyValue("username", username)
-                .addKeyValue("claims", claims)
-                .addKeyValue("is_expired", isExpired)
+
+
+
+
+
                 .log("validating refresh token");
         boolean isValid = username != null && username.equals(userDetails.getUsername()) && jwtParser.isSigned(token) && !isExpired;
         log.atInfo()
-                .addKeyValue("process", "validating_refresh_token")
-                .addKeyValue("refresh_token", token)
-                .addKeyValue("username", username)
-                .addKeyValue("claims", claims)
-                .addKeyValue("is_expired", isExpired)
-                .addKeyValue("is_valid", isValid)
+
+
+
+
+
+
                 .log("refresh token validated");
         return isValid;
     }
@@ -98,13 +98,13 @@ public class JwtService {
         String secretKey = env.getProperty("environment.access_token_secret_key");
         String secretKeyEncoded = Encoders.BASE64.encode(secretKey.getBytes(StandardCharsets.UTF_8));
         log.atInfo()
-                .addKeyValue("process", "generate_token")
-                .addKeyValue("instant_issued", instantIssued)
-                .addKeyValue("instant_expiration", instantExpiration)
-                .addKeyValue("access_token_secret_key", secretKey)
-                .addKeyValue("access_token_secret_key_encoded", secretKeyEncoded)
-                .addKeyValue("claims", claims)
-                .addKeyValue("subject", userDetails.getUsername())
+
+
+
+
+
+
+
                 .setMessage("generating access token")
                 .log();
         String jwt = Jwts.builder()
@@ -115,13 +115,13 @@ public class JwtService {
                 .expiration(dateExpiration)
                 .compact();
         log.atInfo()
-                .addKeyValue("process", "generate_token")
-                .addKeyValue("instant_issued", instantIssued)
-                .addKeyValue("instant_expiration", instantExpiration)
-                .addKeyValue("access_token_secret_key", secretKey)
-                .addKeyValue("access_token_secret_key_encoded", secretKeyEncoded)
-                .addKeyValue("claims", claims)
-                .addKeyValue("subject", userDetails.getUsername())
+
+
+
+
+
+
+
                 .setMessage("generating access token")
                 .log();
         return jwt;
@@ -137,11 +137,11 @@ public class JwtService {
         String secretKey = env.getProperty("environment.refresh_token_secret_key");
         String secretKeyEncoded = Encoders.BASE64.encode(secretKey.getBytes(StandardCharsets.UTF_8));
         log.atInfo()
-                .addKeyValue("instant_issued", instantIssued)
-                .addKeyValue("instant_expiration", instantExpiration)
-                .addKeyValue("refresh_token_secret_key", secretKey)
-                .addKeyValue("refresh_token_secret_key_encoded", secretKeyEncoded)
-                .addKeyValue("process", "generate_token")
+
+
+
+
+
                 .setMessage("generating refresh token")
                 .log();
         String jwt = Jwts.builder()
@@ -152,11 +152,11 @@ public class JwtService {
                 .expiration(dateExpiration)
                 .compact();
         log.atInfo()
-                .addKeyValue("instant_issued", instantIssued)
-                .addKeyValue("instant_expiration", instantExpiration)
-                .addKeyValue("refresh_token_secret_key", secretKey)
-                .addKeyValue("refresh_token_secret_key_encoded", secretKeyEncoded)
-                .addKeyValue("process", "generate_token")
+
+
+
+
+
                 .setMessage("refresh token generated")
                 .log();
         return jwt;

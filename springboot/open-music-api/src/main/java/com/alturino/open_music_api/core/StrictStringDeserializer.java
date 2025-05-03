@@ -15,8 +15,8 @@ public class StrictStringDeserializer extends StringDeserializer {
         if (p.getCurrentToken().isBoolean()) {
             log.atInfo()
                     .setMessage("token is not a valid String")
-                    .addKeyValue("process", "deserialize")
-                    .addKeyValue("token", p.getCurrentToken().asString())
+    
+    
                     .log();
             ctxt.reportInputMismatch(String.class, p.getCurrentToken().getClass().getTypeName());
             return null;
@@ -24,8 +24,8 @@ public class StrictStringDeserializer extends StringDeserializer {
         if (p.getCurrentToken().isNumeric()) {
             log.atInfo()
                     .setMessage("token is not a valid String")
-                    .addKeyValue("process", "deserialize")
-                    .addKeyValue("token", p.getCurrentToken().asString())
+    
+    
                     .log();
             ctxt.reportInputMismatch(String.class, p.getCurrentToken().getClass().getTypeName());
             return null;

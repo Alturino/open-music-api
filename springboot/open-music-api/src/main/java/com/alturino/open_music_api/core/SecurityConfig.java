@@ -33,8 +33,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         log.atTrace()
-                .addKeyValue("process", "securityFilterChain")
-                .addKeyValue("class", "SecurityConfig")
+
+
                 .log("initiating securityFilterChain");
         DefaultSecurityFilterChain defaultSecurityFilterChain = http.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/albums/**").permitAll()
@@ -51,7 +51,7 @@ public class SecurityConfig {
                 .build();
         log.atTrace()
                 .setMessage("securityFilterChain initiated")
-                .addKeyValue("class", "SecurityConfig")
+
                 .log();
         return defaultSecurityFilterChain;
     }
