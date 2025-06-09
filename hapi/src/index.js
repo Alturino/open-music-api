@@ -7,7 +7,9 @@ const SongValidator = require('./validator/songs');
 const albumsPlugin = require('./api/albums');
 const songsPlugin = require('./api/songs');
 const { Pool } = require('pg');
-require('dotenv').config();
+const dotenvExpand = require('dotenv-expand');
+const dotenv = require('dotenv');
+dotenvExpand.expand(dotenv.config());
 
 async function main() {
   const hapiServer = Hapi.server({
