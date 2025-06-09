@@ -23,11 +23,11 @@ async function main() {
   });
 
   const pgPool = new Pool({
-    user: process.env.POSTGRES_USER,
-    password: process.env.POSTGRES_PASSWORD,
-    host: process.env.POSTGRES_HOST,
-    database: process.env.POSTGRES_DB,
-    port: process.env.POSTGRES_PORT,
+    user: process.env.PGUSER,
+    password: process.env.PGPASSWORD,
+    host: process.env.PGDATABASE,
+    database: process.env.PGHOST,
+    port: process.env.PGPORT,
   });
   pgPool.connect((err) => {
     console.error(err);
