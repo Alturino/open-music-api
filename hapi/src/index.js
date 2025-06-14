@@ -21,7 +21,9 @@ const playlistPlugin = require('./playlists/api');
 const songsPlugin = require('./songs/api');
 const usersPlugin = require('./users/api');
 const { Pool } = require('pg');
-require('dotenv').config();
+const dotenv = require('dotenv');
+const dotenvExpand = require('dotenv-expand');
+dotenvExpand.expand(dotenv.config());
 
 async function main() {
   const server = Hapi.server({
