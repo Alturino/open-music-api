@@ -60,11 +60,11 @@ async function main() {
 
   console.log('creating connection pool to postgres');
   const pgPool = new Pool({
-    user: process.env.POSTGRES_USER,
-    password: process.env.POSTGRES_PASSWORD,
-    host: process.env.POSTGRES_HOST,
-    database: process.env.POSTGRES_DB,
-    port: process.env.POSTGRES_PORT,
+    user: process.env.PGUSER,
+    password: process.env.PGPASSWORD,
+    host: process.env.PGHOST,
+    database: process.env.PGDATABASE,
+    port: process.env.PGPORT,
   });
   pgPool.connect((err) => {
     if (err instanceof Error) {
