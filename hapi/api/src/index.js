@@ -36,13 +36,11 @@ const ClientError = require('./core/exceptions/ClientError');
 const Hapi = require('@hapi/hapi');
 const Jwt = require('@hapi/jwt');
 const amqp = require('amqplib');
-const config = require('./core/config');
 const { Pool } = require('pg');
 const redis = require('redis');
 const path = require('path');
-const dotenvExpand = require('dotenv-expand');
-
-dotenvExpand.expand(require('dotenv').config());
+const config = require('./core/config');
+const hapiPino = require('hapi-pino');
 
 async function main() {
   const server = Hapi.server({
@@ -60,7 +58,7 @@ async function main() {
     { plugin: Jwt },
     { plugin: Inert },
     {
-      plugin: require('hapi-pino'),
+      plugin: hapiPino,
       options: {
         level: 'debug',
         logPayload: true,
@@ -73,6 +71,7 @@ async function main() {
     },
   ]);
 
+  server.logger.info(config, 'config');
   server.auth.strategy('open_music_api_jwt', 'jwt', {
     keys: config.app.accessTokenKey,
     verify: {
@@ -102,7 +101,7 @@ async function main() {
     }
   });
 
-  const redisClient = redis.createClient({ url: config.redis.url });
+  const redisClient = redis.createClient({ url: config.redis.server });
   redisClient.on('error', (error) => {
     server.logger.error(`main redisClient ${error}`);
   });
@@ -116,7 +115,7 @@ async function main() {
   const userService = new UserService(pgPool);
   const storageService = new StorageService(fs, staticFileFolder);
   const playlistService = new PlaylistService(pgPool);
-  const rabbitmqConnection = await amqp.connect(config.rabbitmq.uri);
+  const rabbitmqConnection = await amqp.connect(config.rabbitmq.server);
   const exportService = new ExportService(rabbitmqConnection);
   const collaborationsService = new CollaborationsService(pgPool);
   const authenticationService = new AuthenticationService(pgPool);

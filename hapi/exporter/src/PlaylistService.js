@@ -1,19 +1,15 @@
+const logger = require('./core/logger');
+
 class PlaylistService {
   constructor(pool) {
     this._pool = pool;
 
-    this.exportPlaylist = this.getPlaylistToExport.bind(this);
+    this.getPlaylistToExport = this.getPlaylistToExport.bind(this);
   }
 
-  async getPlaylistToExport(playlistId, userId) {
+  async getPlaylistToExport(playlistId) {
     const queryPlaylist = {
-      text: `
-        select
-            p.id,
-            p.name,
-        from playlists as p
-        left join users as u on p.owner_id = u.id
-        where p.id = $1;`,
+      text: 'select p.id, p.name from playlists as p where p.id = $1;',
       values: [playlistId],
     };
     const queryPlaylistResult = await this._pool.query(queryPlaylist);
@@ -24,6 +20,7 @@ class PlaylistService {
         username: row.username,
       };
     })[0];
+    logger.info('got playlists', { playlist: playlist });
 
     const querySongs = {
       text: `
@@ -36,10 +33,11 @@ class PlaylistService {
           s.duration,
           s.album_id
         from playlists as p
-        left join users as u on p.owner_id = u.id
-        left join playlists_and_songs as ps on p.id = ps.playlist_id
-        left join songs as s on ps.song_id = s.id`,
-      values: [playlistId, userId],
+        inner join playlists_and_songs as ps on p.id = ps.playlist_id
+        inner join songs as s on ps.song_id = s.id
+        where p.id = $1 and ps.playlist_id = $1;
+      `,
+      values: [playlistId],
     };
     const querySongsResult = await this._pool.query(querySongs);
     const songs = querySongsResult.rows.map((row) => {
@@ -49,11 +47,11 @@ class PlaylistService {
         performer: row.performer,
       };
     });
+    logger.info('got songs', { songs: songs });
 
-    return {
-      ...playlist,
-      songs,
-    };
+    const result = { ...playlist, songs };
+    logger.info('got playlist and songs', { result: result });
+    return result;
   }
 }
 

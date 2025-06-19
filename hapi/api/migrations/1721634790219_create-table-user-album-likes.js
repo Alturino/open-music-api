@@ -39,6 +39,18 @@ exports.up = (pgm) => {
       default: null,
     },
   });
+
+  // memberikan constraint foreign key pada kolom note_id dan user_id terhadap notes.id dan users.id
+  pgm.addConstraint(
+    'user_album_likes',
+    'fk_user_album_likes.user_id',
+    'FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE',
+  );
+  pgm.addConstraint(
+    'user_album_likes',
+    'fk_user_album_likes.album_id',
+    'FOREIGN KEY(album_id) REFERENCES albums(id) ON DELETE CASCADE',
+  );
 };
 
 /**
